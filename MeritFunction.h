@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <iostream>
+#include "LOTransform.h"
 
 class MeritFunction{
 
@@ -17,6 +18,19 @@ class MeritFunction{
 
     private:
 
+        Eigen::ArrayXi Row,Col;
+        Eigen::MatrixXcd U1,U2,U3,UTot;
+        std::complex<double> I;
+        Eigen::MatrixXcd OMEGAU;
+        int HSDimension,subHSDimension,photons,realModes,lossModes,interferometerControlParams,modes;
+        Eigen::VectorXcd initialState,finalState;
+        int g(int n,int m);
+        double doublefactorial(int x);
+        LOTransform LOOP;
+        Eigen::MatrixXi generateBasisVector(int subPhotons,int subModes, int subMeasureModes);
+        Eigen::MatrixXi generateSubBasisVector(int subPhotons, int subModes);
+        void setRowAndCol(Eigen::ArrayXi& Row,Eigen::ArrayXi& Col);
+        int findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::MatrixXi& fullBasisVector);
 };
 
 #endif // MERITFUNCTION_H_INCLUDED

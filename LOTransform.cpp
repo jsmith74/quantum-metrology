@@ -3,7 +3,7 @@
 
 /** ====== Restrict Unitarity of Linear Operators (also change in PUA.cpp and MeritFunction.cpp  ===================== */
 
-#define RESTRICT_TO_UNITARY
+//#define RESTRICT_TO_UNITARY
 
 //#define ALLOW_ARBITRARY_VACUUM_MODES
 
@@ -38,6 +38,13 @@ std::complex<double> LOTransform::omegaUij(int& i,int& j){
     return I;
 }
 
+void LOTransform::setUnitaryMatrixDirect(Eigen::MatrixXcd& Uin){
+
+    U = Uin;
+
+    return;
+
+}
 
 void LOTransform::setUnitaryMatrix(Eigen::ArrayXd& position){
 

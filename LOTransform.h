@@ -14,6 +14,7 @@ class LOTransform{
         LOTransform(int N,int M,Eigen::ArrayXi& Row,Eigen::ArrayXi& Col);
         void setLOTransform(int N,int M,Eigen::ArrayXi& Row,Eigen::ArrayXi& Col);
         void setUnitaryMatrix(Eigen::ArrayXd& position);
+        void setUnitaryMatrixDirect(Eigen::MatrixXcd& Uin);
         LOTransform();
 
     private:
