@@ -21,8 +21,10 @@ void MeritFunction::setMeritFunction(int intParam){
     U1(0,0) = std::exp(I * PI/4.0);
 
     double alpha,beta;
-    alpha = 0.0;
-    beta = 0.0;
+
+    alpha = 1.3;
+    beta = 2.7;
+
     U2.resize(modes,modes);
 
     U2 << cos(alpha),0.0,sin(alpha),0.0,
@@ -41,6 +43,8 @@ void MeritFunction::setMeritFunction(int intParam){
 
     setRowAndCol(Row,Col);
 
+    std::cout << "Col: " << Col << std::endl << std::endl;
+
     LOOP.setLOTransform(photons,modes,Row,Col);
 
     OMEGAU.resize(HSDimension,subHSDimension);
@@ -58,12 +62,16 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     double gamma = position(2*subHSDimension);
 
+    std::cout << "gamma: " << gamma << std::endl << std::endl;
+
     U3(0,0) = cos(gamma);       U3(0,1) = sin(gamma);
     U3(1,0) = -sin(gamma);      U3(1,1) = cos(gamma);
 
     UTot = U1 * U2 * U3;
 
     LOOP.setUnitaryMatrixDirect(UTot);
+
+    std::cout << "UTot Unitary Check:\n" << UTot.conjugate().transpose() * UTot << std::endl << std::endl;
 
     for(int i=0;i<HSDimension;i++){
         for(int j=0;j<subHSDimension;j++){
@@ -73,9 +81,43 @@ double MeritFunction::f(Eigen::VectorXd& position){
         }
     }
 
+    std::cout << "OMEGA(UTot): \n" << OMEGAU << std::endl << std::endl;
+
     finalState = OMEGAU * initialState;
 
-    std::cout << initialState << std::endl << std::endl;
+    std::cout << finalState << std::endl << std::endl;
+
+    LOOP.setUnitaryMatrixDirect(U1);
+    for(int i=0;i<HSDimension;i++){
+        for(int j=0;j<subHSDimension;j++){
+
+            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Col(j));
+
+        }
+    }
+
+    finalState = OMEGAU * initialState;
+    OMEGAU.resize(HSDimension,HSDimension);
+    LOOP.setLOTransform(photons,modes,Row,Row);
+    LOOP.setUnitaryMatrixDirect(U2);
+    for(int i=0;i<HSDimension;i++){
+        for(int j=0;j<HSDimension;j++){
+
+            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Row(j));
+
+        }
+    }
+    finalState = OMEGAU * finalState;
+
+    LOOP.setUnitaryMatrixDirect(U3);
+    for(int i=0;i<HSDimension;i++){
+        for(int j=0;j<HSDimension;j++){
+
+            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Row(j));
+
+        }
+    }
+    finalState = OMEGAU * finalState;
 
     std::cout << finalState << std::endl << std::endl;
 
@@ -104,6 +146,8 @@ void MeritFunction::setRowAndCol(Eigen::ArrayXi& Row,Eigen::ArrayXi& Col){
         Col(i) = findColLoc(i,subBasisVector,fullBasisVector);
 
     }
+
+    std::cout << "outBasis:\n" << fullBasisVector << std::endl << std::endl;
 
     return;
 

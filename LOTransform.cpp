@@ -160,7 +160,7 @@ void LOTransform::genCijMatrix(Eigen::MatrixXi& Pmatrix,Eigen::ArrayXi& Row,Eige
     for(int i=0;i<dim;i++){
         for(int j=i;j<dim;j++){
 
-            if(containedIn(i,Row) && containedIn(j,Col)){
+            if((containedIn(i,Row) &&  containedIn(j,Col)) || (containedIn(i,Col) &&  containedIn(j,Row))){
                 CijMatrix[genKIndex(i,j,dim)] = Eigen::ArrayXd::Zero(kMatrix[genKIndex(i,j,dim)](0));
             }
 
@@ -171,7 +171,9 @@ void LOTransform::genCijMatrix(Eigen::MatrixXi& Pmatrix,Eigen::ArrayXi& Row,Eige
 
     for(int i=0;i<dim;i++){
         for(int j=i;j<dim;j++){
-            if(containedIn(i,Row) && containedIn(j,Col)){
+
+            if((containedIn(i,Row) &&  containedIn(j,Col)) || (containedIn(i,Col) &&  containedIn(j,Row))){
+
                 for(int l=0;l<kMatrix[genKIndex(i,j,dim)](0);l++){
                     Eigen::VectorXi impactingKet = basisVector.row(j);
                     Eigen::VectorXi impactedKet = basisVector.row(i);
@@ -188,7 +190,7 @@ void LOTransform::genCijMatrix(Eigen::MatrixXi& Pmatrix,Eigen::ArrayXi& Row,Eige
 
     for(int i=0;i<dim;i++){
         for(int j=i;j<dim;j++){
-            if(containedIn(i,Row) && containedIn(j,Col)){
+            if((containedIn(i,Row) &&  containedIn(j,Col)) || (containedIn(i,Col) &&  containedIn(j,Row))){
                 Eigen::ArrayXi tempKMatrix = kMatrix[genKIndex(i,j,dim)];
                 int p = 1;
                 for(int l=0;l<tempKMatrix(0);l++){
@@ -437,10 +439,12 @@ void LOTransform::genKMatrix(Eigen::MatrixXi& Pmatrix,Eigen::ArrayXi& Row,Eigen:
         kMatrix.at(i) = Eigen::ArrayXi::Zero(2);
     }
     int k=0;
+
     for(int i=0;i<basisVector.rows();i++){
         for(int j=i;j<basisVector.rows();j++){
 
-            if(containedIn(i,Row) &&  containedIn(j,Col)){
+            if((containedIn(i,Row) &&  containedIn(j,Col)) || (containedIn(i,Col) &&  containedIn(j,Row))){
+
 
                 Eigen::VectorXi impactingKet = basisVector.row(j);
                 Eigen::VectorXi impactedKet = basisVector.row(i);

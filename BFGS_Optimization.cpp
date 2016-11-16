@@ -31,7 +31,7 @@
 
 /** ===== Seed Random Number Generator ============================= */
 
-#define SEED_RANDOM_NUMBER_GENERATOR
+//#define SEED_RANDOM_NUMBER_GENERATOR
 
 /** ================================================================ */
 
