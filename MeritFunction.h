@@ -20,10 +20,10 @@ class MeritFunction{
     private:
 
         Eigen::ArrayXi Row,Col;
-        Eigen::MatrixXcd U1,U2,U3,UTot;
+        Eigen::MatrixXcd UTot;
         std::complex<double> I;
         Eigen::MatrixXcd OMEGAU;
-        int HSDimension,subHSDimension,photons,realModes,lossModes,interferometerControlParams,modes;
+        int HSDimension,subHSDimension,photons,interferometerControlParams,modes,stateModes;
         Eigen::VectorXcd initialState,finalState;
         int g(int n,int m);
         double doublefactorial(int x);

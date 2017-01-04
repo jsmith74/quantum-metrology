@@ -1,53 +1,23 @@
 #include "MeritFunction.h"
 
 #define PI 3.141592653589793
-
+#define ALPHA 0.0;
+#define BETA 0.0
 
 void MeritFunction::setMeritFunction(int intParam){
 
     photons = 2;
-    realModes = 2;
-    lossModes = 2;
-    interferometerControlParams = 1;
 
-    modes = realModes + lossModes;
+    stateModes = 2;
+    modes = 4;
 
     std::complex<double> IGen(0.0,1.0);
 
     I = IGen;
 
-    U1 = Eigen::MatrixXcd::Identity(modes,modes);
 
-    U1(0,0) = std::exp(I * PI/4.0);
 
-    double alpha,beta;
-
-    alpha = 1.3;
-    beta = 2.7;
-
-    U2.resize(modes,modes);
-
-    U2 << cos(alpha),0.0,sin(alpha),0.0,
-            0.0,cos(beta),0.0,sin(beta),
-            -sin(alpha), 0.0,cos(alpha),0.0,
-            0.0,-sin(beta),0.0,cos(beta);
-
-    U3 = Eigen::MatrixXcd::Identity(modes,modes);
-
-    HSDimension = g(photons,modes);
-    subHSDimension = g(photons,realModes);
-
-    funcDimension = interferometerControlParams + 2 * subHSDimension;
-
-    initialState = Eigen::VectorXcd::Zero(subHSDimension);
-
-    setRowAndCol(Row,Col);
-
-    std::cout << "Col: " << Col << std::endl << std::endl;
-
-    LOOP.setLOTransform(photons,modes,Row,Col);
-
-    OMEGAU.resize(HSDimension,subHSDimension);
+    assert(1>2 && "End here");
 
     return;
 
@@ -56,76 +26,7 @@ void MeritFunction::setMeritFunction(int intParam){
 
 double MeritFunction::f(Eigen::VectorXd& position){
 
-    for(int i=0;i<subHSDimension;i++) initialState(i) = position(2*i) * exp(I * position(2*i+1));
-
-    initialState.normalize();
-
-    double gamma = position(2*subHSDimension);
-
-    std::cout << "gamma: " << gamma << std::endl << std::endl;
-
-    U3(0,0) = cos(gamma);       U3(0,1) = sin(gamma);
-    U3(1,0) = -sin(gamma);      U3(1,1) = cos(gamma);
-
-    UTot = U1 * U2 * U3;
-
-    LOOP.setUnitaryMatrixDirect(UTot);
-
-    std::cout << "UTot Unitary Check:\n" << UTot.conjugate().transpose() * UTot << std::endl << std::endl;
-
-    for(int i=0;i<HSDimension;i++){
-        for(int j=0;j<subHSDimension;j++){
-
-            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Col(j));
-
-        }
-    }
-
-    std::cout << "OMEGA(UTot): \n" << OMEGAU << std::endl << std::endl;
-
-    finalState = OMEGAU * initialState;
-
-    std::cout << finalState << std::endl << std::endl;
-
-    LOOP.setUnitaryMatrixDirect(U1);
-    for(int i=0;i<HSDimension;i++){
-        for(int j=0;j<subHSDimension;j++){
-
-            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Col(j));
-
-        }
-    }
-
-    finalState = OMEGAU * initialState;
-    OMEGAU.resize(HSDimension,HSDimension);
-    LOOP.setLOTransform(photons,modes,Row,Row);
-    LOOP.setUnitaryMatrixDirect(U2);
-    for(int i=0;i<HSDimension;i++){
-        for(int j=0;j<HSDimension;j++){
-
-            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Row(j));
-
-        }
-    }
-    finalState = OMEGAU * finalState;
-
-    LOOP.setUnitaryMatrixDirect(U3);
-    for(int i=0;i<HSDimension;i++){
-        for(int j=0;j<HSDimension;j++){
-
-            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Row(j));
-
-        }
-    }
-    finalState = OMEGAU * finalState;
-
-    std::cout << finalState << std::endl << std::endl;
-
-    /** ==== TO DO -- CHECK THAT THIS TRANSFORMATION MATCHES YANG's ==== */
-
-    assert(1>2 && "break it here");
-
-    return std::pow(position(0) * position(1) - 3,2) + 1.0;
+    return 1.0;
 
 }
 
@@ -139,7 +40,7 @@ void MeritFunction::setRowAndCol(Eigen::ArrayXi& Row,Eigen::ArrayXi& Col){
     Col.resize(subHSDimension);
 
     Eigen::MatrixXi fullBasisVector = generateBasisVector(photons,modes,1);
-    Eigen::MatrixXi subBasisVector  = generateBasisVector(photons,realModes,1);
+    Eigen::MatrixXi subBasisVector  = generateBasisVector(photons,stateModes,1);
 
     for(int i=0;i<subHSDimension;i++){
 
@@ -159,11 +60,11 @@ int MeritFunction::findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::Matri
 
     for(int j=0;j<fullBasisVector.rows();j++){
 
-        for(int k=0;k<realModes;k++){
+        for(int k=0;k<stateModes;k++){
 
             if(fullBasisVector(j,k) != tempHold(0,k)) break;
 
-            if(k==realModes-1) return j;
+            if(k==stateModes-1) return j;
 
         }
 
