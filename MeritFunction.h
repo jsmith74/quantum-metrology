@@ -20,18 +20,18 @@ class MeritFunction{
     private:
 
         Eigen::ArrayXi Row,Col;
-        Eigen::MatrixXcd UTot;
         std::complex<double> I;
         Eigen::MatrixXcd OMEGAU;
-        int HSDimension,subHSDimension,photons,interferometerControlParams,modes,stateModes;
-        Eigen::VectorXcd initialState,finalState;
         int g(int n,int m);
         double doublefactorial(int x);
-        LOTransform LOOP;
         Eigen::MatrixXi generateBasisVector(int subPhotons,int subModes, int subMeasureModes);
         Eigen::MatrixXi generateSubBasisVector(int subPhotons, int subModes);
-        void setRowAndCol(Eigen::ArrayXi& Row,Eigen::ArrayXi& Col);
-        int findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::MatrixXi& fullBasisVector);
+        void setRowAndCol(Eigen::ArrayXi& Row,Eigen::ArrayXi& Col,int& photons,int& modes,int& stateModes);
+        int findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::MatrixXi& fullBasisVector,int& stateModes);
+        void p_m_phiGen(Eigen::ArrayXd& p_m_phi,double& phi,double& gamma,Eigen::VectorXcd& psi,LOTransform& LOOP);
+        void mAddressGen(std::vector<Eigen::ArrayXi>& mAddress,int& photons,int& stateModes,int& modes);
+        void setmAddress(std::vector<Eigen::ArrayXi>& mAddress,Eigen::VectorXi subVector,Eigen::MatrixXi& fullVector,int& k);
+
 };
 
 #endif // MERITFUNCTION_H_INCLUDED

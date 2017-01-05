@@ -4,20 +4,138 @@
 #define ALPHA 0.0;
 #define BETA 0.0
 
+Eigen::VectorXd MeritFunction::setInitialPosition(){
+
+    Eigen::VectorXd position = Eigen::VectorXd::Random(funcDimension);
+
+    position *= PI;
+
+    return position;
+
+}
+
 void MeritFunction::setMeritFunction(int intParam){
-
-    photons = 2;
-
-    stateModes = 2;
-    modes = 4;
 
     std::complex<double> IGen(0.0,1.0);
 
     I = IGen;
 
+    /** =========================================== */
 
+    funcDimension = 3;
+
+    int photons = 2;
+
+    int stateModes = 2;
+    int modes = 4;
+
+    setRowAndCol(Row,Col,photons,modes,stateModes);
+
+    std::cout << "col\n" << Col << std::endl << std::endl;
+
+    LOTransform LOOPtest;
+    LOOPtest.setLOTransform(photons,modes,Row,Col);
+
+    std::vector<Eigen::ArrayXi> mAddressTest;
+    mAddressGen(mAddressTest,photons,stateModes,modes);
+
+    Eigen::MatrixXi fullVector = generateBasisVector(photons,modes,1);
+
+    for(int i=0;i<mAddressTest.size();i++){
+
+        std::cout << i << ":\n";
+        for(int j=0;j<mAddressTest.at(i).size();j++) std::cout << mAddressTest.at(i)(j) << " ";
+        std::cout << std::endl;
+        for(int j=0;j<mAddressTest.at(i).size();j++) std::cout << fullVector.row(mAddressTest.at(i)(j))  << std::endl;
+        std::cout << std::endl;
+    }
+
+    // UP TO HERE:
+    // CHECK THAT THIS CODE IS PRODUCING THE CORRECT MAPS FROM STARTING STATES ONTO FULL HILBERT SPACE
+    // AND THE CORRECT MEASUREMENT LOCATION MAPS FOR RANDOM PHYSICAL SYSTEMS (MODES, PHOTONS, STATEMODES)
+
+    /** =========================================== */
 
     assert(1>2 && "End here");
+
+    return;
+
+}
+
+void MeritFunction::mAddressGen(std::vector<Eigen::ArrayXi>& mAddress,int& photons,int& stateModes,int& modes){
+
+    int totalMeasOutComes = 0;
+
+    for(int i=0;i<=photons;i++){
+
+        totalMeasOutComes += g(i,stateModes);
+
+    }
+
+    std::cout << totalMeasOutComes << std::endl << std::endl;
+
+    mAddress.resize(totalMeasOutComes);
+
+    Eigen::MatrixXi fullVector = generateBasisVector(photons,modes,1);
+
+    std::cout << "full:\n"  << fullVector << std::endl << std::endl;
+
+    int k=0;
+
+    for(int i=0;i<=photons;i++){
+
+        Eigen::MatrixXi subVector = generateBasisVector(i,stateModes,1);
+
+        std::cout << "sub\n" << subVector << std::endl << std::endl;
+
+        for(int j=0;j<subVector.rows();j++){
+
+            setmAddress(mAddress,subVector.row(j),fullVector,k);
+
+            k++;
+
+        }
+
+    }
+
+    return;
+
+}
+
+void MeritFunction::setmAddress(std::vector<Eigen::ArrayXi>& mAddress,Eigen::VectorXi subVector,Eigen::MatrixXi& fullVector,int& k){
+
+    for(int i=0;i<fullVector.rows();i++){
+
+        bool match = true;
+
+        for(int j=0;j<subVector.size();j++){
+
+            if(subVector(j) != fullVector(i,j)){
+
+                match = false;
+                break;
+
+            }
+
+        }
+
+        if(match == true){
+
+            mAddress.at(k).conservativeResize(mAddress.at(k).size() + 1);
+            mAddress.at(k)(mAddress.at(k).size() - 1) = i;
+
+        }
+
+    }
+
+    return;
+
+}
+
+void MeritFunction::p_m_phiGen(Eigen::ArrayXd& p_m_phi,double& phi,double& gamma,Eigen::VectorXcd& psi,LOTransform& LOOP){
+
+    // TURN THIS INTO A FUNCTION AS A PART OF A SEPARATE OBJECT WITH mAddress and all this stuff as data. I THINK
+    // EACH p(m|phi) WILL BE A SEPARATE OBJECT OF THE SAME TYPE REPRESENTING A DIFFERENT RUN THROUGH INTERFEROMETER
 
     return;
 
@@ -31,7 +149,11 @@ double MeritFunction::f(Eigen::VectorXd& position){
 }
 
 
-void MeritFunction::setRowAndCol(Eigen::ArrayXi& Row,Eigen::ArrayXi& Col){
+void MeritFunction::setRowAndCol(Eigen::ArrayXi& Row,Eigen::ArrayXi& Col,int& photons,int& modes,int& stateModes){
+
+    int HSDimension = g(photons,modes);
+
+    int subHSDimension = g(photons,stateModes);
 
     Row.resize(HSDimension);
 
@@ -42,19 +164,20 @@ void MeritFunction::setRowAndCol(Eigen::ArrayXi& Row,Eigen::ArrayXi& Col){
     Eigen::MatrixXi fullBasisVector = generateBasisVector(photons,modes,1);
     Eigen::MatrixXi subBasisVector  = generateBasisVector(photons,stateModes,1);
 
+    std::cout << "full\n" << fullBasisVector << std::endl << std::endl;
+    std::cout << "sub start vec\n" << subBasisVector << std::endl << std::endl;
+
     for(int i=0;i<subHSDimension;i++){
 
-        Col(i) = findColLoc(i,subBasisVector,fullBasisVector);
+        Col(i) = findColLoc(i,subBasisVector,fullBasisVector,stateModes);
 
     }
-
-    std::cout << "outBasis:\n" << fullBasisVector << std::endl << std::endl;
 
     return;
 
 }
 
-int MeritFunction::findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::MatrixXi& fullBasisVector){
+int MeritFunction::findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::MatrixXi& fullBasisVector,int& stateModes){
 
     Eigen::MatrixXi tempHold = subBasisVector.row(i);
 
@@ -87,17 +210,6 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
 }
 
-
-
-Eigen::VectorXd MeritFunction::setInitialPosition(){
-
-    Eigen::VectorXd position = Eigen::VectorXd::Random(funcDimension);
-
-    position *= PI;
-
-    return position;
-
-}
 
 
 MeritFunction::MeritFunction(){
