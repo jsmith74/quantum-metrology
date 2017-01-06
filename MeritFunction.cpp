@@ -1,8 +1,8 @@
 #include "MeritFunction.h"
 
 #define PI 3.141592653589793
-#define ALPHA 0.0;
-#define BETA 0.0
+#define ALPHA 0.343
+#define BETA 0.975
 
 Eigen::VectorXd MeritFunction::setInitialPosition(){
 
@@ -29,9 +29,10 @@ void MeritFunction::setMeritFunction(int intParam){
     int stateModes = 2;
     int modes = 4;
 
-    setRowAndCol(Row,Col,photons,modes,stateModes);
+    int HSDimension = g(photons,modes);
+    int subHSdimension = g(photons,stateModes);
 
-    std::cout << "col\n" << Col << std::endl << std::endl;
+    setRowAndCol(Row,Col,photons,modes,stateModes);
 
     LOTransform LOOPtest;
     LOOPtest.setLOTransform(photons,modes,Row,Col);
@@ -39,20 +40,51 @@ void MeritFunction::setMeritFunction(int intParam){
     std::vector<Eigen::ArrayXi> mAddressTest;
     mAddressGen(mAddressTest,photons,stateModes,modes);
 
-    Eigen::MatrixXi fullVector = generateBasisVector(photons,modes,1);
+//    Eigen::MatrixXi fullVector = generateBasisVector(photons,modes,1);
+//
+//    for(int i=0;i<mAddressTest.size();i++){
+//
+//        std::cout << i << ":\n";
+//        for(int j=0;j<mAddressTest.at(i).size();j++) std::cout << mAddressTest.at(i)(j) << " ";
+//        std::cout << std::endl;
+//        for(int j=0;j<mAddressTest.at(i).size();j++) std::cout << fullVector.row(mAddressTest.at(i)(j))  << std::endl;
+//        std::cout << std::endl;
+//    }
 
-    for(int i=0;i<mAddressTest.size();i++){
+    Eigen::VectorXcd psiTest = Eigen::VectorXcd::Random(subHSdimension);
 
-        std::cout << i << ":\n";
-        for(int j=0;j<mAddressTest.at(i).size();j++) std::cout << mAddressTest.at(i)(j) << " ";
-        std::cout << std::endl;
-        for(int j=0;j<mAddressTest.at(i).size();j++) std::cout << fullVector.row(mAddressTest.at(i)(j))  << std::endl;
-        std::cout << std::endl;
+    psiTest.normalize();
+
+    std::cout << "psi:\n" << std::setprecision(16) << psiTest << std::endl << std::endl;
+
+    Eigen::ArrayXd probs(mAddressTest.size());
+
+    double phiTest = PI / 3.0;
+
+    double gammaTest = 0.8;
+
+    Eigen::MatrixXcd UTot(modes,modes);
+
+    OMEGAU.resize(HSDimension,subHSdimension);
+
+    UTot << exp(I * phiTest) * cos(ALPHA) * cos(gammaTest), exp(I * phiTest) * cos(ALPHA) * sin(gammaTest), exp(I * phiTest) * sin(ALPHA), 0.0,
+            -cos(BETA) * sin(gammaTest), cos(BETA) * cos(gammaTest), 0.0, sin(BETA),
+            -sin(ALPHA) * cos(gammaTest), -sin(ALPHA) * sin(gammaTest), cos(ALPHA), 0.0,
+            sin(BETA) * sin(gammaTest), -sin(BETA) * cos(gammaTest), 0.0, cos(BETA);
+
+    LOOPtest.setUnitaryMatrixDirect(UTot);
+
+    for(int i=0;i<HSDimension;i++){
+        for(int j=0;j<subHSdimension;j++){
+
+            OMEGAU(i,j) = LOOPtest.omegaUij(Row(i),Col(j));
+
+        }
     }
 
-    // UP TO HERE:
-    // CHECK THAT THIS CODE IS PRODUCING THE CORRECT MAPS FROM STARTING STATES ONTO FULL HILBERT SPACE
-    // AND THE CORRECT MEASUREMENT LOCATION MAPS FOR RANDOM PHYSICAL SYSTEMS (MODES, PHOTONS, STATEMODES)
+    psi = psiTest;
+
+    p_m_phiGen(probs,mAddressTest);
 
     /** =========================================== */
 
@@ -61,6 +93,32 @@ void MeritFunction::setMeritFunction(int intParam){
     return;
 
 }
+
+
+void MeritFunction::p_m_phiGen(Eigen::ArrayXd& p_m_phi,std::vector<Eigen::ArrayXi>& mAddress){
+
+    psiPrime = OMEGAU * psi;
+
+    for(int i=0;i<mAddress.size();i++){
+
+            p_m_phi(i) = norm(psiPrime(mAddress[i](0)));
+
+        for(int j=1;j<mAddress[i].size();j++){
+
+            p_m_phi(i) += norm(psiPrime(mAddress[i](j)));
+
+        }
+
+    }
+
+    // UP TO HERE. CHECK THAT THIS GENERATES RIGHT PROBABILITIES FOR PARTIAL MEASUREMENTS
+    // AND THEN WRITE A CLASS OBJECT THAT STORES MULTIMEASUREMENT STRUCTURE THING OR WHATEVER THAT WILL ONLY NEED TO ACCESS LOOP
+    // FOR IDENTICAL PHYSICAL PARAMETERS (TO SAVE MEMORY)
+
+    return;
+
+}
+
 
 void MeritFunction::mAddressGen(std::vector<Eigen::ArrayXi>& mAddress,int& photons,int& stateModes,int& modes){
 
@@ -71,6 +129,8 @@ void MeritFunction::mAddressGen(std::vector<Eigen::ArrayXi>& mAddress,int& photo
         totalMeasOutComes += g(i,stateModes);
 
     }
+
+    if(stateModes == modes) totalMeasOutComes = g(photons,stateModes);
 
     std::cout << totalMeasOutComes << std::endl << std::endl;
 
@@ -83,6 +143,8 @@ void MeritFunction::mAddressGen(std::vector<Eigen::ArrayXi>& mAddress,int& photo
     int k=0;
 
     for(int i=0;i<=photons;i++){
+
+        if(stateModes == modes) i = photons;
 
         Eigen::MatrixXi subVector = generateBasisVector(i,stateModes,1);
 
@@ -127,15 +189,6 @@ void MeritFunction::setmAddress(std::vector<Eigen::ArrayXi>& mAddress,Eigen::Vec
         }
 
     }
-
-    return;
-
-}
-
-void MeritFunction::p_m_phiGen(Eigen::ArrayXd& p_m_phi,double& phi,double& gamma,Eigen::VectorXcd& psi,LOTransform& LOOP){
-
-    // TURN THIS INTO A FUNCTION AS A PART OF A SEPARATE OBJECT WITH mAddress and all this stuff as data. I THINK
-    // EACH p(m|phi) WILL BE A SEPARATE OBJECT OF THE SAME TYPE REPRESENTING A DIFFERENT RUN THROUGH INTERFEROMETER
 
     return;
 
