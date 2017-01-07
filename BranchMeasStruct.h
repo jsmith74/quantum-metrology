@@ -1,0 +1,17 @@
+#ifndef BRANCHMEASUREMENTSTRUCTURE_H_INCLUDED
+#define BRANCHMEASUREMENTSTRUCTURE_H_INCLUDED
+
+#include "MZIMeas.h"
+
+class BranchMeasStruct{
+
+    public:
+
+
+
+    private:
+
+
+};
+
+#endif // BRANCHMEASUREMENTSTRUCTURE_H_INCLUDED
