@@ -6,6 +6,7 @@
 #include <iomanip>
 
 #include "MZIMeas.h"
+#include "BranchMeasStruct.h"
 
 class MeritFunction{
 
@@ -25,6 +26,7 @@ class MeritFunction{
         Eigen::VectorXcd psiPrime;
         int g(int n,int m);
         double doublefactorial(int x);
+        BranchMeasStruct measChain;
 
 };
 

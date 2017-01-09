@@ -33,6 +33,10 @@ void MZIMeas::initializeMZIObject(int N,int M,int SM){
 
     p_m_phi.resize(mAddress.size());
 
+    branches.resize(mAddress.size());
+
+    numbBranches = mAddress.size();
+
     U1 = Eigen::MatrixXcd::Identity(modes,modes);
 
     U23 = Eigen::MatrixXcd::Zero(modes,modes);
@@ -47,6 +51,11 @@ void MZIMeas::initializeMZIObject(int N,int M,int SM){
 
 }
 
+int MZIMeas::extractPhotons(){
+
+    return photons;
+
+}
 
 void MZIMeas::updateP_M_PHI(){
 
@@ -63,14 +72,6 @@ void MZIMeas::updateP_M_PHI(){
         }
 
     }
-
-    std::cout << "psiPrime: \n" << psiPrime << std::endl << std::endl;
-    std::cout << "p_m_phi:\n" << p_m_phi << std::endl << std::endl;
-    std::cout << "mAddress:\n";
-    for(int i=0;i<mAddress.size();i++) std::cout << mAddress.at(i) << std::endl << std::endl;
-
-    // YOU WERE UP TO HERE. CHECK TO MAKE SURE THAT MZIMeas IS FUNCTIONING PROPERLY - THAT ALL PROBABILITIES AND STATES ARE BEING
-    // EVALUATED CORRECTLY ETC. GO THROUGH ENTIRE THING CHECK WITH MATHEMATICA.
 
     return;
 
@@ -141,7 +142,7 @@ void MZIMeas::setPsi(Eigen::VectorXd a){
 
     psi.normalize();
 
-    std::cout << "psi:\n" << psi << std::endl << std::endl;
+    std::cout << "psi:\n" << std::setprecision(16)  << psi << std::endl << std::endl;
     std::cout << std::setprecision(16) << psi.norm() << std::endl;
 
     return;
@@ -228,6 +229,7 @@ void MZIMeas::setRowAndCol(){
     Eigen::MatrixXi subBasisVector  = generateBasisVector(photons,stateModes,1);
 
     std::cout << "full\n" << fullBasisVector << std::endl << std::endl;
+
     std::cout << "sub start vec\n" << subBasisVector << std::endl << std::endl;
 
     for(int i=0;i<subHSDimension;i++){
@@ -240,6 +242,23 @@ void MZIMeas::setRowAndCol(){
 
 }
 
+void MZIMeas::printMathematicaMatrix(Eigen::MatrixXi& M){
+
+    for(int i=0;i<M.rows();i++){
+         std::cout << "{";
+         for(int j=0;j<M.cols();j++){
+
+            std::cout << M(i,j);
+            if(j==M.cols()-1) break;
+            std::cout << ",";
+
+         }
+         std::cout << "},";
+    }
+
+    return;
+
+}
 
 void MZIMeas::setmAddress(Eigen::VectorXi subVector,Eigen::MatrixXi& fullVector,int& k){
 

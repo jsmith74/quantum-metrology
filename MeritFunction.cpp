@@ -14,27 +14,34 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 
 void MeritFunction::setMeritFunction(int intParam){
 
-    /** =========================================== */
-
     funcDimension = 3;
 
-    MZIMeas MZITest;
+    measChain.setMeasChain(true,3,false);
 
-    MZITest.initializeMZIObject(2,4,2);
+    measChain.printBranchStructure();
 
-    MZITest.setPsi(Eigen::VectorXd::Random(6));
+    // UP TO HERE PLAY WITH BRANCH STRUCTURE, MAKE SURE ITS GENERATING THE RIGHT STRUCTURE AND MAKE SURE MEASUREMENT OUTCOMES ARE WORKING
+    // DONT FORGET TO CHECK FOR NON-ADAPTIVE REPEATED MEASUREMENTS
+    // IF ALL IS GOOD, SET ALL N=2 FOR ALL BRANCHES AND MAYBE WRITE AN I/O INTERFACE FOR INPUTTING N
+    // THEN, TRY AND MEET WITH KAPLAN TO FIND OUT WHAT HAPPENS TO P(PHI) AFTER SUCCESSIVE MEASUREMENTS
 
-    double phiTest = PI / 6.0;
-
-    double gammaTest = 0.54;
-
-    MZITest.updateGamma(gammaTest);
-
-    MZITest.updatePhi(phiTest);
-
-    MZITest.updateOMEGAU();
-
-    MZITest.updateP_M_PHI();
+//    MZIMeas MZITest;
+//
+//    MZITest.initializeMZIObject(2,4,2);
+//
+//    MZITest.setPsi(Eigen::VectorXd::Random(6));
+//
+//    double phiTest = PI / 6.0;
+//
+//    double gammaTest = 0.54;
+//
+//    MZITest.updateGamma(gammaTest);
+//
+//    MZITest.updatePhi(phiTest);
+//
+//    MZITest.updateOMEGAU();
+//
+//    MZITest.updateP_M_PHI();
 
     assert(1>2 && "End here");
 

@@ -19,8 +19,12 @@ class MZIMeas{
         void updatePhi(double& phi);
         void updateOMEGAU();
         void updateP_M_PHI();
+        int extractPhotons();
 
         Eigen::ArrayXd p_m_phi;
+
+        int level,root,numbBranches;
+        std::vector<int> branches;
 
     private:
 
@@ -42,6 +46,7 @@ class MZIMeas{
         void setmAddress(Eigen::VectorXi subVector,Eigen::MatrixXi& fullVector,int& k);
         int findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::MatrixXi& fullBasisVector);
         void initializeU23();
+        void printMathematicaMatrix(Eigen::MatrixXi& M);
 
 };
 
