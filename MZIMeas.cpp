@@ -9,6 +9,92 @@ MZIMeas::MZIMeas(){
 
 }
 
+void MZIMeas::updateOMEGAU(){
+
+    LOOP.setUnitaryMatrixDirect(UTot);
+
+    for(int i=0;i<OMEGAU.rows();i++){
+        for(int j=0;j<OMEGAU.cols();j++){
+
+            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Col(j));
+
+        }
+    }
+
+    return;
+
+}
+
+
+void MZIMeas::updatePhi(double& phi){
+
+    U1(0,0) = exp(I * phi);
+
+    UTot = U1 * U23;
+
+    return;
+
+}
+
+void MZIMeas::setPsi(Eigen::VectorXd& position,int& k){
+
+    for(int i=0;i<subHSDimension;i++){
+
+        //psi(i) = a(2*i) * exp(I * a(2*i+1));
+        psi(i) = position(k) * exp(I * position(k+1));
+        k += 2;
+
+    }
+
+    psi.normalize();
+
+    //std::cout << "psi:\n" << psi << std::endl << std::endl;
+
+    return;
+
+}
+
+
+void MZIMeas::updateGamma(double& gamma){
+
+    U23(0,0) = cos(ALPHA) * cos(gamma);
+    U23(0,1) = cos(ALPHA) * sin(gamma);
+    U23(1,0) = -cos(BETA) * sin(gamma);
+    U23(1,1) = cos(BETA) * cos(gamma);
+    U23(2,0) = -sin(ALPHA) * cos(gamma);
+    U23(2,1) = -sin(ALPHA) * sin(gamma);
+    U23(3,0) = sin(BETA) * sin(gamma);
+    U23(3,1) = -sin(BETA) * cos(gamma);
+
+    //std::cout << "gamma: " << gamma << std::endl;
+
+    return;
+
+}
+
+
+void MZIMeas::printMAddress(){
+
+    Eigen::MatrixXi fullAddress = generateBasisVector(photons,modes,1);
+
+    std::cout << "mAddress:\n";
+
+    for(int i=0;i<mAddress.size();i++){
+
+        for(int j=0;j<mAddress.at(i).size();j++){
+
+            std::cout << fullAddress.row(mAddress.at(i)(j)) << std::endl;
+
+        }
+
+        std::cout << std::endl;
+
+    }
+
+    return;
+
+}
+
 
 void MZIMeas::initializeMZIObject(int N,int M,int SM){
 
@@ -78,49 +164,6 @@ void MZIMeas::updateP_M_PHI(){
 }
 
 
-void MZIMeas::updateOMEGAU(){
-
-    LOOP.setUnitaryMatrixDirect(UTot);
-
-    for(int i=0;i<OMEGAU.rows();i++){
-        for(int j=0;j<OMEGAU.cols();j++){
-
-            OMEGAU(i,j) = LOOP.omegaUij(Row(i),Col(j));
-
-        }
-    }
-
-    return;
-
-}
-
-
-void MZIMeas::updatePhi(double& phi){
-
-    U1(0,0) = exp(I * phi);
-
-    UTot = U1 * U23;
-
-    return;
-
-}
-
-
-void MZIMeas::updateGamma(double& gamma){
-
-    U23(0,0) = cos(ALPHA) * cos(gamma);
-    U23(0,1) = cos(ALPHA) * sin(gamma);
-    U23(1,0) = -cos(BETA) * sin(gamma);
-    U23(1,1) = cos(BETA) * cos(gamma);
-    U23(2,0) = -sin(ALPHA) * cos(gamma);
-    U23(2,1) = -sin(ALPHA) * sin(gamma);
-    U23(3,0) = sin(BETA) * sin(gamma);
-    U23(3,1) = -sin(BETA) * cos(gamma);
-
-    return;
-
-}
-
 void MZIMeas::initializeU23(){
 
     U23(0,2) = sin(ALPHA);
@@ -132,22 +175,7 @@ void MZIMeas::initializeU23(){
 
 }
 
-void MZIMeas::setPsi(Eigen::VectorXd a){
 
-    for(int i=0;i<subHSDimension;i++){
-
-        psi(i) = a(2*i) * exp(I * a(2*i+1));
-
-    }
-
-    psi.normalize();
-
-    std::cout << "psi:\n" << std::setprecision(16)  << psi << std::endl << std::endl;
-    std::cout << std::setprecision(16) << psi.norm() << std::endl;
-
-    return;
-
-}
 
 
 int MZIMeas::findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::MatrixXi& fullBasisVector){
@@ -185,13 +213,13 @@ void MZIMeas::mAddressGen(){
 
     if(stateModes == modes) totalMeasOutComes = g(photons,stateModes);
 
-    std::cout << totalMeasOutComes << std::endl << std::endl;
+    //std::cout << totalMeasOutComes << std::endl << std::endl;
 
     mAddress.resize(totalMeasOutComes);
 
     Eigen::MatrixXi fullVector = generateBasisVector(photons,modes,1);
 
-    std::cout << "full:\n"  << fullVector << std::endl << std::endl;
+    //std::cout << "full:\n"  << fullVector << std::endl << std::endl;
 
     int k=0;
 
@@ -201,7 +229,7 @@ void MZIMeas::mAddressGen(){
 
         Eigen::MatrixXi subVector = generateBasisVector(i,stateModes,1);
 
-        std::cout << "sub\n" << subVector << std::endl << std::endl;
+        //std::cout << "sub\n" << subVector << std::endl << std::endl;
 
         for(int j=0;j<subVector.rows();j++){
 
@@ -228,9 +256,9 @@ void MZIMeas::setRowAndCol(){
     Eigen::MatrixXi fullBasisVector = generateBasisVector(photons,modes,1);
     Eigen::MatrixXi subBasisVector  = generateBasisVector(photons,stateModes,1);
 
-    std::cout << "full\n" << fullBasisVector << std::endl << std::endl;
+    //std::cout << "full\n" << fullBasisVector << std::endl << std::endl;
 
-    std::cout << "sub start vec\n" << subBasisVector << std::endl << std::endl;
+    //std::cout << "sub start vec\n" << subBasisVector << std::endl << std::endl;
 
     for(int i=0;i<subHSDimension;i++){
 

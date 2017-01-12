@@ -14,16 +14,11 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 
 void MeritFunction::setMeritFunction(int intParam){
 
-    funcDimension = 3;
-
     measChain.setMeasChain(true,3,false);
 
     measChain.printBranchStructure();
 
-    // UP TO HERE PLAY WITH BRANCH STRUCTURE, MAKE SURE ITS GENERATING THE RIGHT STRUCTURE AND MAKE SURE MEASUREMENT OUTCOMES ARE WORKING
-    // DONT FORGET TO CHECK FOR NON-ADAPTIVE REPEATED MEASUREMENTS
-    // IF ALL IS GOOD, SET ALL N=2 FOR ALL BRANCHES AND MAYBE WRITE AN I/O INTERFACE FOR INPUTTING N
-    // THEN, TRY AND MEET WITH KAPLAN TO FIND OUT WHAT HAPPENS TO P(PHI) AFTER SUCCESSIVE MEASUREMENTS
+    funcDimension = measChain.setFuncDimension();
 
 //    MZIMeas MZITest;
 //
@@ -43,7 +38,7 @@ void MeritFunction::setMeritFunction(int intParam){
 //
 //    MZITest.updateP_M_PHI();
 
-    assert(1>2 && "End here");
+
 
     return;
 
@@ -51,6 +46,12 @@ void MeritFunction::setMeritFunction(int intParam){
 
 
 double MeritFunction::f(Eigen::VectorXd& position){
+
+    measChain.setPsiAndGamma(position);
+
+    measChain.setPhaseEstimators();
+
+    assert(1>2 && "End here");
 
     return 1.0;
 

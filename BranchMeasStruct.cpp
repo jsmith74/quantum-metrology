@@ -1,7 +1,61 @@
 #include "BranchMeasStruct.h"
 
+// TO DO: THINK OF A CLEVER WAY TO I/O A BRANCH STRUCTURE - WE WILL WANT IT TO BE AUTOMATIC
+// TO DO: IF GENERATING BRANCH STRUCTURE BECOMES A BOTTLENECK, FIND A WAY TO SHARE LOOP OBJECTS
+//        BETWEEN IDENTICAL STRUCTURES
 
 BranchMeasStruct::BranchMeasStruct(){
+
+}
+
+void BranchMeasStruct::setPhaseEstimators(){
+
+    for(int i=0;i<levels;i++) m[i] = 0;
+
+    // UP TO HERE, WRITE CODE THAT CONSTRUCTS PHASE ESTIMATORS GOING TO HAVE TO USE SIMPSONS RULE ETC
+
+    return;
+
+}
+
+void BranchMeasStruct::setPsiAndGamma(Eigen::VectorXd& position){
+
+    int k=0;
+
+    for(int i=0;i<levels;i++){
+
+        for(int j=0;j<chainMeasurement[i].size();j++){
+
+            chainMeasurement[i][j].setPsi(position,k);
+
+            chainMeasurement[i][j].updateGamma(position(k));
+            k++;
+
+        }
+
+    }
+
+    return;
+
+}
+
+int BranchMeasStruct::setFuncDimension(){
+
+    int output = 0;
+
+    for(int i=0;i<levels;i++){
+
+        for(int j=0;j<chainMeasurement.at(i).size();j++){
+
+            output += 2*chainMeasurement.at(i).at(j).subHSDimension;
+
+            output += 1;
+
+        }
+
+    }
+
+    return output;
 
 }
 
@@ -13,13 +67,12 @@ void BranchMeasStruct::printBranchStructure(){
 
         for(int j=0;j<chainMeasurement.at(i).size();j++){
 
-            std::cout << i << " " << j << std::endl;
-            std::cout << "photons: " << chainMeasurement.at(i).at(j).extractPhotons() << std::endl;
+
             std::cout << "level: " << chainMeasurement.at(i).at(j).level << std::endl;
-
+            std::cout << "Index: " << j << std::endl;
             if(i>0) std::cout << "root: " << chainMeasurement.at(i).at(j).root << std::endl;
-
-            if(i<levels-1){
+            std::cout << "photons: " << chainMeasurement.at(i).at(j).extractPhotons() << std::endl;
+            //if(i<levels-1){
 
                 std::cout << "numbBranches: " << chainMeasurement.at(i).at(j).numbBranches << std::endl;
 
@@ -28,9 +81,11 @@ void BranchMeasStruct::printBranchStructure(){
 
                 std::cout << std::endl;
 
-            }
+                chainMeasurement.at(i).at(j).printMAddress();
 
-            std::cout << std::endl;
+            //}
+
+            std::cout << std::endl << std::endl;
 
         }
 
@@ -68,7 +123,7 @@ void BranchMeasStruct::setAdaptiveMeasurements(){
 
             while(k<chainMeasurement.at(i+1).size()){
 
-                chainMeasurement.at(i+1).at(k).initializeMZIObject(l%4+1,4,2);    // THINK OF SOME WAY TO CHANGE THIS DYNAMICALLY
+                chainMeasurement.at(i+1).at(k).initializeMZIObject(2,4,2);    // THINK OF SOME WAY TO CHANGE THIS DYNAMICALLY
 
                 chainMeasurement.at(i+1).at(k).root = j;
 
@@ -110,6 +165,34 @@ void BranchMeasStruct::setNonAdaptiveMeasurements(){
 
 }
 
+void BranchMeasStruct::setNumbTotalMeasOutcomesAdaptive(){
+
+    numbTotalMeasOutcomes = 0;
+
+    for(int i=0;i<chainMeasurement.at(levels-1).size();i++){
+
+        numbTotalMeasOutcomes += chainMeasurement.at(levels-1).at(i).numbBranches;
+
+    }
+
+    return;
+
+}
+
+void BranchMeasStruct::setNumbTotalMeasOutcomesNonAdaptive(){
+
+    numbTotalMeasOutcomes = 1;
+
+    for(int i=0;i<levels;i++){
+
+        numbTotalMeasOutcomes *= chainMeasurement.at(i).at(0).numbBranches;
+
+    }
+
+    return;
+
+}
+
 void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import){
 
     adaptive = Adaptive;
@@ -123,6 +206,15 @@ void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import){
     if(adaptive) setAdaptiveMeasurements();
 
     if(!adaptive) setNonAdaptiveMeasurements();
+
+    numbTotalMeasBranches = chainMeasurement.at(levels-1).size();
+
+    if(adaptive) setNumbTotalMeasOutcomesAdaptive();
+    if(!adaptive) setNumbTotalMeasOutcomesNonAdaptive();
+
+    phaseEstimators.resize(numbTotalMeasOutcomes);
+
+    m.resize(levels);
 
     return;
 
