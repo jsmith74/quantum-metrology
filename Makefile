@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -O3 -c
 LFLAGS = -O3 -o QuantumMetrology
 INCLUDE = -I /home/jake/Documents/EIGEN
-OBJS = main.o MeritFunction.o BFGS_Optimization.o LOTransform.o MZIMeas.o BranchMeasStruct.o
+OBJS = main.o MeritFunction.o BFGS_Optimization.o LOTransform.o MZIMeas.o BranchMeasStruct.o Integration.o
 
 QuantumMetrology: $(OBJS)
 	$(CC) $(LFLAGS) $(OBJS)
@@ -18,6 +18,9 @@ BranchMeasStruct.o: BranchMeasStruct.cpp
 
 MZIMeas.o: MZIMeas.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) MZIMeas.cpp
+
+Integration.o: Integration.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) Integration.cpp
 
 BFGS_Optimization.o: BFGS_Optimization.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) BFGS_Optimization.cpp

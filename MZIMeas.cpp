@@ -9,6 +9,25 @@ MZIMeas::MZIMeas(){
 
 }
 
+
+void MZIMeas::printPDist(){
+
+    std::ofstream outfile("P.dat");
+
+    //outfile << P.size() << "\t" << dP << std::endl;
+
+    for(int i=0;i<P.size();i++){
+
+        outfile << std::setprecision(16)  << -delta + (i+0.5) * dP << "\t" << P[i] << std::endl;
+
+    }
+
+    outfile.close();
+
+    return;
+
+}
+
 void MZIMeas::updateOMEGAU(){
 
     LOOP.setUnitaryMatrixDirect(UTot);

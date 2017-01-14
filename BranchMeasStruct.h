@@ -9,11 +9,12 @@ class BranchMeasStruct{
     public:
 
         BranchMeasStruct();
-        void setMeasChain(bool Adaptive,int numbMeas,bool import);
+        void setMeasChain(bool Adaptive,int numbMeas,bool import,int gridSize,double Delta);
         void printBranchStructure();
         int setFuncDimension();
         void setPsiAndGamma(Eigen::VectorXd& position);
         void setPhaseEstimators();
+        void setKernalProbDistribution();
 
     private:
 
@@ -21,7 +22,8 @@ class BranchMeasStruct{
         std::vector<double> phaseEstimators;
         std::vector<std::vector<MZIMeas> > chainMeasurement;
         bool adaptive,import;
-        int levels, numbTotalMeasBranches, numbTotalMeasOutcomes;
+        int levels, numbTotalMeasBranches, numbTotalMeasOutcomes, numbGridPoints;
+        double delta,dP;
 
         void setKernel();
         void setAdaptiveMeasurements();

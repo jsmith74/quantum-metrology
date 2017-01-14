@@ -14,9 +14,11 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 
 void MeritFunction::setMeritFunction(int intParam){
 
-    measChain.setMeasChain(true,3,false);
+    measChain.setMeasChain(true,3,false,30000,PI/2.0);
 
-    measChain.printBranchStructure();
+    measChain.setKernalProbDistribution();
+
+    //measChain.printBranchStructure();
 
     funcDimension = measChain.setFuncDimension();
 

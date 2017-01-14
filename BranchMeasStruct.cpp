@@ -8,11 +8,30 @@ BranchMeasStruct::BranchMeasStruct(){
 
 }
 
+void BranchMeasStruct::setKernalProbDistribution(){
+
+    /** ======= ENTER THE INITIAL PROBABILITY DISTRIBUTION OF THE PHASE UNCERTAINTY ======================== */
+
+        for(int i=0;i<numbGridPoints;i++){
+
+            chainMeasurement.at(0).at(0).P.at(i) = 1.0 / ( 2.0 * delta  );
+
+        }
+
+    /** ==================================================================================================== */
+
+    //chainMeasurement.at(0).at(0).printPDist();
+
+    return;
+
+}
+
 void BranchMeasStruct::setPhaseEstimators(){
 
     for(int i=0;i<levels;i++) m[i] = 0;
 
     // UP TO HERE, WRITE CODE THAT CONSTRUCTS PHASE ESTIMATORS GOING TO HAVE TO USE SIMPSONS RULE ETC
+    // WRITE CODE TO DO SIMPSON'S RULE FIRST
 
     return;
 
@@ -103,6 +122,12 @@ void BranchMeasStruct::setKernel(){
 
     chainMeasurement.at(0).at(0).level = 0;
 
+    chainMeasurement.at(0).at(0).delta = delta;
+
+    chainMeasurement.at(0).at(0).dP = dP;
+
+    chainMeasurement.at(0).at(0).P.resize(numbGridPoints);
+
     return;
 
 }
@@ -131,6 +156,12 @@ void BranchMeasStruct::setAdaptiveMeasurements(){
 
                 chainMeasurement.at(i).at(j).branches.at(l) = k;
 
+                chainMeasurement.at(i+1).at(k).delta = delta;
+
+                chainMeasurement.at(i+1).at(k).dP = dP;
+
+                chainMeasurement.at(i+1).at(k).P.resize(numbGridPoints);
+
                 l++;
 
                 k++;
@@ -156,6 +187,12 @@ void BranchMeasStruct::setNonAdaptiveMeasurements(){
         chainMeasurement.at(i+1).at(0).root = 0;
 
         chainMeasurement.at(i+1).at(0).level = i+1;
+
+        chainMeasurement.at(i+1).at(0).delta = delta;
+
+        chainMeasurement.at(i+1).at(0).dP = dP;
+
+        chainMeasurement.at(i+1).at(0).P.resize(numbGridPoints);
 
         for(int j=0;j<chainMeasurement.at(i).at(0).numbBranches;j++) chainMeasurement.at(i).at(0).branches.at(j) = 0;
 
@@ -193,11 +230,17 @@ void BranchMeasStruct::setNumbTotalMeasOutcomesNonAdaptive(){
 
 }
 
-void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import){
+void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import,int gridSize,double Delta){
 
     adaptive = Adaptive;
     levels = numbMeas;
     import = Import;
+
+    delta = Delta;
+
+    dP = (2.0 * delta) / (1.0 * gridSize);
+
+    numbGridPoints = gridSize;
 
     chainMeasurement.resize(levels);
 

@@ -4,6 +4,7 @@
 #include <Eigen/Dense>
 #include <vector>
 #include <iomanip>
+#include <fstream>
 
 #include "LOTransform.h"
 
@@ -27,6 +28,9 @@ class MZIMeas{
         int level,root,numbBranches;
         int photons,modes,stateModes,HSDimension,subHSDimension;
         std::vector<int> branches;
+        std::vector<double> P;
+        void printPDist();
+        double delta,dP;
 
     private:
 
