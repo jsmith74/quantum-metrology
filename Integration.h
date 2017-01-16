@@ -2,17 +2,19 @@
 #define INTEGRATION_H_INCLUDED
 
 #include <vector>
+#include <iostream>
 
 class Integration{
 
     public:
 
         Integration();
-        double integrate(std::vector<double>& f,int lowerBound,int higherBound);
+        void setIntegral(double Delta,double DP);
+        double integrateArray(std::vector<double>& f);
 
     private:
 
-
+        double delta,dP;
 
 };
 

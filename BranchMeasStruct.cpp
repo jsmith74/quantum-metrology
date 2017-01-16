@@ -20,7 +20,13 @@ void BranchMeasStruct::setKernalProbDistribution(){
 
     /** ==================================================================================================== */
 
-    //chainMeasurement.at(0).at(0).printPDist();
+    chainMeasurement.at(0).at(0).printPDist();
+
+    //Integration integrate;
+
+    //integrate.setIntegral(delta,dP);
+
+    //std::cout << std::setprecision(16)  <<  integrate.integrateArray(chainMeasurement.at(0).at(0).P) << std::endl;
 
     return;
 
@@ -30,8 +36,9 @@ void BranchMeasStruct::setPhaseEstimators(){
 
     for(int i=0;i<levels;i++) m[i] = 0;
 
-    // UP TO HERE, WRITE CODE THAT CONSTRUCTS PHASE ESTIMATORS GOING TO HAVE TO USE SIMPSONS RULE ETC
-    // WRITE CODE TO DO SIMPSON'S RULE FIRST
+    // UP TO HERE, WRITE A CODE THAT ITERATES THROUGH BRANCH STUCTURE OF BOTH ADAPTIVE AND NON ADAPTIVE
+    // MEASUREMENTS AND STORES THEM IN m[i] THEN WRITE FUNCTIONS FOR EVALUATING p(m1...,mM) IN SOME EFFICIENT WAY, REVIEW
+    // THE updateP_M_PHI() FUNCTION THAT ACTUALLY GENERATES A LIST OF PROBABILITIES
 
     return;
 
@@ -240,7 +247,9 @@ void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import,int g
 
     dP = (2.0 * delta) / (1.0 * gridSize);
 
-    numbGridPoints = gridSize;
+    numbGridPoints = gridSize + 1;
+
+    assert(numbGridPoints % 2 == 1 && "ERROR: Simpson's rule requires an even number of intervals (odd number of grid points).");
 
     chainMeasurement.resize(levels);
 

@@ -11,7 +11,7 @@ int main( int argc, char *argv[] ){
 
     double maxStepSize = 2.0;
 
-    int intParam = 0;
+    int intParam = 6000;
 
     clock_t t1,t2;
 

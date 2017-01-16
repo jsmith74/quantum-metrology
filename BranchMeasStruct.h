@@ -2,6 +2,8 @@
 #define BRANCHMEASUREMENTSTRUCTURE_H_INCLUDED
 
 #include "MZIMeas.h"
+#include "Integration.h"
+#include <iomanip>
 #include <fstream>
 
 class BranchMeasStruct{

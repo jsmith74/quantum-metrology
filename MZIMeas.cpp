@@ -18,7 +18,7 @@ void MZIMeas::printPDist(){
 
     for(int i=0;i<P.size();i++){
 
-        outfile << std::setprecision(16)  << -delta + (i+0.5) * dP << "\t" << P[i] << std::endl;
+        outfile << std::setprecision(16)  << -delta + i * dP << "\t" << P[i] << std::endl;
 
     }
 
