@@ -18,7 +18,7 @@ void MeritFunction::setMeritFunction(int intParam){
 
     measChain.setKernalProbDistribution();
 
-    //measChain.printBranchStructure();
+    measChain.printBranchStructure();
 
     funcDimension = measChain.setFuncDimension();
 

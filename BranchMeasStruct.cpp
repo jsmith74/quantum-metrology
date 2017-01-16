@@ -14,7 +14,7 @@ void BranchMeasStruct::setKernalProbDistribution(){
 
         for(int i=0;i<numbGridPoints;i++){
 
-            chainMeasurement.at(0).at(0).P.at(i) = 1.0 / ( 2.0 * delta  );
+            chainMeasurement.at(0).at(0).P_phi.at(i) = 1.0 / ( 2.0 * delta  );
 
         }
 
@@ -26,23 +26,110 @@ void BranchMeasStruct::setKernalProbDistribution(){
 
     //integrate.setIntegral(delta,dP);
 
-    //std::cout << std::setprecision(16)  <<  integrate.integrateArray(chainMeasurement.at(0).at(0).P) << std::endl;
+    //std::cout << std::setprecision(16)  <<  integrate.integrateArray(chainMeasurement.at(0).at(0).P_phi) << std::endl;
 
     return;
 
 }
+
 
 void BranchMeasStruct::setPhaseEstimators(){
 
-    for(int i=0;i<levels;i++) m[i] = 0;
+    for(int i=0;i<numbTotalMeasBranches;i++){
 
-    // UP TO HERE, WRITE A CODE THAT ITERATES THROUGH BRANCH STUCTURE OF BOTH ADAPTIVE AND NON ADAPTIVE
-    // MEASUREMENTS AND STORES THEM IN m[i] THEN WRITE FUNCTIONS FOR EVALUATING p(m1...,mM) IN SOME EFFICIENT WAY, REVIEW
-    // THE updateP_M_PHI() FUNCTION THAT ACTUALLY GENERATES A LIST OF PROBABILITIES
+        setBArray(i);
+        printBArray();
+
+        if(adaptive){
+
+            for(int j=0;j<chainMeasurement[levels-1][i].numbBranches;j++){
+
+                setMArrayAdaptive(j);
+                printMArray();
+
+                // UP TO HERE: CHECK THAT THE m AND b ARRAYS ARE GENERATED PROPERLY
+                // THEN put code that uses m and b here ALSO ADD NON-ADAPTIVE VERSION
+
+            }
+            std::cout << std::endl;
+
+        }
+
+        else{
+
+            for(int j=0;j<numbTotalMeasOutcomes;j++){
+
+
+
+            }
+
+            assert(1>2 && "TO DO: WRITE THIS");
+
+        }
+
+    }
 
     return;
 
 }
+
+
+inline void BranchMeasStruct::setBArray(int& i){
+
+    b[levels-1] = i;
+
+    for(int j=levels-1;j>0;j--){
+
+        b[j-1] = chainMeasurement[j][ b[j] ].root;
+
+    }
+
+    return;
+
+}
+
+
+inline void BranchMeasStruct::setMArrayAdaptive(int& j){
+
+    m[levels-1] = j;
+
+    for(int i=levels-1;i>0;i--){
+
+        m[i-1] = chainMeasurement[i][ b[i] ].rootMeas;
+
+    }
+
+    return;
+
+}
+
+void BranchMeasStruct::printMArray(){
+
+    for(int i=0;i<m.size();i++){
+
+        std::cout << m[i] << " ";
+
+    }
+
+    std::cout << std::endl;
+
+    return;
+
+}
+
+void BranchMeasStruct::printBArray(){
+
+    for(int i=0;i<b.size();i++){
+        std::cout << b[i] << " ";
+    }
+
+    std::cout << std::endl;
+
+    return;
+
+}
+
+
 
 void BranchMeasStruct::setPsiAndGamma(Eigen::VectorXd& position){
 
@@ -97,6 +184,7 @@ void BranchMeasStruct::printBranchStructure(){
             std::cout << "level: " << chainMeasurement.at(i).at(j).level << std::endl;
             std::cout << "Index: " << j << std::endl;
             if(i>0) std::cout << "root: " << chainMeasurement.at(i).at(j).root << std::endl;
+            if(i>0) std::cout << "rootMeas: " << chainMeasurement.at(i).at(j).rootMeas << std::endl;
             std::cout << "photons: " << chainMeasurement.at(i).at(j).extractPhotons() << std::endl;
             //if(i<levels-1){
 
@@ -133,7 +221,7 @@ void BranchMeasStruct::setKernel(){
 
     chainMeasurement.at(0).at(0).dP = dP;
 
-    chainMeasurement.at(0).at(0).P.resize(numbGridPoints);
+    chainMeasurement.at(0).at(0).P_phi.resize(numbGridPoints);
 
     return;
 
@@ -159,6 +247,8 @@ void BranchMeasStruct::setAdaptiveMeasurements(){
 
                 chainMeasurement.at(i+1).at(k).root = j;
 
+                chainMeasurement.at(i+1).at(k).rootMeas = l;
+
                 chainMeasurement.at(i+1).at(k).level = i+1;
 
                 chainMeasurement.at(i).at(j).branches.at(l) = k;
@@ -167,7 +257,7 @@ void BranchMeasStruct::setAdaptiveMeasurements(){
 
                 chainMeasurement.at(i+1).at(k).dP = dP;
 
-                chainMeasurement.at(i+1).at(k).P.resize(numbGridPoints);
+                //chainMeasurement.at(i+1).at(k).P_phi.resize(numbGridPoints);
 
                 l++;
 
@@ -199,7 +289,7 @@ void BranchMeasStruct::setNonAdaptiveMeasurements(){
 
         chainMeasurement.at(i+1).at(0).dP = dP;
 
-        chainMeasurement.at(i+1).at(0).P.resize(numbGridPoints);
+        //chainMeasurement.at(i+1).at(0).P_phi.resize(numbGridPoints);
 
         for(int j=0;j<chainMeasurement.at(i).at(0).numbBranches;j++) chainMeasurement.at(i).at(0).branches.at(j) = 0;
 
@@ -213,7 +303,7 @@ void BranchMeasStruct::setNumbTotalMeasOutcomesAdaptive(){
 
     numbTotalMeasOutcomes = 0;
 
-    for(int i=0;i<chainMeasurement.at(levels-1).size();i++){
+    for(int i=0;i<numbTotalMeasBranches;i++){
 
         numbTotalMeasOutcomes += chainMeasurement.at(levels-1).at(i).numbBranches;
 
@@ -267,6 +357,8 @@ void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import,int g
     phaseEstimators.resize(numbTotalMeasOutcomes);
 
     m.resize(levels);
+
+    b.resize(levels);
 
     return;
 

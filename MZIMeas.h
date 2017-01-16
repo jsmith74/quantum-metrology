@@ -23,12 +23,12 @@ class MZIMeas{
         int extractPhotons();
         void printMAddress();
 
-        Eigen::ArrayXd p_m_phi;
+        std::vector<double> P_m_phi;
+        std::vector<double> P_phi;
 
-        int level,root,numbBranches;
+        int level,root,numbBranches,rootMeas;
         int photons,modes,stateModes,HSDimension,subHSDimension;
         std::vector<int> branches;
-        std::vector<double> P;
         void printPDist();
         double delta,dP;
 

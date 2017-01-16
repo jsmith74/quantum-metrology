@@ -16,9 +16,9 @@ void MZIMeas::printPDist(){
 
     //outfile << P.size() << "\t" << dP << std::endl;
 
-    for(int i=0;i<P.size();i++){
+    for(int i=0;i<P_phi.size();i++){
 
-        outfile << std::setprecision(16)  << -delta + i * dP << "\t" << P[i] << std::endl;
+        outfile << std::setprecision(16)  << -delta + i * dP << "\t" << P_phi[i] << std::endl;
 
     }
 
@@ -136,7 +136,7 @@ void MZIMeas::initializeMZIObject(int N,int M,int SM){
 
     mAddressGen();
 
-    p_m_phi.resize(mAddress.size());
+    P_m_phi.resize(mAddress.size());
 
     branches.resize(mAddress.size());
 
@@ -168,11 +168,11 @@ void MZIMeas::updateP_M_PHI(){
 
     for(int i=0;i<mAddress.size();i++){
 
-        p_m_phi(i) = norm(psiPrime(mAddress[i](0)));
+        P_m_phi[i] = norm(psiPrime(mAddress[i](0)));
 
         for(int j=1;j<mAddress[i].size();j++){
 
-            p_m_phi(i) += norm(psiPrime(mAddress[i](j)));
+            P_m_phi[i] += norm(psiPrime(mAddress[i](j)));
 
         }
 

@@ -21,6 +21,7 @@ class BranchMeasStruct{
     private:
 
         std::vector<int> m;
+        std::vector<int> b;
         std::vector<double> phaseEstimators;
         std::vector<std::vector<MZIMeas> > chainMeasurement;
         bool adaptive,import;
@@ -32,6 +33,10 @@ class BranchMeasStruct{
         void setNonAdaptiveMeasurements();
         void setNumbTotalMeasOutcomesAdaptive();
         void setNumbTotalMeasOutcomesNonAdaptive();
+        inline void setBArray(int& i);
+        void printBArray();
+        inline void setMArrayAdaptive(int& j);
+        void printMArray();
 
 };
 
