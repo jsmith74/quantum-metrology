@@ -59,7 +59,6 @@ void MZIMeas::setPsi(Eigen::VectorXd& position,int& k){
 
     for(int i=0;i<subHSDimension;i++){
 
-        //psi(i) = a(2*i) * exp(I * a(2*i+1));
         psi(i) = position(k) * exp(I * position(k+1));
         k += 2;
 

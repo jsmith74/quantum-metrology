@@ -27,6 +27,7 @@ class BranchMeasStruct{
         bool adaptive,import;
         int levels, numbTotalMeasBranches, numbTotalMeasOutcomes, numbGridPoints;
         double delta,dP;
+        double probTestTot;
 
         void setKernel();
         void setAdaptiveMeasurements();
@@ -35,9 +36,13 @@ class BranchMeasStruct{
         void setNumbTotalMeasOutcomesNonAdaptive();
         inline void setBArray(int& i);
         void printBArray();
-        inline void setMArrayAdaptive(int& j);
+        inline void setMArrayAdaptive();
+        inline void iterateMArray();
         void printMArray();
+        void updatePhaseEstimators(int& k);
 
+        Integration integrate;
+        double probabilityTest();
 };
 
 #endif // BRANCHMEASUREMENTSTRUCTURE_H_INCLUDED
