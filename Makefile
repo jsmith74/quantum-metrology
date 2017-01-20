@@ -30,3 +30,6 @@ LOTransform.o: LOTransform.cpp
 
 clean:
 	rm *.o QuantumMetrology
+
+cleandat:
+	rm *.o QuantumMetrology *.dat

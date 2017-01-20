@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <iomanip>
 #include "MZIMeas.h"
 
 class Integration{
@@ -14,6 +15,8 @@ class Integration{
         double integrateArray(std::vector<double>& f);
         double numer(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m);
         double denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m);
+
+        double generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<double>& phaseEstimators);
 
     private:
 

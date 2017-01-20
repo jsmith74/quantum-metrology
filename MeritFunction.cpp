@@ -18,7 +18,7 @@ void MeritFunction::setMeritFunction(int intParam){
 
     measChain.setKernalProbDistribution();
 
-    measChain.printBranchStructure();
+    //measChain.printBranchStructure();
 
     funcDimension = measChain.setFuncDimension();
 
@@ -53,9 +53,7 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     measChain.setPhaseEstimators();
 
-    assert(1>2 && "End here");
-
-    return 1.0;
+    return measChain.generalVariance();
 
 }
 

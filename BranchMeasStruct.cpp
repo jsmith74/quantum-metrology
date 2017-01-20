@@ -10,6 +10,15 @@ BranchMeasStruct::BranchMeasStruct(){
 
 }
 
+double BranchMeasStruct::generalVariance(){
+
+    // UP TO HERE WRITE A FUNCTION THAT EVALUATES THE GENERAL VARIANCE. MAYBE GO THROUGH THE INTEGRAL ONCE.
+    // SEE WHICH ORDER IS FASTER - INTEGRAL THEN SUM OR VICE VERSA
+
+    return integrate.generalVariance(chainMeasurement,phaseEstimators);
+
+}
+
 void BranchMeasStruct::setKernalProbDistribution(){
 
     /** ======= ENTER THE INITIAL PROBABILITY DISTRIBUTION OF THE PHASE UNCERTAINTY ======================== */
@@ -83,7 +92,7 @@ void BranchMeasStruct::setPhaseEstimators(){
     for(int i=0;i<numbTotalMeasBranches;i++){
 
         setBArray(i);
-        printBArray();
+        //printBArray();
 
         if(adaptive){
 
@@ -95,13 +104,13 @@ void BranchMeasStruct::setPhaseEstimators(){
 
                 //probabilityTest();
 
-                printMArray();
+                //printMArray();
 
                 updatePhaseEstimators(k);
 
             }
 
-            std::cout << std::endl;
+            //std::cout << std::endl;
 
         }
 
@@ -113,7 +122,7 @@ void BranchMeasStruct::setPhaseEstimators(){
 
                 //probabilityTest();
 
-                printMArray();
+                //printMArray();
 
                 updatePhaseEstimators(k);
 
