@@ -20,9 +20,129 @@ void Integration::setIntegral(double Delta,double DP,int NUMBGRIDPOINTS,int LEVE
 
 }
 
-double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<double>& phaseEstimators){
+double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m,double& phaseEstimator){
 
-    return 2.0;
+    //std::ofstream test("funcIntTest.dat");
+    double phi = -delta;
+    double productHolder;
+
+    productHolder = (phi - phaseEstimator) * (phi - phaseEstimator)  * chainMeasurement[0][0].P_phi[0];
+
+    for(int i=0;i<levels;i++){
+
+        chainMeasurement[i][b[i]].updatePhi(phi);
+        chainMeasurement[i][b[i]].updateOMEGAU();
+        chainMeasurement[i][b[i]].updateP_M_PHI();
+
+        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
+
+    }
+
+    //test << std::setprecision(16) << 0 << "\t" << phi << "\t" << productHolder << std::endl;
+
+    double output = (dP / 3.0) * productHolder;
+
+    for(int i=1;i<numbGridPoints-2;i+=2){
+
+        phi = -delta + i*dP;
+
+        productHolder = (phi - phaseEstimator) * (phi - phaseEstimator) * chainMeasurement[0][0].P_phi[i];
+
+        for(int j=0;j<levels;j++){
+
+            chainMeasurement[j][b[j]].updatePhi(phi);
+            chainMeasurement[j][b[j]].updateOMEGAU();
+            chainMeasurement[j][b[j]].updateP_M_PHI();
+
+            productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
+
+        }
+
+        //test << i << "\t" << phi << "\t" << productHolder << std::endl;
+
+        output += (4.0 * dP / 3.0) * productHolder;
+
+        phi = -delta + (i+1) * dP;
+
+        productHolder = (phi - phaseEstimator) * (phi - phaseEstimator) * chainMeasurement[0][0].P_phi[i+1];
+
+        for(int j=0;j<levels;j++){
+
+            chainMeasurement[j][b[j]].updatePhi(phi);
+            chainMeasurement[j][b[j]].updateOMEGAU();
+            chainMeasurement[j][b[j]].updateP_M_PHI();
+
+            productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
+
+        }
+
+        //test << i+1 << "\t" << phi << "\t" << productHolder << std::endl;
+
+        output += (2.0 * dP / 3.0) * productHolder;
+
+    }
+
+    phi = delta - dP;
+
+    productHolder = (phi - phaseEstimator) * (phi - phaseEstimator) * chainMeasurement[0][0].P_phi[numbGridPoints-2];
+
+    for(int i=0;i<levels;i++){
+
+        chainMeasurement[i][b[i]].updatePhi(phi);
+        chainMeasurement[i][b[i]].updateOMEGAU();
+        chainMeasurement[i][b[i]].updateP_M_PHI();
+
+        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
+
+    }
+
+    //test << numbGridPoints-2 << "\t" << phi << "\t" << productHolder << std::endl;
+
+    output += (4.0 * dP / 3.0) * productHolder;
+
+
+    phi = delta;
+
+    productHolder = (phi - phaseEstimator) * (phi - phaseEstimator) * chainMeasurement[0][0].P_phi[numbGridPoints-1];
+
+    for(int i=0;i<levels;i++){
+
+        chainMeasurement[i][b[i]].updatePhi(phi);
+        chainMeasurement[i][b[i]].updateOMEGAU();
+        chainMeasurement[i][b[i]].updateP_M_PHI();
+
+        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
+
+    }
+
+    //test << numbGridPoints-1 << "\t" << phi << "\t" << productHolder << std::endl;
+
+    output += (dP / 3.0) * productHolder;
+
+    //test.close();
+
+    //std::cout << "integration result: " << std::setprecision(16) << output << std::endl;
+
+    return output;
+
+}
+
+
+double Integration::integrateArray(std::vector<double>& f){
+
+    double output = (dP / 3.0) * f[0];
+
+    for(int i=1;i<f.size()-2;i+=2){
+
+        output += (4.0 * dP / 3.0) * f[i];
+        output += (2.0 * dP / 3.0) * f[i+1];
+
+    }
+
+    output += (4.0 * dP / 3.0) * f[f.size() - 2];
+    output += (dP / 3.0) * f.back();
+
+    return output;
 
 }
 
@@ -251,20 +371,4 @@ double Integration::denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 }
 
 
-double Integration::integrateArray(std::vector<double>& f){
 
-    double output = (dP / 3.0) * f[0];
-
-    for(int i=1;i<f.size()-2;i+=2){
-
-        output += (4.0 * dP / 3.0) * f[i];
-        output += (2.0 * dP / 3.0) * f[i+1];
-
-    }
-
-    output += (4.0 * dP / 3.0) * f[f.size() - 2];
-    output += (dP / 3.0) * f.back();
-
-    return output;
-
-}

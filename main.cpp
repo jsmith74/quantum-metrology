@@ -7,7 +7,7 @@
 
 int main( int argc, char *argv[] ){
 
-    double gradientCheck = 1e-6;
+    double gradientCheck = 1e-8;
 
     double maxStepSize = 2.0;
 

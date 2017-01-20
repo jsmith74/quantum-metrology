@@ -8,14 +8,62 @@
 
 BranchMeasStruct::BranchMeasStruct(){
 
+
+
 }
 
 double BranchMeasStruct::generalVariance(){
 
-    // UP TO HERE WRITE A FUNCTION THAT EVALUATES THE GENERAL VARIANCE. MAYBE GO THROUGH THE INTEGRAL ONCE.
-    // SEE WHICH ORDER IS FASTER - INTEGRAL THEN SUM OR VICE VERSA
+    int k=0;
 
-    return integrate.generalVariance(chainMeasurement,phaseEstimators);
+    double output = 0.0;
+
+    for(int i=0;i<numbTotalMeasBranches;i++){
+
+        setBArray(i);
+        //printBArray();
+
+        if(adaptive){
+
+            setMArrayAdaptive();
+
+            for(int j=0;j<chainMeasurement[levels-1][i].numbBranches;j++){
+
+                m[levels-1] = j;
+
+                //printMArray();
+
+                output += integrate.generalVariance(chainMeasurement,b,m,phaseEstimators[k]);
+
+                k++;
+
+            }
+
+            //std::cout << std::endl;
+
+        }
+
+        else{
+
+            for(int j=0;j<levels;j++) m[j] = 0;
+
+            for(int j=0;j<numbTotalMeasOutcomes;j++){
+
+                //printMArray();
+
+                output += integrate.generalVariance(chainMeasurement,b,m,phaseEstimators[k]);
+
+                k++;
+
+                iterateMArray();
+
+            }
+
+        }
+
+    }
+
+    return output;
 
 }
 
@@ -31,13 +79,7 @@ void BranchMeasStruct::setKernalProbDistribution(){
 
     /** ==================================================================================================== */
 
-    chainMeasurement.at(0).at(0).printPDist();
-
-    //Integration integrate;
-
-    //integrate.setIntegral(delta,dP);
-
-    //std::cout << std::setprecision(16)  <<  integrate.integrateArray(chainMeasurement.at(0).at(0).P_phi) << std::endl;
+    //chainMeasurement.at(0).at(0).printPDist();
 
     return;
 
@@ -48,7 +90,19 @@ void BranchMeasStruct::updatePhaseEstimators(int& k){
 
     phaseEstimators[k] = integrate.numer(chainMeasurement,b,m);
 
-    phaseEstimators[k] /= integrate.denom(chainMeasurement,b,m);
+    double denom = integrate.denom(chainMeasurement,b,m);
+
+    if(denom == 0.0){
+
+        assert(phaseEstimators[k] == 0.0);
+
+        k++;
+
+        return;
+
+    }
+
+    phaseEstimators[k] /= denom;
 
     k++;
 
@@ -210,6 +264,30 @@ void BranchMeasStruct::printBArray(){
 
 }
 
+
+void BranchMeasStruct::printPsiAndGamma(Eigen::VectorXd& position){
+
+    int k=0;
+
+    for(int i=0;i<levels;i++){
+
+        for(int j=0;j<chainMeasurement[i].size();j++){
+
+            std::cout << "Level: " << i << "\t" << "Branch #: " << j << std::endl;
+
+            chainMeasurement[i][j].printPsi(position,k);
+
+            std::cout << "Gamma: " << position(k) << std::endl;
+
+            k++;
+
+        }
+
+    }
+
+    return;
+
+}
 
 
 void BranchMeasStruct::setPsiAndGamma(Eigen::VectorXd& position){

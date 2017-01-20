@@ -14,11 +14,11 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 
 void MeritFunction::setMeritFunction(int intParam){
 
-    measChain.setMeasChain(true,3,false,intParam,PI/2.0);
+    measChain.setMeasChain(true,1,false,intParam,.1);
 
     measChain.setKernalProbDistribution();
 
-    //measChain.printBranchStructure();
+    measChain.printBranchStructure();
 
     funcDimension = measChain.setFuncDimension();
 
@@ -60,9 +60,13 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
 void MeritFunction::printReport(Eigen::VectorXd& position){
 
-    std::cout << "OPTIMIZATION RESULT: " << std::endl;
-    std::cout << std::pow(position(0) * position(1) - 3,2) + 1.0 << std::endl << std::endl;
-    std::cout << position << std::endl << std::endl;
+    measChain.setPsiAndGamma(position);
+
+    measChain.setPhaseEstimators();
+
+    std::cout << "OPTIMIZATION RESULT: " << measChain.generalVariance() << std::endl << std::endl;
+
+    measChain.printPsiAndGamma(position);
 
     return;
 

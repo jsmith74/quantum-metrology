@@ -1,8 +1,8 @@
 #include "MZIMeas.h"
 #define PI 3.141592653589793
 
-#define ALPHA 0.76
-#define BETA 0.001
+#define ALPHA 0.0
+#define BETA 0.0
 
 MZIMeas::MZIMeas(){
 
@@ -54,6 +54,27 @@ void MZIMeas::updatePhi(double& phi){
     return;
 
 }
+
+
+void MZIMeas::printPsi(Eigen::VectorXd& position,int& k){
+
+    for(int i=0;i<subHSDimension;i++){
+
+        psi(i) = position(k) * exp(I * position(k+1));
+        k += 2;
+
+    }
+
+    psi.normalize();
+
+    std::cout << "Psi:\n" << psi << std::endl << std::endl;
+
+    for(int i=0;i<subHSDimension;i++) std::cout << sqrt(norm(psi(i))) << "  exp( " << arg(psi(i)) << " I ) " << std::endl;
+
+    return;
+
+}
+
 
 void MZIMeas::setPsi(Eigen::VectorXd& position,int& k){
 

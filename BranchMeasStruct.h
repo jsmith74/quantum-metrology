@@ -15,6 +15,7 @@ class BranchMeasStruct{
         void printBranchStructure();
         int setFuncDimension();
         void setPsiAndGamma(Eigen::VectorXd& position);
+        void printPsiAndGamma(Eigen::VectorXd& position);
         void setPhaseEstimators();
         void setKernalProbDistribution();
         double generalVariance();

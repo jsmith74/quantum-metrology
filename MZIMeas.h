@@ -16,6 +16,7 @@ class MZIMeas{
 
         void initializeMZIObject(int N,int M,int SM);
         void setPsi(Eigen::VectorXd& position,int& k);
+        void printPsi(Eigen::VectorXd& position,int& k);
         void updateGamma(double& gamma);
         void updatePhi(double& phi);
         void updateOMEGAU();

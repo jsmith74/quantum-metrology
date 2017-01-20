@@ -16,7 +16,7 @@ class Integration{
         double numer(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m);
         double denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m);
 
-        double generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<double>& phaseEstimators);
+        double generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m,double& phaseEstimator);
 
     private:
 
