@@ -44,7 +44,7 @@
 
 /** ===== Set the Maximum Number of Iterations ===================== */
 
-#define MAX_ITERATIONS 2//6000
+#define MAX_ITERATIONS 0//6000
 
 /** ================================================================ */
 

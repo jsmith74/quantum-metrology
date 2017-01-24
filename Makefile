@@ -29,7 +29,7 @@ LOTransform.o: LOTransform.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) LOTransform.cpp
 
 clean:
-	rm *.o QuantumMetrology
+	rm *.o QuantumMetrology *.out
 
 cleandat:
 	rm *.o QuantumMetrology *.dat

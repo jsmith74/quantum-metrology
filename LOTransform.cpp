@@ -6,9 +6,9 @@ std::complex<double> LOTransform::omegaUij(int& i,int& j){
     if(i<=j){
         int kIndex = genKIndex(i,j,LDimension(1));
         std::complex<double> output(0,0);
-        int numbKSolutions = kMatrix[kIndex](0);
+
         int p=1;
-        for(int q=0;q<numbKSolutions;q++){
+        for(int q=0;q<kMatrix[kIndex](0);q++){
             output += CijMatrix[kIndex](q) * UProduct(q,p,kIndex);
             p = p + 3*kMatrix[kIndex](p) + 1;
         }
@@ -18,15 +18,14 @@ std::complex<double> LOTransform::omegaUij(int& i,int& j){
     else{
         int kIndex = genKIndex(j,i,LDimension(1));
         std::complex<double> output(0,0);
-        int numbKSolutions = kMatrix[kIndex](0);
         int p=1;
-        for(int q=0;q<numbKSolutions;q++){
+        for(int q=0;q<kMatrix[kIndex](0);q++){
             output += CijMatrix[kIndex](q) * UProductFlipped(q,p,kIndex);
             p = p + 3*kMatrix[kIndex](p) + 1;
         }
         return output;
     }
-    return I;
+
 }
 
 void LOTransform::setUnitaryMatrixDirect(Eigen::MatrixXcd& Uin){
