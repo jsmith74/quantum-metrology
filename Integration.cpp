@@ -32,7 +32,7 @@ double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMea
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 
@@ -52,7 +52,7 @@ double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMea
 
             chainMeasurement[j][b[j]].updatePhi(phi);
             chainMeasurement[j][b[j]].updateOMEGAU();
-            chainMeasurement[j][b[j]].updateP_M_PHI();
+            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
 
             productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
 
@@ -70,7 +70,7 @@ double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMea
 
             chainMeasurement[j][b[j]].updatePhi(phi);
             chainMeasurement[j][b[j]].updateOMEGAU();
-            chainMeasurement[j][b[j]].updateP_M_PHI();
+            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
 
             productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
 
@@ -90,7 +90,7 @@ double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMea
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 
@@ -109,7 +109,7 @@ double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMea
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 
@@ -160,7 +160,7 @@ double Integration::numer(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 
@@ -180,7 +180,7 @@ double Integration::numer(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
             chainMeasurement[j][b[j]].updatePhi(phi);
             chainMeasurement[j][b[j]].updateOMEGAU();
-            chainMeasurement[j][b[j]].updateP_M_PHI();
+            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
 
             productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
 
@@ -198,7 +198,7 @@ double Integration::numer(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
             chainMeasurement[j][b[j]].updatePhi(phi);
             chainMeasurement[j][b[j]].updateOMEGAU();
-            chainMeasurement[j][b[j]].updateP_M_PHI();
+            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
 
             productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
 
@@ -218,7 +218,7 @@ double Integration::numer(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 
@@ -237,7 +237,7 @@ double Integration::numer(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 
@@ -269,7 +269,7 @@ double Integration::denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 
@@ -289,7 +289,7 @@ double Integration::denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
             chainMeasurement[j][b[j]].updatePhi(phi);
             chainMeasurement[j][b[j]].updateOMEGAU();
-            chainMeasurement[j][b[j]].updateP_M_PHI();
+            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
 
             productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
 
@@ -307,7 +307,7 @@ double Integration::denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
             chainMeasurement[j][b[j]].updatePhi(phi);
             chainMeasurement[j][b[j]].updateOMEGAU();
-            chainMeasurement[j][b[j]].updateP_M_PHI();
+            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
 
             productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
 
@@ -327,7 +327,7 @@ double Integration::denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 
@@ -346,7 +346,7 @@ double Integration::denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,s
 
         chainMeasurement[i][b[i]].updatePhi(phi);
         chainMeasurement[i][b[i]].updateOMEGAU();
-        chainMeasurement[i][b[i]].updateP_M_PHI();
+        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
 
         productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
 

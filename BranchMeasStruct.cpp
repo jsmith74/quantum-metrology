@@ -2,6 +2,8 @@
 
 #define PI 3.141592653589793
 
+#define PHOTONS 4
+
 // TO DO: THINK OF A CLEVER WAY TO I/O A BRANCH STRUCTURE - WE WILL WANT IT TO BE AUTOMATIC
 // TO DO: IF GENERATING BRANCH STRUCTURE BECOMES A BOTTLENECK, FIND A WAY TO SHARE LOOP OBJECTS
 //        BETWEEN IDENTICAL STRUCTURES
@@ -49,7 +51,7 @@ double BranchMeasStruct::generalVariance(){
 
             for(int j=0;j<numbTotalMeasOutcomes;j++){
 
-                //printMArray();
+                printMArray();
 
                 output += integrate.generalVariance(chainMeasurement,b,m,phaseEstimators[k]);
 
@@ -372,7 +374,7 @@ void BranchMeasStruct::setKernel(){
 
     chainMeasurement.at(0).resize(1);
 
-    chainMeasurement.at(0).at(0).initializeMZIObject(2,4,2);
+    chainMeasurement.at(0).at(0).initializeMZIObject(PHOTONS,2,2);
 
     chainMeasurement.at(0).at(0).level = 0;
 
@@ -402,7 +404,7 @@ void BranchMeasStruct::setAdaptiveMeasurements(){
 
             while(k<chainMeasurement.at(i+1).size()){
 
-                chainMeasurement.at(i+1).at(k).initializeMZIObject(2,4,2);    // THINK OF SOME WAY TO CHANGE THIS DYNAMICALLY
+                chainMeasurement.at(i+1).at(k).initializeMZIObject(PHOTONS,2,2);    // THINK OF SOME WAY TO CHANGE THIS DYNAMICALLY
 
                 chainMeasurement.at(i+1).at(k).root = j;
 
@@ -438,7 +440,7 @@ void BranchMeasStruct::setNonAdaptiveMeasurements(){
 
         chainMeasurement.at(i+1).resize(1);
 
-        chainMeasurement.at(i+1).at(0).initializeMZIObject(2,4,2);
+        chainMeasurement.at(i+1).at(0).initializeMZIObject(PHOTONS,2,2);
 
         chainMeasurement.at(i+1).at(0).root = 0;
 

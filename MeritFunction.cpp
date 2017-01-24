@@ -22,26 +22,6 @@ void MeritFunction::setMeritFunction(int intParam){
 
     funcDimension = measChain.setFuncDimension();
 
-//    MZIMeas MZITest;
-//
-//    MZITest.initializeMZIObject(2,4,2);
-//
-//    MZITest.setPsi(Eigen::VectorXd::Random(6));
-//
-//    double phiTest = PI / 6.0;
-//
-//    double gammaTest = 0.54;
-//
-//    MZITest.updateGamma(gammaTest);
-//
-//    MZITest.updatePhi(phiTest);
-//
-//    MZITest.updateOMEGAU();
-//
-//    MZITest.updateP_M_PHI();
-
-
-
     return;
 
 }

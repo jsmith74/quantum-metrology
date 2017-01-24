@@ -10,24 +10,6 @@ MZIMeas::MZIMeas(){
 }
 
 
-void MZIMeas::printPDist(){
-
-    std::ofstream outfile("P.dat");
-
-    //outfile << P.size() << "\t" << dP << std::endl;
-
-    for(int i=0;i<P_phi.size();i++){
-
-        outfile << std::setprecision(16)  << -delta + i * dP << "\t" << P_phi[i] << std::endl;
-
-    }
-
-    outfile.close();
-
-    return;
-
-}
-
 void MZIMeas::updateOMEGAU(){
 
     LOOP.setUnitaryMatrixDirect(UTot);
@@ -56,54 +38,16 @@ void MZIMeas::updatePhi(double& phi){
 }
 
 
-void MZIMeas::printPsi(Eigen::VectorXd& position,int& k){
-
-    for(int i=0;i<subHSDimension;i++){
-
-        psi(i) = position(k) * exp(I * position(k+1));
-        k += 2;
-
-    }
-
-    psi.normalize();
-
-    std::cout << "Psi:\n" << psi << std::endl << std::endl;
-
-    for(int i=0;i<subHSDimension;i++) std::cout << sqrt(norm(psi(i))) << "  exp( " << arg(psi(i)) << " I ) " << std::endl;
-
-    return;
-
-}
-
-
-void MZIMeas::setPsi(Eigen::VectorXd& position,int& k){
-
-    for(int i=0;i<subHSDimension;i++){
-
-        psi(i) = position(k) * exp(I * position(k+1));
-        k += 2;
-
-    }
-
-    psi.normalize();
-
-    //std::cout << "psi:\n" << psi << std::endl << std::endl;
-
-    return;
-
-}
-
-
 void MZIMeas::updateGamma(double& gamma){
 
     U23(0,0) = cos(ALPHA) * cos(gamma);
     U23(0,1) = cos(ALPHA) * sin(gamma);
     U23(1,0) = -cos(BETA) * sin(gamma);
     U23(1,1) = cos(BETA) * cos(gamma);
-    U23(2,0) = -sin(ALPHA) * cos(gamma);
-    U23(2,1) = -sin(ALPHA) * sin(gamma);
-    U23(3,0) = sin(BETA) * sin(gamma);
-    U23(3,1) = -sin(BETA) * cos(gamma);
+    //U23(2,0) = -sin(ALPHA) * cos(gamma);
+    //U23(2,1) = -sin(ALPHA) * sin(gamma);
+    //U23(3,0) = sin(BETA) * sin(gamma);
+    //U23(3,1) = -sin(BETA) * cos(gamma);
 
     //std::cout << "gamma: " << gamma << std::endl;
 
@@ -112,23 +56,12 @@ void MZIMeas::updateGamma(double& gamma){
 }
 
 
-void MZIMeas::printMAddress(){
+void MZIMeas::initializeU23(){
 
-    Eigen::MatrixXi fullAddress = generateBasisVector(photons,modes,1);
-
-    std::cout << "mAddress:\n";
-
-    for(int i=0;i<mAddress.size();i++){
-
-        for(int j=0;j<mAddress.at(i).size();j++){
-
-            std::cout << fullAddress.row(mAddress.at(i)(j)) << std::endl;
-
-        }
-
-        std::cout << std::endl;
-
-    }
+    //U23(0,2) = sin(ALPHA);
+    //U23(1,3) = sin(BETA);
+    //U23(2,2) = cos(ALPHA);
+    //U23(3,3) = cos(BETA);
 
     return;
 
@@ -176,11 +109,22 @@ void MZIMeas::initializeMZIObject(int N,int M,int SM){
 
 }
 
-int MZIMeas::extractPhotons(){
+void MZIMeas::updateP_M_PHI(int& i){
 
-    return photons;
+    psiPrime = OMEGAU * psi;
+
+    P_m_phi[i] = norm(psiPrime(mAddress[i](0)));
+
+    for(int j=1;j<mAddress[i].size();j++){
+
+        P_m_phi[i] += norm(psiPrime(mAddress[i](j)));
+
+    }
+
+    return;
 
 }
+
 
 void MZIMeas::updateP_M_PHI(){
 
@@ -203,18 +147,93 @@ void MZIMeas::updateP_M_PHI(){
 }
 
 
-void MZIMeas::initializeU23(){
+void MZIMeas::printPDist(){
 
-    U23(0,2) = sin(ALPHA);
-    U23(1,3) = sin(BETA);
-    U23(2,2) = cos(ALPHA);
-    U23(3,3) = cos(BETA);
+    std::ofstream outfile("P.dat");
+
+    //outfile << P.size() << "\t" << dP << std::endl;
+
+    for(int i=0;i<P_phi.size();i++){
+
+        outfile << std::setprecision(16)  << -delta + i * dP << "\t" << P_phi[i] << std::endl;
+
+    }
+
+    outfile.close();
 
     return;
 
 }
 
 
+void MZIMeas::printPsi(Eigen::VectorXd& position,int& k){
+
+    for(int i=0;i<subHSDimension;i++){
+
+        psi(i) = position(k) * exp(I * position(k+1));
+        k += 2;
+
+    }
+
+    psi.normalize();
+
+    std::cout << "Psi:\n" << psi << std::endl << std::endl;
+
+    for(int i=0;i<subHSDimension;i++) std::cout << sqrt(norm(psi(i))) << "  exp( " << arg(psi(i)) << " I ) " << std::endl;
+
+    return;
+
+}
+
+
+void MZIMeas::setPsi(Eigen::VectorXd& position,int& k){
+
+    for(int i=0;i<subHSDimension;i++){
+
+        psi(i) = position(k) * exp(I * position(k+1));
+        k += 2;
+
+    }
+
+    psi.normalize();
+
+    //std::cout << "psi:\n" << psi << std::endl << std::endl;
+
+    return;
+
+}
+
+
+
+
+void MZIMeas::printMAddress(){
+
+    Eigen::MatrixXi fullAddress = generateBasisVector(photons,modes,1);
+
+    std::cout << "mAddress:\n";
+
+    for(int i=0;i<mAddress.size();i++){
+
+        for(int j=0;j<mAddress.at(i).size();j++){
+
+            std::cout << fullAddress.row(mAddress.at(i)(j)) << std::endl;
+
+        }
+
+        std::cout << std::endl;
+
+    }
+
+    return;
+
+}
+
+
+int MZIMeas::extractPhotons(){
+
+    return photons;
+
+}
 
 
 int MZIMeas::findColLoc(int i,Eigen::MatrixXi& subBasisVector,Eigen::MatrixXi& fullBasisVector){

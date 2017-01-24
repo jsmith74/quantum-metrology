@@ -1,15 +1,6 @@
 #include "LOTransform.h"
 
 
-/** ====== Restrict Unitarity of Linear Operators (also change in PUA.cpp and MeritFunction.cpp  ===================== */
-
-//#define RESTRICT_TO_UNITARY
-
-//#define ALLOW_ARBITRARY_VACUUM_MODES
-
-/** ================================================================================================================== */
-
-
 std::complex<double> LOTransform::omegaUij(int& i,int& j){
 
     if(i<=j){
@@ -18,7 +9,7 @@ std::complex<double> LOTransform::omegaUij(int& i,int& j){
         int numbKSolutions = kMatrix[kIndex](0);
         int p=1;
         for(int q=0;q<numbKSolutions;q++){
-            output += CijMatrix[genKIndex(i,j,LDimension(1))](q) * UProduct(q,p,kIndex);
+            output += CijMatrix[kIndex](q) * UProduct(q,p,kIndex);
             p = p + 3*kMatrix[kIndex](p) + 1;
         }
         return output;
@@ -30,7 +21,7 @@ std::complex<double> LOTransform::omegaUij(int& i,int& j){
         int numbKSolutions = kMatrix[kIndex](0);
         int p=1;
         for(int q=0;q<numbKSolutions;q++){
-            output += CijMatrix[genKIndex(j,i,LDimension(1))](q) * UProductFlipped(q,p,kIndex);
+            output += CijMatrix[kIndex](q) * UProductFlipped(q,p,kIndex);
             p = p + 3*kMatrix[kIndex](p) + 1;
         }
         return output;

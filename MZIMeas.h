@@ -21,6 +21,7 @@ class MZIMeas{
         void updatePhi(double& phi);
         void updateOMEGAU();
         void updateP_M_PHI();
+        void updateP_M_PHI(int& i);
         int extractPhotons();
         void printMAddress();
 

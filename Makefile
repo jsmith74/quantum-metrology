@@ -1,6 +1,6 @@
 CC = g++
-CFLAGS = -O3 -c
-LFLAGS = -O3 -o QuantumMetrology
+CFLAGS = -O3 -c -pg
+LFLAGS = -O3 -pg -o QuantumMetrology
 INCLUDE = -I /home/jake/Documents/EIGEN
 OBJS = main.o MeritFunction.o BFGS_Optimization.o LOTransform.o MZIMeas.o BranchMeasStruct.o Integration.o
 
