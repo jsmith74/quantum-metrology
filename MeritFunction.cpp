@@ -31,8 +31,6 @@ double MeritFunction::f(Eigen::VectorXd& position){
 
     measChain.setPsiAndGamma(position);
 
-    measChain.setPhaseEstimators();
-
     return measChain.generalVariance();
 
 }
@@ -41,8 +39,6 @@ double MeritFunction::f(Eigen::VectorXd& position){
 void MeritFunction::printReport(Eigen::VectorXd& position){
 
     measChain.setPsiAndGamma(position);
-
-    measChain.setPhaseEstimators();
 
     std::cout << "OPTIMIZATION RESULT: " << measChain.generalVariance() << std::endl << std::endl;
 
@@ -53,13 +49,11 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 }
 
 
-
 MeritFunction::MeritFunction(){
 
 
 
 }
-
 
 
 int MeritFunction::g(int n,int m){

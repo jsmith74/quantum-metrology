@@ -16,7 +16,6 @@ class BranchMeasStruct{
         int setFuncDimension();
         void setPsiAndGamma(Eigen::VectorXd& position);
         void printPsiAndGamma(Eigen::VectorXd& position);
-        void setPhaseEstimators();
         void setKernalProbDistribution();
         double generalVariance();
 
@@ -41,7 +40,6 @@ class BranchMeasStruct{
         inline void setMArrayAdaptive();
         inline void iterateMArray();
         void printMArray();
-        void updatePhaseEstimators(int& k);
 
         Integration integrate;
         double probabilityTest();

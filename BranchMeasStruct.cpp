@@ -13,56 +13,7 @@ BranchMeasStruct::BranchMeasStruct(){
 
 double BranchMeasStruct::generalVariance(){
 
-    int k=0;
-
-    double output = 0.0;
-
-    for(int i=0;i<numbTotalMeasBranches;i++){
-
-        setBArray(i);
-        //printBArray();
-
-        if(adaptive){
-
-            setMArrayAdaptive();
-
-            for(int j=0;j<chainMeasurement[levels-1][i].numbBranches;j++){
-
-                m[levels-1] = j;
-
-                //printMArray();
-
-                output += integrate.generalVariance(chainMeasurement,b,m,phaseEstimators[k]);
-
-                k++;
-
-            }
-
-            //std::cout << std::endl;
-
-        }
-
-        else{
-
-            for(int j=0;j<levels;j++) m[j] = 0;
-
-            for(int j=0;j<numbTotalMeasOutcomes;j++){
-
-                printMArray();
-
-                output += integrate.generalVariance(chainMeasurement,b,m,phaseEstimators[k]);
-
-                k++;
-
-                iterateMArray();
-
-            }
-
-        }
-
-    }
-
-    return output;
+    return integrate.generalVariance(chainMeasurement);
 
 }
 
@@ -78,36 +29,10 @@ void BranchMeasStruct::setKernalProbDistribution(){
 
     /** ==================================================================================================== */
 
-    //chainMeasurement.at(0).at(0).printPDist();
-
     return;
 
 }
 
-
-void BranchMeasStruct::updatePhaseEstimators(int& k){
-
-    phaseEstimators[k] = integrate.numer(chainMeasurement,b,m);
-
-    double denom = integrate.denom(chainMeasurement,b,m);
-
-    if(denom == 0.0){
-
-        assert(phaseEstimators[k] == 0.0);
-
-        k++;
-
-        return;
-
-    }
-
-    phaseEstimators[k] /= denom;
-
-    k++;
-
-    return;
-
-}
 
 double BranchMeasStruct::probabilityTest(){
 
@@ -134,60 +59,6 @@ double BranchMeasStruct::probabilityTest(){
     std::cout << probTestTemp << "\t" << probTestTot << std::endl;
 
     return 2.0;
-
-}
-
-
-void BranchMeasStruct::setPhaseEstimators(){
-
-    int k=0;
-
-    for(int i=0;i<numbTotalMeasBranches;i++){
-
-        setBArray(i);
-        //printBArray();
-
-        if(adaptive){
-
-            setMArrayAdaptive();
-
-            for(int j=0;j<chainMeasurement[levels-1][i].numbBranches;j++){
-
-                m[levels-1] = j;
-
-                //probabilityTest();
-
-                //printMArray();
-
-                updatePhaseEstimators(k);
-
-            }
-
-            //std::cout << std::endl;
-
-        }
-
-        else{
-
-            for(int j=0;j<levels;j++) m[j] = 0;
-
-            for(int j=0;j<numbTotalMeasOutcomes;j++){
-
-                //probabilityTest();
-
-                //printMArray();
-
-                updatePhaseEstimators(k);
-
-                iterateMArray();
-
-            }
-
-        }
-
-    }
-
-    return;
 
 }
 
@@ -518,7 +389,7 @@ void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import,int g
 
     b.resize(levels);
 
-    integrate.setIntegral(delta,dP,numbGridPoints,levels);
+    integrate.setIntegral(delta,dP,numbGridPoints,levels,adaptive,numbTotalMeasBranches,numbTotalMeasOutcomes);
 
     probTestTot = 0.0;
 
