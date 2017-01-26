@@ -157,13 +157,7 @@ double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMea
 
     updateABC(chainMeasurement,dP / 3.0);
 
-    std::cout << (B.array() / A.array()) << std::endl << std::endl;
-
-    std::cout << "GV Result: " << C.sum() - (B.array() / A.array()).matrix().transpose() * B + ((B.array() / A.array()) * (B.array() / A.array())).matrix().transpose() * A << std::endl << std::endl;
-
-    assert(1>2);
-
-    return C.sum() - (B.array() / A.array()).matrix().transpose() * B + ((B.array() / A.array()) * (B.array() / A.array())).matrix().transpose() * A;
+    return C.sum() - 2.0 * (B.array() / A.array()).matrix().transpose() * B + ((B.array() / A.array()) * (B.array() / A.array())).matrix().transpose() * A;
 
 }
 
