@@ -14,12 +14,12 @@ class MZIMeas{
 
         MZIMeas();
 
-        void initializeMZIObject(int N,int M,int SM);
         void setPsi(Eigen::VectorXd& position,int& k);
         void updateGamma(double& gamma);
         void updatePhi(double& phi);
         void updateOMEGAU();
         void updateP_M_PHI();
+        void initializeMZIObject(int N,int M,int SM);
 
         double delta,dP;
         std::vector<double> P_m_phi;
@@ -28,13 +28,12 @@ class MZIMeas{
 
         void printPDist();
         void printMAddress();
-        void printPsi(Eigen::VectorXd& position,int& k);
+        void printPsi(Eigen::VectorXd& position,int& k,std::ofstream& outfile);
         int extractPhotons();
 
     private:
 
         std::complex<double> I;
-        double phi,gamma;
         Eigen::VectorXcd psi,psiPrime;
         Eigen::MatrixXcd OMEGAU,UTot,U1,U23;
         Eigen::ArrayXi Row,Col;

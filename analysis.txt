@@ -1,0 +1,670 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 51.14     33.33    33.33 1492700742     0.00     0.00  LOTransform::omegaUij(int&, int&)
+ 13.85     42.36     9.03 165855651     0.00     0.00  MZIMeas::initializeMZIObject(int, int, int)
+ 13.33     51.05     8.69 165855638     0.00     0.00  Eigen::internal::general_matrix_vector_product<long, std::complex<double>, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 0>, 0, false, std::complex<double>, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 1>, false, 0>::run(long, long, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 0> const&, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 1> const&, std::complex<double>*, long, std::complex<double>)
+  7.10     55.68     4.63     2126     0.00     0.03  Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&)
+  5.65     59.36     3.68 165855638     0.00     0.00  MZIMeas::updateP_M_PHI()
+  4.34     62.19     2.83 165855638     0.00     0.00  MZIMeas::updateOMEGAU()
+  1.44     63.13     0.94 165855638     0.00     0.00  MZIMeas::updatePhi(double&)
+  1.43     64.06     0.93 165855638     0.00     0.00  LOTransform::setUnitaryMatrixDirect(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>&)
+  1.09     64.77     0.71 165855638     0.00     0.00  void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>::Scalar const&)
+  0.52     65.11     0.34      182     0.00     0.00  double Eigen::DenseBase<Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<double, double>, Eigen::Transpose<Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, 1, -1, false> const> const, Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, -1, 1, true> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const
+  0.08     65.16     0.05    27638     0.00     0.00  MZIMeas::setPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&)
+  0.04     65.18     0.03                             Eigen::internal::general_matrix_matrix_product<long, std::complex<double>, 0, false, std::complex<double>, 0, false, 0>::run(long, long, long, std::complex<double> const*, long, std::complex<double> const*, long, std::complex<double>*, long, std::complex<double>, Eigen::internal::level3_blocking<std::complex<double>, std::complex<double> >&, Eigen::internal::GemmParallelInfo<long>*)
+  0.00     65.18     0.00    27638     0.00     0.00  MZIMeas::updateGamma(double&)
+  0.00     65.18     0.00     2126     0.00     0.00  BranchMeasStruct::setPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&)
+  0.00     65.18     0.00     2126     0.00     0.00  BranchMeasStruct::generalVariance()
+  0.00     65.18     0.00     2124     0.00     0.00  MeritFunction::f(Eigen::Matrix<double, -1, 1, 0, -1, 1>&)
+  0.00     65.18     0.00      208     0.00     0.00  std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<double, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<double, -1, 1, 0, -1, 1> const&)
+  0.00     65.18     0.00      195     0.00     0.00  MZIMeas::generateSubBasisVector(int, int)
+  0.00     65.18     0.00      156     0.00     0.00  LOTransform::generateSubBasisVector(int, int)
+  0.00     65.18     0.00      100     0.00     0.00  BFGS_Optimization::phi(double&)
+  0.00     65.18     0.00       91     0.00     0.00  LOTransform::blockAssign(Eigen::Matrix<int, -1, -1, 0, -1, -1>, int, Eigen::Matrix<int, -1, -1, 0, -1, -1>&)
+  0.00     65.18     0.00       91     0.00     0.00  LOTransform::genNonZeroCoordinates(int, Eigen::Matrix<int, -1, -1, 0, -1, -1>)
+  0.00     65.18     0.00       80     0.00     0.00  Eigen::internal::gebp_kernel<double, double, long, Eigen::internal::blas_data_mapper<double, long, 0, 0>, 4, 4, false, false>::operator()(Eigen::internal::blas_data_mapper<double, long, 0, 0> const&, double const*, double const*, long, long, long, double, long, long, long, long) [clone .constprop.309]
+  0.00     65.18     0.00       80     0.00     0.00  Eigen::internal::gemm_pack_lhs<double, long, Eigen::internal::const_blas_data_mapper<double, long, 0>, 4, 2, 0, false, false>::operator()(double*, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, long, long, long, long) [clone .constprop.307]
+  0.00     65.18     0.00       78     0.00     0.00  LOTransform::genContributions(Eigen::Matrix<int, -1, 1, 0, -1, 1>&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&, int&, int&)
+  0.00     65.18     0.00       78     0.00     0.00  LOTransform::validInputsAndOutputs(int&, int&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&)
+  0.00     65.18     0.00       65     0.00     0.00  MZIMeas::generateBasisVector(int, int, int) [clone .constprop.351]
+  0.00     65.18     0.00       46     0.00     0.00  double Eigen::DenseBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>, Eigen::Matrix<double, -1, 1, 0, -1, 1> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const
+  0.00     65.18     0.00       41     0.00     0.00  Eigen::PlainObjectBase<Eigen::Matrix<double, -1, 1, 0, -1, 1> >::resize(long, long) [clone .constprop.311]
+  0.00     65.18     0.00       40     0.00     0.00  Eigen::internal::gemm_pack_rhs<double, long, Eigen::internal::const_blas_data_mapper<double, long, 0>, 4, 0, false, false>::operator()(double*, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, long, long, long, long) [clone .constprop.308]
+  0.00     65.18     0.00       40     0.00     0.00  Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*)
+  0.00     65.18     0.00       40     0.00     0.00  void Eigen::internal::evaluateProductBlockingSizesHeuristic<double, double, 1, long>(long&, long&, long&, long)
+  0.00     65.18     0.00       39     0.00     0.00  std::ostream& Eigen::internal::print_matrix<Eigen::Matrix<int, 1, -1, 1, 1, -1> >(std::ostream&, Eigen::Matrix<int, 1, -1, 1, 1, -1> const&, Eigen::IOFormat const&)
+  0.00     65.18     0.00       39     0.00     0.00  MZIMeas::findColLoc(int, Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Matrix<int, -1, -1, 0, -1, -1>&)
+  0.00     65.18     0.00       39     0.00     0.00  MZIMeas::setmAddress(Eigen::Matrix<int, -1, 1, 0, -1, 1>, Eigen::Matrix<int, -1, -1, 0, -1, -1>&, int&)
+  0.00     65.18     0.00       26     0.00     0.01  LOTransform::generateBasisVector(int, int, int)
+  0.00     65.18     0.00       26     0.00     0.00  std::ostream& Eigen::internal::print_matrix<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::IOFormat const&)
+  0.00     65.18     0.00       26     0.00     0.00  std::ostream& Eigen::operator<< <Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::DenseBase<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> > const&)
+  0.00     65.18     0.00       26     0.00     0.00  MZIMeas::printPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&)
+  0.00     65.18     0.00       26     0.00     0.00  std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<int, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<int, -1, 1, 0, -1, 1> const&)
+  0.00     65.18     0.00       22     0.00     2.79  BFGS_Optimization::setGradient()
+  0.00     65.18     0.00       22     0.00     0.00  BFGS_Optimization::setInitialH()
+  0.00     65.18     0.00       22     0.00     0.00  BFGS_Optimization::printStepMonitor()
+  0.00     65.18     0.00       22     0.00     0.00  MZIMeas::MZIMeas(MZIMeas const&)
+  0.00     65.18     0.00       21     0.00     0.00  Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >::resize(long, long)
+  0.00     65.18     0.00       20     0.00     0.15  BFGS_Optimization::alpha()
+  0.00     65.18     0.00       20     0.00     0.00  void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const>, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, -1, 1, 0, -1, 1> >(Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>::Scalar const&)
+  0.00     65.18     0.00       20     0.00     0.00  Eigen::internal::general_matrix_vector_product<long, double, Eigen::internal::const_blas_data_mapper<double, long, 0>, 0, false, double, Eigen::internal::const_blas_data_mapper<double, long, 1>, false, 0>::run(long, long, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, Eigen::internal::const_blas_data_mapper<double, long, 1> const&, double*, long, double)
+  0.00     65.18     0.00       14     0.00     0.00  std::vector<double, std::allocator<double> >::_M_fill_insert(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, unsigned long, double const&)
+  0.00     65.18     0.00       13     0.00     0.01  LOTransform::genKMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&)
+  0.00     65.18     0.00       13     0.00     0.00  LOTransform::setPmatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&)
+  0.00     65.18     0.00       13     0.00     0.01  LOTransform::genCijMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&)
+  0.00     65.18     0.00       13     0.00     0.00  LOTransform::setLdimension(Eigen::Matrix<int, -1, -1, 0, -1, -1>&)
+  0.00     65.18     0.00       13     0.00     0.03  LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&)
+  0.00     65.18     0.00       13     0.00     0.01  LOTransform::genNumbKMatrices(Eigen::Matrix<int, -1, -1, 0, -1, -1>&)
+  0.00     65.18     0.00       13     0.00     0.00  MZIMeas::mAddressGen()
+  0.00     65.18     0.00       13     0.00     0.00  MZIMeas::setRowAndCol()
+  0.00     65.18     0.00       13     0.00     0.00  MZIMeas::printMAddress()
+  0.00     65.18     0.00       13     0.00     0.00  MZIMeas::extractPhotons()
+  0.00     65.18     0.00        9     0.00     0.19  BFGS_Optimization::zoom(double, double, double, double, double)
+  0.00     65.18     0.00        7     0.00     0.00  LOTransform::LOTransform()
+  0.00     65.18     0.00        7     0.00     0.00  MZIMeas::MZIMeas()
+  0.00     65.18     0.00        5     0.00     0.00  std::vector<MZIMeas, std::allocator<MZIMeas> >::_M_fill_insert(__gnu_cxx::__normal_iterator<MZIMeas*, std::vector<MZIMeas, std::allocator<MZIMeas> > >, unsigned long, MZIMeas const&)
+  0.00     65.18     0.00        2     0.00     0.03  MeritFunction::printReport(Eigen::Matrix<double, -1, 1, 0, -1, 1>&)
+  0.00     65.18     0.00        2     0.00     0.00  MeritFunction::setInitialPosition()
+  0.00     65.18     0.00        2     0.00     0.00  BranchMeasStruct::printPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&)
+  0.00     65.18     0.00        2     0.00     0.03  BFGS_Optimization::printResultReport()
+  0.00     65.18     0.00        2     0.00     0.00  std::vector<int, std::allocator<int> >::_M_fill_insert(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, unsigned long, int const&)
+  0.00     65.18     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN11IntegrationC2Ev
+  0.00     65.18     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN11LOTransform8omegaUijERiS0_
+  0.00     65.18     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN13MeritFunctionC2Ev
+  0.00     65.18     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN16BranchMeasStructC2Ev
+  0.00     65.18     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN17BFGS_Optimization5alphaEv
+  0.00     65.18     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN7MZIMeasC2Ev
+  0.00     65.18     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00     65.18     0.00        1     0.00     0.00  Integration::setIntegral(double, double, int, int, bool, int, int)
+  0.00     65.18     0.00        1     0.00     0.00  Integration::Integration()
+  0.00     65.18     0.00        1     0.00     0.00  MeritFunction::setMeritFunction(int)
+  0.00     65.18     0.00        1     0.00     0.00  MeritFunction::MeritFunction()
+  0.00     65.18     0.00        1     0.00     0.00  BranchMeasStruct::setMeasChain(bool, int, bool, int, double)
+  0.00     65.18     0.00        1     0.00     0.00  BranchMeasStruct::setFuncDimension()
+  0.00     65.18     0.00        1     0.00     0.00  BranchMeasStruct::printBranchStructure()
+  0.00     65.18     0.00        1     0.00     0.00  BranchMeasStruct::setAdaptiveMeasurements()
+  0.00     65.18     0.00        1     0.00     0.00  BranchMeasStruct::setKernalProbDistribution()
+  0.00     65.18     0.00        1     0.00     0.00  BranchMeasStruct::setKernel()
+  0.00     65.18     0.00        1     0.00     0.00  BranchMeasStruct::BranchMeasStruct()
+  0.00     65.18     0.00        1     0.00     0.00  Eigen::internal::queryCacheSizes(int&, int&, int&)
+  0.00     65.18     0.00        1     0.00     0.00  std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >::_M_fill_insert(__gnu_cxx::__normal_iterator<std::vector<MZIMeas, std::allocator<MZIMeas> >*, std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > > >, unsigned long, std::vector<MZIMeas, std::allocator<MZIMeas> > const&)
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2015 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.02% of 65.18 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]    100.0    0.00   65.16                 BFGS_Optimization::minimize() [1]
+                0.00   61.36      22/22          BFGS_Optimization::setGradient() [3]
+                0.00    3.06      20/20          BFGS_Optimization::alpha() [11]
+                0.05    0.63      22/2126        Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+                0.00    0.06       2/2           BFGS_Optimization::printResultReport() [22]
+                0.00    0.00      22/2124        MeritFunction::f(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [25]
+                0.00    0.00      22/2126        BranchMeasStruct::generalVariance() [41]
+                0.00    0.00      22/22          BFGS_Optimization::setInitialH() [64]
+                0.00    0.00      22/22          BFGS_Optimization::printStepMonitor() [65]
+                0.00    0.00      22/46          double Eigen::DenseBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>, Eigen::Matrix<double, -1, 1, 0, -1, 1> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [52]
+                0.00    0.00      21/41          Eigen::PlainObjectBase<Eigen::Matrix<double, -1, 1, 0, -1, 1> >::resize(long, long) [clone .constprop.311] [53]
+                0.00    0.00      21/21          Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >::resize(long, long) [67]
+                0.00    0.00      20/20          void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const>, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, -1, 1, 0, -1, 1> >(Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>::Scalar const&) [68]
+                0.00    0.00      20/40          void Eigen::internal::evaluateProductBlockingSizesHeuristic<double, double, 1, long>(long&, long&, long&, long) [56]
+                0.00    0.00      20/40          Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [55]
+                0.00    0.00       2/2           MeritFunction::setInitialPosition() [79]
+-----------------------------------------------
+                0.00    0.06       2/2126        MeritFunction::printReport(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [21]
+                0.05    0.63      22/2126        BFGS_Optimization::minimize() [1]
+                0.10    1.25      44/2126        BFGS_Optimization::alpha() [11]
+                0.12    1.59      56/2126        BFGS_Optimization::zoom(double, double, double, double, double) [12]
+                4.36   56.95    2002/2126        BFGS_Optimization::setGradient() [3]
+[2]     99.9    4.63   60.48    2126         Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+                2.83   34.26 165855638/165855638     MZIMeas::updateOMEGAU() [4]
+                3.68    9.40 165855638/165855638     MZIMeas::updateP_M_PHI() [6]
+                0.94    9.37 165855638/165855638     MZIMeas::updatePhi(double&) [7]
+-----------------------------------------------
+                0.00   61.36      22/22          BFGS_Optimization::minimize() [1]
+[3]     94.1    0.00   61.36      22         BFGS_Optimization::setGradient() [3]
+                4.36   56.95    2002/2126        Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+                0.00    0.05    2002/2124        MeritFunction::f(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [25]
+                0.00    0.00    2002/2126        BranchMeasStruct::generalVariance() [41]
+-----------------------------------------------
+                2.83   34.26 165855638/165855638     Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+[4]     56.9    2.83   34.26 165855638         MZIMeas::updateOMEGAU() [4]
+               33.33    0.00 1492700742/1492700742     LOTransform::omegaUij(int&, int&) [5]
+                0.93    0.00 165855638/165855638     LOTransform::setUnitaryMatrixDirect(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>&) [13]
+-----------------------------------------------
+               33.33    0.00 1492700742/1492700742     MZIMeas::updateOMEGAU() [4]
+[5]     51.1   33.33    0.00 1492700742         LOTransform::omegaUij(int&, int&) [5]
+-----------------------------------------------
+                3.68    9.40 165855638/165855638     Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+[6]     20.1    3.68    9.40 165855638         MZIMeas::updateP_M_PHI() [6]
+                0.71    8.69 165855638/165855638     void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>::Scalar const&) [8]
+-----------------------------------------------
+                0.94    9.37 165855638/165855638     Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+[7]     15.8    0.94    9.37 165855638         MZIMeas::updatePhi(double&) [7]
+                9.03    0.34 165855638/165855651     MZIMeas::initializeMZIObject(int, int, int) [9]
+-----------------------------------------------
+                0.71    8.69 165855638/165855638     MZIMeas::updateP_M_PHI() [6]
+[8]     14.4    0.71    8.69 165855638         void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>::Scalar const&) [8]
+                8.69    0.00 165855638/165855638     Eigen::internal::general_matrix_vector_product<long, std::complex<double>, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 0>, 0, false, std::complex<double>, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 1>, false, 0>::run(long, long, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 0> const&, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 1> const&, std::complex<double>*, long, std::complex<double>) [10]
+-----------------------------------------------
+                0.00    0.00       1/165855651     BranchMeasStruct::setKernel() [32]
+                0.00    0.00      12/165855651     BranchMeasStruct::setAdaptiveMeasurements() [31]
+                9.03    0.34 165855638/165855651     MZIMeas::updatePhi(double&) [7]
+[9]     14.4    9.03    0.34 165855651         MZIMeas::initializeMZIObject(int, int, int) [9]
+                0.00    0.34      13/13          LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+                0.00    0.00      26/208         std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<double, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<double, -1, 1, 0, -1, 1> const&) [42]
+                0.00    0.00      13/13          MZIMeas::setRowAndCol() [73]
+                0.00    0.00      13/13          MZIMeas::mAddressGen() [72]
+                0.00    0.00      13/14          std::vector<double, std::allocator<double> >::_M_fill_insert(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, unsigned long, double const&) [70]
+-----------------------------------------------
+                8.69    0.00 165855638/165855638     void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>::Scalar const&) [8]
+[10]    13.3    8.69    0.00 165855638         Eigen::internal::general_matrix_vector_product<long, std::complex<double>, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 0>, 0, false, std::complex<double>, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 1>, false, 0>::run(long, long, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 0> const&, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 1> const&, std::complex<double>*, long, std::complex<double>) [10]
+-----------------------------------------------
+                0.00    3.06      20/20          BFGS_Optimization::minimize() [1]
+[11]     4.7    0.00    3.06      20         BFGS_Optimization::alpha() [11]
+                0.00    1.72       9/9           BFGS_Optimization::zoom(double, double, double, double, double) [12]
+                0.10    1.25      44/2126        Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+                0.00    0.00      44/2124        MeritFunction::f(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [25]
+                0.00    0.00      44/2126        BranchMeasStruct::generalVariance() [41]
+                0.00    0.00      44/100         BFGS_Optimization::phi(double&) [44]
+-----------------------------------------------
+                0.00    1.72       9/9           BFGS_Optimization::alpha() [11]
+[12]     2.6    0.00    1.72       9         BFGS_Optimization::zoom(double, double, double, double, double) [12]
+                0.12    1.59      56/2126        Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+                0.00    0.00      56/2124        MeritFunction::f(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [25]
+                0.00    0.00      56/2126        BranchMeasStruct::generalVariance() [41]
+                0.00    0.00      56/100         BFGS_Optimization::phi(double&) [44]
+-----------------------------------------------
+                0.93    0.00 165855638/165855638     MZIMeas::updateOMEGAU() [4]
+[13]     1.4    0.93    0.00 165855638         LOTransform::setUnitaryMatrixDirect(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>&) [13]
+-----------------------------------------------
+                0.02    0.00      13/182         LOTransform::genCijMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [18]
+                0.05    0.00      26/182         LOTransform::setLdimension(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [26]
+                0.07    0.00      39/182         LOTransform::genNumbKMatrices(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [20]
+                0.19    0.00     104/182         LOTransform::generateSubBasisVector(int, int) [16]
+[14]     0.5    0.34    0.00     182         double Eigen::DenseBase<Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<double, double>, Eigen::Transpose<Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, 1, -1, false> const> const, Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, -1, 1, true> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [14]
+-----------------------------------------------
+                0.00    0.34      13/13          MZIMeas::initializeMZIObject(int, int, int) [9]
+[15]     0.5    0.00    0.34      13         LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+                0.00    0.12      13/13          LOTransform::genCijMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [18]
+                0.00    0.10      13/13          LOTransform::genKMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [19]
+                0.00    0.07      13/13          LOTransform::genNumbKMatrices(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [20]
+                0.00    0.05      13/13          LOTransform::setLdimension(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [26]
+                0.00    0.00      13/13          LOTransform::setPmatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [71]
+                0.00    0.00      13/208         std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<double, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<double, -1, 1, 0, -1, 1> const&) [42]
+                0.00    0.00      13/26          std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<int, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<int, -1, 1, 0, -1, 1> const&) [63]
+-----------------------------------------------
+                0.00    0.19     156/156         LOTransform::generateBasisVector(int, int, int) [17]
+[16]     0.3    0.00    0.19     156         LOTransform::generateSubBasisVector(int, int) [16]
+                0.19    0.00     104/182         double Eigen::DenseBase<Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<double, double>, Eigen::Transpose<Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, 1, -1, false> const> const, Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, -1, 1, true> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [14]
+-----------------------------------------------
+                0.00    0.10      13/26          LOTransform::genCijMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [18]
+                0.00    0.10      13/26          LOTransform::genKMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [19]
+[17]     0.3    0.00    0.19      26         LOTransform::generateBasisVector(int, int, int) [17]
+                0.00    0.19     156/156         LOTransform::generateSubBasisVector(int, int) [16]
+-----------------------------------------------
+                0.00    0.12      13/13          LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+[18]     0.2    0.00    0.12      13         LOTransform::genCijMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [18]
+                0.00    0.10      13/26          LOTransform::generateBasisVector(int, int, int) [17]
+                0.02    0.00      13/182         double Eigen::DenseBase<Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<double, double>, Eigen::Transpose<Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, 1, -1, false> const> const, Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, -1, 1, true> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [14]
+-----------------------------------------------
+                0.00    0.10      13/13          LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+[19]     0.1    0.00    0.10      13         LOTransform::genKMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [19]
+                0.00    0.10      13/26          LOTransform::generateBasisVector(int, int, int) [17]
+                0.00    0.00      91/91          LOTransform::blockAssign(Eigen::Matrix<int, -1, -1, 0, -1, -1>, int, Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [45]
+                0.00    0.00      91/91          LOTransform::genNonZeroCoordinates(int, Eigen::Matrix<int, -1, -1, 0, -1, -1>) [46]
+                0.00    0.00      78/78          LOTransform::genContributions(Eigen::Matrix<int, -1, 1, 0, -1, 1>&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&, int&, int&) [49]
+-----------------------------------------------
+                0.00    0.07      13/13          LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+[20]     0.1    0.00    0.07      13         LOTransform::genNumbKMatrices(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [20]
+                0.07    0.00      39/182         double Eigen::DenseBase<Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<double, double>, Eigen::Transpose<Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, 1, -1, false> const> const, Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, -1, 1, true> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [14]
+-----------------------------------------------
+                0.00    0.06       2/2           BFGS_Optimization::printResultReport() [22]
+[21]     0.1    0.00    0.06       2         MeritFunction::printReport(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [21]
+                0.00    0.06       2/2126        Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [2]
+                0.00    0.00       2/2126        BranchMeasStruct::setPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [24]
+                0.00    0.00       2/2126        BranchMeasStruct::generalVariance() [41]
+-----------------------------------------------
+                0.00    0.06       2/2           BFGS_Optimization::minimize() [1]
+[22]     0.1    0.00    0.06       2         BFGS_Optimization::printResultReport() [22]
+                0.00    0.06       2/2           MeritFunction::printReport(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [21]
+                0.00    0.00       2/2           BranchMeasStruct::printPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [80]
+-----------------------------------------------
+                0.05    0.00   27638/27638       BranchMeasStruct::setPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [24]
+[23]     0.1    0.05    0.00   27638         MZIMeas::setPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&) [23]
+-----------------------------------------------
+                0.00    0.00       2/2126        MeritFunction::printReport(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [21]
+                0.00    0.05    2124/2126        MeritFunction::f(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [25]
+[24]     0.1    0.00    0.05    2126         BranchMeasStruct::setPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [24]
+                0.05    0.00   27638/27638       MZIMeas::setPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&) [23]
+                0.00    0.00   27638/27638       MZIMeas::updateGamma(double&) [40]
+-----------------------------------------------
+                0.00    0.00      22/2124        BFGS_Optimization::minimize() [1]
+                0.00    0.00      44/2124        BFGS_Optimization::alpha() [11]
+                0.00    0.00      56/2124        BFGS_Optimization::zoom(double, double, double, double, double) [12]
+                0.00    0.05    2002/2124        BFGS_Optimization::setGradient() [3]
+[25]     0.1    0.00    0.05    2124         MeritFunction::f(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [25]
+                0.00    0.05    2124/2126        BranchMeasStruct::setPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [24]
+-----------------------------------------------
+                0.00    0.05      13/13          LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+[26]     0.1    0.00    0.05      13         LOTransform::setLdimension(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [26]
+                0.05    0.00      26/182         double Eigen::DenseBase<Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<double, double>, Eigen::Transpose<Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, 1, -1, false> const> const, Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, -1, 1, true> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [14]
+-----------------------------------------------
+                                                 <spontaneous>
+[27]     0.0    0.03    0.00                 Eigen::internal::general_matrix_matrix_product<long, std::complex<double>, 0, false, std::complex<double>, 0, false, 0>::run(long, long, long, std::complex<double> const*, long, std::complex<double> const*, long, std::complex<double>*, long, std::complex<double>, Eigen::internal::level3_blocking<std::complex<double>, std::complex<double> >&, Eigen::internal::GemmParallelInfo<long>*) [27]
+-----------------------------------------------
+                0.00    0.00       1/1           BFGS_Optimization::BFGS_Optimization(double, double, int) [30]
+[28]     0.0    0.00    0.00       1         MeritFunction::setMeritFunction(int) [28]
+                0.00    0.00       1/1           BranchMeasStruct::setMeasChain(bool, int, bool, int, double) [29]
+                0.00    0.00       1/1           BranchMeasStruct::setKernalProbDistribution() [94]
+                0.00    0.00       1/1           BranchMeasStruct::setFuncDimension() [92]
+                0.00    0.00       1/1           BranchMeasStruct::printBranchStructure() [93]
+-----------------------------------------------
+                0.00    0.00       1/1           MeritFunction::setMeritFunction(int) [28]
+[29]     0.0    0.00    0.00       1         BranchMeasStruct::setMeasChain(bool, int, bool, int, double) [29]
+                0.00    0.00       1/1           BranchMeasStruct::setAdaptiveMeasurements() [31]
+                0.00    0.00       1/1           BranchMeasStruct::setKernel() [32]
+                0.00    0.00       1/1           Integration::setIntegral(double, double, int, int, bool, int, int) [89]
+                0.00    0.00       1/1           std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >::_M_fill_insert(__gnu_cxx::__normal_iterator<std::vector<MZIMeas, std::allocator<MZIMeas> >*, std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > > >, unsigned long, std::vector<MZIMeas, std::allocator<MZIMeas> > const&) [97]
+-----------------------------------------------
+                                                 <spontaneous>
+[30]     0.0    0.00    0.00                 BFGS_Optimization::BFGS_Optimization(double, double, int) [30]
+                0.00    0.00       1/1           MeritFunction::setMeritFunction(int) [28]
+                0.00    0.00       1/1           MeritFunction::MeritFunction() [91]
+-----------------------------------------------
+                0.00    0.00       1/1           BranchMeasStruct::setMeasChain(bool, int, bool, int, double) [29]
+[31]     0.0    0.00    0.00       1         BranchMeasStruct::setAdaptiveMeasurements() [31]
+                0.00    0.00      12/165855651     MZIMeas::initializeMZIObject(int, int, int) [9]
+                0.00    0.00       6/7           MZIMeas::MZIMeas() [77]
+                0.00    0.00       4/5           std::vector<MZIMeas, std::allocator<MZIMeas> >::_M_fill_insert(__gnu_cxx::__normal_iterator<MZIMeas*, std::vector<MZIMeas, std::allocator<MZIMeas> > >, unsigned long, MZIMeas const&) [78]
+-----------------------------------------------
+                0.00    0.00       1/1           BranchMeasStruct::setMeasChain(bool, int, bool, int, double) [29]
+[32]     0.0    0.00    0.00       1         BranchMeasStruct::setKernel() [32]
+                0.00    0.00       1/165855651     MZIMeas::initializeMZIObject(int, int, int) [9]
+                0.00    0.00       1/7           MZIMeas::MZIMeas() [77]
+                0.00    0.00       1/5           std::vector<MZIMeas, std::allocator<MZIMeas> >::_M_fill_insert(__gnu_cxx::__normal_iterator<MZIMeas*, std::vector<MZIMeas, std::allocator<MZIMeas> > >, unsigned long, MZIMeas const&) [78]
+                0.00    0.00       1/14          std::vector<double, std::allocator<double> >::_M_fill_insert(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, unsigned long, double const&) [70]
+-----------------------------------------------
+                0.00    0.00   27638/27638       BranchMeasStruct::setPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [24]
+[40]     0.0    0.00    0.00   27638         MZIMeas::updateGamma(double&) [40]
+-----------------------------------------------
+                0.00    0.00       2/2126        MeritFunction::printReport(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [21]
+                0.00    0.00      22/2126        BFGS_Optimization::minimize() [1]
+                0.00    0.00      44/2126        BFGS_Optimization::alpha() [11]
+                0.00    0.00      56/2126        BFGS_Optimization::zoom(double, double, double, double, double) [12]
+                0.00    0.00    2002/2126        BFGS_Optimization::setGradient() [3]
+[41]     0.0    0.00    0.00    2126         BranchMeasStruct::generalVariance() [41]
+-----------------------------------------------
+                0.00    0.00      13/208         LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+                0.00    0.00      26/208         MZIMeas::initializeMZIObject(int, int, int) [9]
+                0.00    0.00      39/208         MZIMeas::mAddressGen() [72]
+                0.00    0.00     130/208         MZIMeas::generateSubBasisVector(int, int) [43]
+[42]     0.0    0.00    0.00     208         std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<double, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<double, -1, 1, 0, -1, 1> const&) [42]
+-----------------------------------------------
+                0.00    0.00     195/195         MZIMeas::generateBasisVector(int, int, int) [clone .constprop.351] [51]
+[43]     0.0    0.00    0.00     195         MZIMeas::generateSubBasisVector(int, int) [43]
+                0.00    0.00     130/208         std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<double, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<double, -1, 1, 0, -1, 1> const&) [42]
+-----------------------------------------------
+                0.00    0.00      44/100         BFGS_Optimization::alpha() [11]
+                0.00    0.00      56/100         BFGS_Optimization::zoom(double, double, double, double, double) [12]
+[44]     0.0    0.00    0.00     100         BFGS_Optimization::phi(double&) [44]
+-----------------------------------------------
+                0.00    0.00      91/91          LOTransform::genKMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [19]
+[45]     0.0    0.00    0.00      91         LOTransform::blockAssign(Eigen::Matrix<int, -1, -1, 0, -1, -1>, int, Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [45]
+-----------------------------------------------
+                0.00    0.00      91/91          LOTransform::genKMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [19]
+[46]     0.0    0.00    0.00      91         LOTransform::genNonZeroCoordinates(int, Eigen::Matrix<int, -1, -1, 0, -1, -1>) [46]
+-----------------------------------------------
+                0.00    0.00      80/80          Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [55]
+[47]     0.0    0.00    0.00      80         Eigen::internal::gebp_kernel<double, double, long, Eigen::internal::blas_data_mapper<double, long, 0, 0>, 4, 4, false, false>::operator()(Eigen::internal::blas_data_mapper<double, long, 0, 0> const&, double const*, double const*, long, long, long, double, long, long, long, long) [clone .constprop.309] [47]
+-----------------------------------------------
+                0.00    0.00      80/80          Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [55]
+[48]     0.0    0.00    0.00      80         Eigen::internal::gemm_pack_lhs<double, long, Eigen::internal::const_blas_data_mapper<double, long, 0>, 4, 2, 0, false, false>::operator()(double*, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, long, long, long, long) [clone .constprop.307] [48]
+-----------------------------------------------
+                0.00    0.00      78/78          LOTransform::genKMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [19]
+[49]     0.0    0.00    0.00      78         LOTransform::genContributions(Eigen::Matrix<int, -1, 1, 0, -1, 1>&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&, int&, int&) [49]
+                0.00    0.00      78/78          LOTransform::validInputsAndOutputs(int&, int&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&) [50]
+-----------------------------------------------
+                0.00    0.00      78/78          LOTransform::genContributions(Eigen::Matrix<int, -1, 1, 0, -1, 1>&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&, int&, int&) [49]
+[50]     0.0    0.00    0.00      78         LOTransform::validInputsAndOutputs(int&, int&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&) [50]
+-----------------------------------------------
+                0.00    0.00      13/65          MZIMeas::printMAddress() [74]
+                0.00    0.00      26/65          MZIMeas::setRowAndCol() [73]
+                0.00    0.00      26/65          MZIMeas::mAddressGen() [72]
+[51]     0.0    0.00    0.00      65         MZIMeas::generateBasisVector(int, int, int) [clone .constprop.351] [51]
+                0.00    0.00     195/195         MZIMeas::generateSubBasisVector(int, int) [43]
+-----------------------------------------------
+                0.00    0.00       2/46          BFGS_Optimization::setInitialH() [64]
+                0.00    0.00      22/46          BFGS_Optimization::printStepMonitor() [65]
+                0.00    0.00      22/46          BFGS_Optimization::minimize() [1]
+[52]     0.0    0.00    0.00      46         double Eigen::DenseBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>, Eigen::Matrix<double, -1, 1, 0, -1, 1> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [52]
+-----------------------------------------------
+                0.00    0.00      20/41          BFGS_Optimization::setInitialH() [64]
+                0.00    0.00      21/41          BFGS_Optimization::minimize() [1]
+[53]     0.0    0.00    0.00      41         Eigen::PlainObjectBase<Eigen::Matrix<double, -1, 1, 0, -1, 1> >::resize(long, long) [clone .constprop.311] [53]
+-----------------------------------------------
+                0.00    0.00      40/40          Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [55]
+[54]     0.0    0.00    0.00      40         Eigen::internal::gemm_pack_rhs<double, long, Eigen::internal::const_blas_data_mapper<double, long, 0>, 4, 0, false, false>::operator()(double*, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, long, long, long, long) [clone .constprop.308] [54]
+-----------------------------------------------
+                0.00    0.00      20/40          BFGS_Optimization::setInitialH() [64]
+                0.00    0.00      20/40          BFGS_Optimization::minimize() [1]
+[55]     0.0    0.00    0.00      40         Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [55]
+                0.00    0.00      80/80          Eigen::internal::gemm_pack_lhs<double, long, Eigen::internal::const_blas_data_mapper<double, long, 0>, 4, 2, 0, false, false>::operator()(double*, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, long, long, long, long) [clone .constprop.307] [48]
+                0.00    0.00      80/80          Eigen::internal::gebp_kernel<double, double, long, Eigen::internal::blas_data_mapper<double, long, 0, 0>, 4, 4, false, false>::operator()(Eigen::internal::blas_data_mapper<double, long, 0, 0> const&, double const*, double const*, long, long, long, double, long, long, long, long) [clone .constprop.309] [47]
+                0.00    0.00      40/40          Eigen::internal::gemm_pack_rhs<double, long, Eigen::internal::const_blas_data_mapper<double, long, 0>, 4, 0, false, false>::operator()(double*, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, long, long, long, long) [clone .constprop.308] [54]
+-----------------------------------------------
+                0.00    0.00      20/40          BFGS_Optimization::setInitialH() [64]
+                0.00    0.00      20/40          BFGS_Optimization::minimize() [1]
+[56]     0.0    0.00    0.00      40         void Eigen::internal::evaluateProductBlockingSizesHeuristic<double, double, 1, long>(long&, long&, long&, long) [56]
+                0.00    0.00       1/1           Eigen::internal::queryCacheSizes(int&, int&, int&) [96]
+-----------------------------------------------
+                0.00    0.00      39/39          MZIMeas::printMAddress() [74]
+[57]     0.0    0.00    0.00      39         std::ostream& Eigen::internal::print_matrix<Eigen::Matrix<int, 1, -1, 1, 1, -1> >(std::ostream&, Eigen::Matrix<int, 1, -1, 1, 1, -1> const&, Eigen::IOFormat const&) [57]
+-----------------------------------------------
+                0.00    0.00      39/39          MZIMeas::setRowAndCol() [73]
+[58]     0.0    0.00    0.00      39         MZIMeas::findColLoc(int, Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [58]
+-----------------------------------------------
+                0.00    0.00      39/39          MZIMeas::mAddressGen() [72]
+[59]     0.0    0.00    0.00      39         MZIMeas::setmAddress(Eigen::Matrix<int, -1, 1, 0, -1, 1>, Eigen::Matrix<int, -1, -1, 0, -1, -1>&, int&) [59]
+-----------------------------------------------
+                0.00    0.00      26/26          std::ostream& Eigen::operator<< <Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::DenseBase<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> > const&) [61]
+[60]     0.0    0.00    0.00      26         std::ostream& Eigen::internal::print_matrix<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::IOFormat const&) [60]
+-----------------------------------------------
+                0.00    0.00      26/26          MZIMeas::printPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&) [62]
+[61]     0.0    0.00    0.00      26         std::ostream& Eigen::operator<< <Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::DenseBase<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> > const&) [61]
+                0.00    0.00      26/26          std::ostream& Eigen::internal::print_matrix<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::IOFormat const&) [60]
+-----------------------------------------------
+                0.00    0.00      26/26          BranchMeasStruct::printPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [80]
+[62]     0.0    0.00    0.00      26         MZIMeas::printPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&) [62]
+                0.00    0.00      26/26          std::ostream& Eigen::operator<< <Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::DenseBase<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> > const&) [61]
+-----------------------------------------------
+                0.00    0.00      13/26          LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+                0.00    0.00      13/26          MZIMeas::mAddressGen() [72]
+[63]     0.0    0.00    0.00      26         std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<int, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<int, -1, 1, 0, -1, 1> const&) [63]
+-----------------------------------------------
+                0.00    0.00      22/22          BFGS_Optimization::minimize() [1]
+[64]     0.0    0.00    0.00      22         BFGS_Optimization::setInitialH() [64]
+                0.00    0.00      20/41          Eigen::PlainObjectBase<Eigen::Matrix<double, -1, 1, 0, -1, 1> >::resize(long, long) [clone .constprop.311] [53]
+                0.00    0.00      20/40          void Eigen::internal::evaluateProductBlockingSizesHeuristic<double, double, 1, long>(long&, long&, long&, long) [56]
+                0.00    0.00      20/40          Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*) [55]
+                0.00    0.00       2/46          double Eigen::DenseBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>, Eigen::Matrix<double, -1, 1, 0, -1, 1> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [52]
+-----------------------------------------------
+                0.00    0.00      22/22          BFGS_Optimization::minimize() [1]
+[65]     0.0    0.00    0.00      22         BFGS_Optimization::printStepMonitor() [65]
+                0.00    0.00      22/46          double Eigen::DenseBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>, Eigen::Matrix<double, -1, 1, 0, -1, 1> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const [52]
+-----------------------------------------------
+                0.00    0.00      22/22          std::vector<MZIMeas, std::allocator<MZIMeas> >::_M_fill_insert(__gnu_cxx::__normal_iterator<MZIMeas*, std::vector<MZIMeas, std::allocator<MZIMeas> > >, unsigned long, MZIMeas const&) [78]
+[66]     0.0    0.00    0.00      22         MZIMeas::MZIMeas(MZIMeas const&) [66]
+-----------------------------------------------
+                0.00    0.00      21/21          BFGS_Optimization::minimize() [1]
+[67]     0.0    0.00    0.00      21         Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >::resize(long, long) [67]
+-----------------------------------------------
+                0.00    0.00      20/20          BFGS_Optimization::minimize() [1]
+[68]     0.0    0.00    0.00      20         void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const>, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, -1, 1, 0, -1, 1> >(Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>::Scalar const&) [68]
+                0.00    0.00      20/20          Eigen::internal::general_matrix_vector_product<long, double, Eigen::internal::const_blas_data_mapper<double, long, 0>, 0, false, double, Eigen::internal::const_blas_data_mapper<double, long, 1>, false, 0>::run(long, long, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, Eigen::internal::const_blas_data_mapper<double, long, 1> const&, double*, long, double) [69]
+-----------------------------------------------
+                0.00    0.00      20/20          void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const>, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, -1, 1, 0, -1, 1> >(Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>::Scalar const&) [68]
+[69]     0.0    0.00    0.00      20         Eigen::internal::general_matrix_vector_product<long, double, Eigen::internal::const_blas_data_mapper<double, long, 0>, 0, false, double, Eigen::internal::const_blas_data_mapper<double, long, 1>, false, 0>::run(long, long, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, Eigen::internal::const_blas_data_mapper<double, long, 1> const&, double*, long, double) [69]
+-----------------------------------------------
+                0.00    0.00       1/14          BranchMeasStruct::setKernel() [32]
+                0.00    0.00      13/14          MZIMeas::initializeMZIObject(int, int, int) [9]
+[70]     0.0    0.00    0.00      14         std::vector<double, std::allocator<double> >::_M_fill_insert(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, unsigned long, double const&) [70]
+-----------------------------------------------
+                0.00    0.00      13/13          LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [15]
+[71]     0.0    0.00    0.00      13         LOTransform::setPmatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [71]
+-----------------------------------------------
+                0.00    0.00      13/13          MZIMeas::initializeMZIObject(int, int, int) [9]
+[72]     0.0    0.00    0.00      13         MZIMeas::mAddressGen() [72]
+                0.00    0.00      39/39          MZIMeas::setmAddress(Eigen::Matrix<int, -1, 1, 0, -1, 1>, Eigen::Matrix<int, -1, -1, 0, -1, -1>&, int&) [59]
+                0.00    0.00      39/208         std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<double, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<double, -1, 1, 0, -1, 1> const&) [42]
+                0.00    0.00      26/65          MZIMeas::generateBasisVector(int, int, int) [clone .constprop.351] [51]
+                0.00    0.00      13/26          std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<int, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<int, -1, 1, 0, -1, 1> const&) [63]
+-----------------------------------------------
+                0.00    0.00      13/13          MZIMeas::initializeMZIObject(int, int, int) [9]
+[73]     0.0    0.00    0.00      13         MZIMeas::setRowAndCol() [73]
+                0.00    0.00      39/39          MZIMeas::findColLoc(int, Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [58]
+                0.00    0.00      26/65          MZIMeas::generateBasisVector(int, int, int) [clone .constprop.351] [51]
+-----------------------------------------------
+                0.00    0.00      13/13          BranchMeasStruct::printBranchStructure() [93]
+[74]     0.0    0.00    0.00      13         MZIMeas::printMAddress() [74]
+                0.00    0.00      39/39          std::ostream& Eigen::internal::print_matrix<Eigen::Matrix<int, 1, -1, 1, 1, -1> >(std::ostream&, Eigen::Matrix<int, 1, -1, 1, 1, -1> const&, Eigen::IOFormat const&) [57]
+                0.00    0.00      13/65          MZIMeas::generateBasisVector(int, int, int) [clone .constprop.351] [51]
+-----------------------------------------------
+                0.00    0.00      13/13          BranchMeasStruct::printBranchStructure() [93]
+[75]     0.0    0.00    0.00      13         MZIMeas::extractPhotons() [75]
+-----------------------------------------------
+                0.00    0.00       7/7           MZIMeas::MZIMeas() [77]
+[76]     0.0    0.00    0.00       7         LOTransform::LOTransform() [76]
+-----------------------------------------------
+                0.00    0.00       1/7           BranchMeasStruct::setKernel() [32]
+                0.00    0.00       6/7           BranchMeasStruct::setAdaptiveMeasurements() [31]
+[77]     0.0    0.00    0.00       7         MZIMeas::MZIMeas() [77]
+                0.00    0.00       7/7           LOTransform::LOTransform() [76]
+-----------------------------------------------
+                0.00    0.00       1/5           BranchMeasStruct::setKernel() [32]
+                0.00    0.00       4/5           BranchMeasStruct::setAdaptiveMeasurements() [31]
+[78]     0.0    0.00    0.00       5         std::vector<MZIMeas, std::allocator<MZIMeas> >::_M_fill_insert(__gnu_cxx::__normal_iterator<MZIMeas*, std::vector<MZIMeas, std::allocator<MZIMeas> > >, unsigned long, MZIMeas const&) [78]
+                0.00    0.00      22/22          MZIMeas::MZIMeas(MZIMeas const&) [66]
+-----------------------------------------------
+                0.00    0.00       2/2           BFGS_Optimization::minimize() [1]
+[79]     0.0    0.00    0.00       2         MeritFunction::setInitialPosition() [79]
+-----------------------------------------------
+                0.00    0.00       2/2           BFGS_Optimization::printResultReport() [22]
+[80]     0.0    0.00    0.00       2         BranchMeasStruct::printPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [80]
+                0.00    0.00      26/26          MZIMeas::printPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&) [62]
+-----------------------------------------------
+                0.00    0.00       2/2           Integration::setIntegral(double, double, int, int, bool, int, int) [89]
+[81]     0.0    0.00    0.00       2         std::vector<int, std::allocator<int> >::_M_fill_insert(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, unsigned long, int const&) [81]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [139]
+[82]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN11IntegrationC2Ev [82]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [139]
+[83]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN11LOTransform8omegaUijERiS0_ [83]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [139]
+[84]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN13MeritFunctionC2Ev [84]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [139]
+[85]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN16BranchMeasStructC2Ev [85]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [139]
+[86]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN17BFGS_Optimization5alphaEv [86]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [139]
+[87]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN7MZIMeasC2Ev [87]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [139]
+[88]     0.0    0.00    0.00       1         _GLOBAL__sub_I_main [88]
+-----------------------------------------------
+                0.00    0.00       1/1           BranchMeasStruct::setMeasChain(bool, int, bool, int, double) [29]
+[89]     0.0    0.00    0.00       1         Integration::setIntegral(double, double, int, int, bool, int, int) [89]
+                0.00    0.00       2/2           std::vector<int, std::allocator<int> >::_M_fill_insert(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, unsigned long, int const&) [81]
+-----------------------------------------------
+                0.00    0.00       1/1           BranchMeasStruct::BranchMeasStruct() [95]
+[90]     0.0    0.00    0.00       1         Integration::Integration() [90]
+-----------------------------------------------
+                0.00    0.00       1/1           BFGS_Optimization::BFGS_Optimization(double, double, int) [30]
+[91]     0.0    0.00    0.00       1         MeritFunction::MeritFunction() [91]
+                0.00    0.00       1/1           BranchMeasStruct::BranchMeasStruct() [95]
+-----------------------------------------------
+                0.00    0.00       1/1           MeritFunction::setMeritFunction(int) [28]
+[92]     0.0    0.00    0.00       1         BranchMeasStruct::setFuncDimension() [92]
+-----------------------------------------------
+                0.00    0.00       1/1           MeritFunction::setMeritFunction(int) [28]
+[93]     0.0    0.00    0.00       1         BranchMeasStruct::printBranchStructure() [93]
+                0.00    0.00      13/13          MZIMeas::extractPhotons() [75]
+                0.00    0.00      13/13          MZIMeas::printMAddress() [74]
+-----------------------------------------------
+                0.00    0.00       1/1           MeritFunction::setMeritFunction(int) [28]
+[94]     0.0    0.00    0.00       1         BranchMeasStruct::setKernalProbDistribution() [94]
+-----------------------------------------------
+                0.00    0.00       1/1           MeritFunction::MeritFunction() [91]
+[95]     0.0    0.00    0.00       1         BranchMeasStruct::BranchMeasStruct() [95]
+                0.00    0.00       1/1           Integration::Integration() [90]
+-----------------------------------------------
+                0.00    0.00       1/1           void Eigen::internal::evaluateProductBlockingSizesHeuristic<double, double, 1, long>(long&, long&, long&, long) [56]
+[96]     0.0    0.00    0.00       1         Eigen::internal::queryCacheSizes(int&, int&, int&) [96]
+-----------------------------------------------
+                0.00    0.00       1/1           BranchMeasStruct::setMeasChain(bool, int, bool, int, double) [29]
+[97]     0.0    0.00    0.00       1         std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >::_M_fill_insert(__gnu_cxx::__normal_iterator<std::vector<MZIMeas, std::allocator<MZIMeas> >*, std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > > >, unsigned long, std::vector<MZIMeas, std::allocator<MZIMeas> > const&) [97]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2015 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [82] _GLOBAL__sub_I__ZN11IntegrationC2Ev [29] BranchMeasStruct::setMeasChain(bool, int, bool, int, double) [69] Eigen::internal::general_matrix_vector_product<long, double, Eigen::internal::const_blas_data_mapper<double, long, 0>, 0, false, double, Eigen::internal::const_blas_data_mapper<double, long, 1>, false, 0>::run(long, long, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, Eigen::internal::const_blas_data_mapper<double, long, 1> const&, double*, long, double)
+  [83] _GLOBAL__sub_I__ZN11LOTransform8omegaUijERiS0_ [24] BranchMeasStruct::setPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [56] void Eigen::internal::evaluateProductBlockingSizesHeuristic<double, double, 1, long>(long&, long&, long&, long)
+  [84] _GLOBAL__sub_I__ZN13MeritFunctionC2Ev [41] BranchMeasStruct::generalVariance() [61] std::ostream& Eigen::operator<< <Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::DenseBase<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> > const&)
+  [85] _GLOBAL__sub_I__ZN16BranchMeasStructC2Ev [80] BranchMeasStruct::printPsiAndGamma(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [58] MZIMeas::findColLoc(int, Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Matrix<int, -1, -1, 0, -1, -1>&)
+  [86] _GLOBAL__sub_I__ZN17BFGS_Optimization5alphaEv [92] BranchMeasStruct::setFuncDimension() [72] MZIMeas::mAddressGen()
+  [87] _GLOBAL__sub_I__ZN7MZIMeasC2Ev [93] BranchMeasStruct::printBranchStructure() [59] MZIMeas::setmAddress(Eigen::Matrix<int, -1, 1, 0, -1, 1>, Eigen::Matrix<int, -1, -1, 0, -1, -1>&, int&)
+  [88] _GLOBAL__sub_I_main    [31] BranchMeasStruct::setAdaptiveMeasurements() [40] MZIMeas::updateGamma(double&)
+  [89] Integration::setIntegral(double, double, int, int, bool, int, int) [94] BranchMeasStruct::setKernalProbDistribution() [73] MZIMeas::setRowAndCol()
+   [2] Integration::generalVariance(std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >&) [32] BranchMeasStruct::setKernel() [4] MZIMeas::updateOMEGAU()
+  [90] Integration::Integration() [95] BranchMeasStruct::BranchMeasStruct() [74] MZIMeas::printMAddress()
+  [19] LOTransform::genKMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [3] BFGS_Optimization::setGradient() [6] MZIMeas::updateP_M_PHI()
+  [71] LOTransform::setPmatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [64] BFGS_Optimization::setInitialH() [75] MZIMeas::extractPhotons()
+  [45] LOTransform::blockAssign(Eigen::Matrix<int, -1, -1, 0, -1, -1>, int, Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [65] BFGS_Optimization::printStepMonitor() [51] MZIMeas::generateBasisVector(int, int, int) [clone .constprop.351]
+  [18] LOTransform::genCijMatrix(Eigen::Matrix<int, -1, -1, 0, -1, -1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [22] BFGS_Optimization::printResultReport() [9] MZIMeas::initializeMZIObject(int, int, int)
+  [26] LOTransform::setLdimension(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [44] BFGS_Optimization::phi(double&) [43] MZIMeas::generateSubBasisVector(int, int)
+  [15] LOTransform::setLOTransform(int, int, Eigen::Array<int, -1, 1, 0, -1, 1>&, Eigen::Array<int, -1, 1, 0, -1, 1>&) [12] BFGS_Optimization::zoom(double, double, double, double, double) [23] MZIMeas::setPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&)
+  [49] LOTransform::genContributions(Eigen::Matrix<int, -1, 1, 0, -1, 1>&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&, int&, int&) [11] BFGS_Optimization::alpha() [62] MZIMeas::printPsi(Eigen::Matrix<double, -1, 1, 0, -1, 1>&, int&)
+  [20] LOTransform::genNumbKMatrices(Eigen::Matrix<int, -1, -1, 0, -1, -1>&) [53] Eigen::PlainObjectBase<Eigen::Matrix<double, -1, 1, 0, -1, 1> >::resize(long, long) [clone .constprop.311] [7] MZIMeas::updatePhi(double&)
+  [17] LOTransform::generateBasisVector(int, int, int) [67] Eigen::PlainObjectBase<Eigen::Matrix<double, -1, -1, 0, -1, -1> >::resize(long, long) [66] MZIMeas::MZIMeas(MZIMeas const&)
+  [46] LOTransform::genNonZeroCoordinates(int, Eigen::Matrix<int, -1, -1, 0, -1, -1>) [47] Eigen::internal::gebp_kernel<double, double, long, Eigen::internal::blas_data_mapper<double, long, 0, 0>, 4, 4, false, false>::operator()(Eigen::internal::blas_data_mapper<double, long, 0, 0> const&, double const*, double const*, long, long, long, double, long, long, long, long) [clone .constprop.309] [77] MZIMeas::MZIMeas()
+  [50] LOTransform::validInputsAndOutputs(int&, int&, Eigen::Matrix<int, -1, 1, 0, -1, 1>&) [60] std::ostream& Eigen::internal::print_matrix<Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(std::ostream&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::IOFormat const&) [52] double Eigen::DenseBase<Eigen::CwiseUnaryOp<Eigen::internal::scalar_abs2_op<double>, Eigen::Matrix<double, -1, 1, 0, -1, 1> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const
+  [16] LOTransform::generateSubBasisVector(int, int) [57] std::ostream& Eigen::internal::print_matrix<Eigen::Matrix<int, 1, -1, 1, 1, -1> >(std::ostream&, Eigen::Matrix<int, 1, -1, 1, 1, -1> const&, Eigen::IOFormat const&) [14] double Eigen::DenseBase<Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<double, double>, Eigen::Transpose<Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, 1, -1, false> const> const, Eigen::Block<Eigen::Matrix<double, -1, -1, 0, -1, -1> const, -1, 1, true> const> >::redux<Eigen::internal::scalar_sum_op<double, double> >(Eigen::internal::scalar_sum_op<double, double> const&) const
+  [13] LOTransform::setUnitaryMatrixDirect(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>&) [48] Eigen::internal::gemm_pack_lhs<double, long, Eigen::internal::const_blas_data_mapper<double, long, 0>, 4, 2, 0, false, false>::operator()(double*, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, long, long, long, long) [clone .constprop.307] [78] std::vector<MZIMeas, std::allocator<MZIMeas> >::_M_fill_insert(__gnu_cxx::__normal_iterator<MZIMeas*, std::vector<MZIMeas, std::allocator<MZIMeas> > >, unsigned long, MZIMeas const&)
+   [5] LOTransform::omegaUij(int&, int&) [54] Eigen::internal::gemm_pack_rhs<double, long, Eigen::internal::const_blas_data_mapper<double, long, 0>, 4, 0, false, false>::operator()(double*, Eigen::internal::const_blas_data_mapper<double, long, 0> const&, long, long, long, long) [clone .constprop.308] [42] std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<double, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<double, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<double, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<double, -1, 1, 0, -1, 1> const&)
+  [76] LOTransform::LOTransform() [96] Eigen::internal::queryCacheSizes(int&, int&, int&) [63] std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > >::_M_fill_insert(__gnu_cxx::__normal_iterator<Eigen::Array<int, -1, 1, 0, -1, 1>*, std::vector<Eigen::Array<int, -1, 1, 0, -1, 1>, std::allocator<Eigen::Array<int, -1, 1, 0, -1, 1> > > >, unsigned long, Eigen::Array<int, -1, 1, 0, -1, 1> const&)
+  [21] MeritFunction::printReport(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [68] void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const>, Eigen::Matrix<double, -1, 1, 0, -1, 1>, Eigen::Matrix<double, -1, 1, 0, -1, 1> >(Eigen::CwiseUnaryOp<Eigen::internal::scalar_opposite_op<double>, Eigen::Matrix<double, -1, -1, 0, -1, -1> const> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1> const&, Eigen::Matrix<double, -1, 1, 0, -1, 1>&, Eigen::Matrix<double, -1, 1, 0, -1, 1>::Scalar const&) [97] std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > >::_M_fill_insert(__gnu_cxx::__normal_iterator<std::vector<MZIMeas, std::allocator<MZIMeas> >*, std::vector<std::vector<MZIMeas, std::allocator<MZIMeas> >, std::allocator<std::vector<MZIMeas, std::allocator<MZIMeas> > > > >, unsigned long, std::vector<MZIMeas, std::allocator<MZIMeas> > const&)
+  [28] MeritFunction::setMeritFunction(int) [8] void Eigen::internal::gemv_dense_selector<2, 0, true>::run<Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> >(Eigen::Matrix<std::complex<double>, -1, -1, 0, -1, -1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1> const&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>&, Eigen::Matrix<std::complex<double>, -1, 1, 0, -1, 1>::Scalar const&) [70] std::vector<double, std::allocator<double> >::_M_fill_insert(__gnu_cxx::__normal_iterator<double*, std::vector<double, std::allocator<double> > >, unsigned long, double const&)
+  [79] MeritFunction::setInitialPosition() [27] Eigen::internal::general_matrix_matrix_product<long, std::complex<double>, 0, false, std::complex<double>, 0, false, 0>::run(long, long, long, std::complex<double> const*, long, std::complex<double> const*, long, std::complex<double>*, long, std::complex<double>, Eigen::internal::level3_blocking<std::complex<double>, std::complex<double> >&, Eigen::internal::GemmParallelInfo<long>*) [81] std::vector<int, std::allocator<int> >::_M_fill_insert(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, unsigned long, int const&)
+  [25] MeritFunction::f(Eigen::Matrix<double, -1, 1, 0, -1, 1>&) [55] Eigen::internal::general_matrix_matrix_product<long, double, 0, false, double, 0, false, 0>::run(long, long, long, double const*, long, double const*, long, double*, long, double, Eigen::internal::level3_blocking<double, double>&, Eigen::internal::GemmParallelInfo<long>*)
+  [91] MeritFunction::MeritFunction() [10] Eigen::internal::general_matrix_vector_product<long, std::complex<double>, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 0>, 0, false, std::complex<double>, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 1>, false, 0>::run(long, long, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 0> const&, Eigen::internal::const_blas_data_mapper<std::complex<double>, long, 1> const&, std::complex<double>*, long, std::complex<double>)

@@ -1,14 +1,15 @@
 CC = g++
-CFLAGS = -O3 -c -pg
-LFLAGS = -O3 -pg -o QuantumMetrology
+CFLAGS = -O3 -c
+LFLAGS = -O3 -o QuantumMetrology
+OMPFLAGS = -fopenmp
 INCLUDE = -I /home/jake/Documents/EIGEN
 OBJS = main.o MeritFunction.o BFGS_Optimization.o LOTransform.o MZIMeas.o BranchMeasStruct.o Integration.o
 
 QuantumMetrology: $(OBJS)
-	$(CC) $(LFLAGS) $(OBJS)
+	$(CC) $(OMPFLAGS) $(LFLAGS) $(OBJS)
 
 main.o: main.cpp
-	$(CC) $(CFLAGS) $(INCLUDE) main.cpp
+	$(CC) $(OMPFLAGS) $(CFLAGS) $(INCLUDE) main.cpp
 
 MeritFunction.o: MeritFunction.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) MeritFunction.cpp
@@ -29,7 +30,4 @@ LOTransform.o: LOTransform.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) LOTransform.cpp
 
 clean:
-	rm *.o QuantumMetrology *.out
-
-cleandat:
-	rm *.o QuantumMetrology *.dat
+	rm *.o QuantumMetrology *.out *.dat

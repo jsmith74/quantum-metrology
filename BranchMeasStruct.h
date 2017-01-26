@@ -19,7 +19,7 @@ class BranchMeasStruct{
 
         double generalVariance();
 
-        void printPsiAndGamma(Eigen::VectorXd& position);
+        void printPsiAndGamma(Eigen::VectorXd& position,std::ofstream& outfile);
         void printBranchStructure();
 
     private:

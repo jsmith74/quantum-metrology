@@ -6,7 +6,6 @@
 
 MZIMeas::MZIMeas(){
 
-
 }
 
 
@@ -52,7 +51,7 @@ void MZIMeas::initializeMZIObject(int N,int M,int SM){
 
 void MZIMeas::updatePhi(double& phi){
 
-    U1(0,0) = exp(I * phi);
+    U1(0,0) = std::exp(I * phi);
 
     UTot = U1 * U23;
 
@@ -160,7 +159,7 @@ void MZIMeas::printPDist(){
 }
 
 
-void MZIMeas::printPsi(Eigen::VectorXd& position,int& k){
+void MZIMeas::printPsi(Eigen::VectorXd& position,int& k,std::ofstream& outfile){
 
     for(int i=0;i<subHSDimension;i++){
 
@@ -171,9 +170,9 @@ void MZIMeas::printPsi(Eigen::VectorXd& position,int& k){
 
     psi.normalize();
 
-    std::cout << "Psi:\n" << psi << std::endl << std::endl;
+    //outfile << "Psi:\n" << psi << std::endl << std::endl;
 
-    for(int i=0;i<subHSDimension;i++) std::cout << sqrt(norm(psi(i))) << "  exp( " << arg(psi(i)) << " I ) " << std::endl;
+    for(int i=0;i<subHSDimension;i++) outfile << sqrt(norm(psi(i))) << "  exp( " << arg(psi(i)) << " I ) " << std::endl;
 
     return;
 

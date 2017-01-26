@@ -27,7 +27,7 @@ void MeritFunction::setMeritFunction(int intParam){
 
     measChain.setKernalProbDistribution();
 
-    measChain.printBranchStructure();
+    //measChain.printBranchStructure();
 
     funcDimension = measChain.setFuncDimension();
 
@@ -49,9 +49,15 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
     measChain.setPsiAndGamma(position);
 
-    std::cout << "OPTIMIZATION RESULT: " << measChain.generalVariance() << std::endl << std::endl;
+    std::ofstream outfile("OptResultsDetail.dat",std::ofstream::app);
 
-    measChain.printPsiAndGamma(position);
+    outfile << std::endl << std::endl << std::endl;
+
+    outfile << "OPTIMIZATION RESULT: " << measChain.generalVariance() << std::endl << std::endl;
+
+    measChain.printPsiAndGamma(position,outfile);
+
+    outfile.close();
 
     return;
 

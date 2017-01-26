@@ -91,31 +91,6 @@ int BranchMeasStruct::setFuncDimension(){
 }
 
 
-void BranchMeasStruct::printPsiAndGamma(Eigen::VectorXd& position){
-
-    int k=0;
-
-    for(int i=0;i<levels;i++){
-
-        for(int j=0;j<chainMeasurement[i].size();j++){
-
-            std::cout << "Level: " << i << "\t" << "Branch #: " << j << std::endl;
-
-            chainMeasurement[i][j].printPsi(position,k);
-
-            std::cout << "Gamma: " << position(k) << std::endl;
-
-            k++;
-
-        }
-
-    }
-
-    return;
-
-}
-
-
 void BranchMeasStruct::setPsiAndGamma(Eigen::VectorXd& position){
 
     int k=0;
@@ -127,6 +102,35 @@ void BranchMeasStruct::setPsiAndGamma(Eigen::VectorXd& position){
             chainMeasurement[i][j].setPsi(position,k);
 
             chainMeasurement[i][j].updateGamma(position(k));
+            k++;
+
+        }
+
+    }
+
+    return;
+
+}
+
+
+void BranchMeasStruct::printPsiAndGamma(Eigen::VectorXd& position,std::ofstream& outfile){
+
+    int k=0;
+
+    for(int i=0;i<levels;i++){
+
+        for(int j=0;j<chainMeasurement[i].size();j++){
+
+            outfile << "Level: " << i << "\n";
+            if(i>0) outfile << "Root: " << chainMeasurement[i][j].root << "\n";
+            outfile << "Photons: " << chainMeasurement[i][j].extractPhotons() << std::endl << std::endl;
+
+            chainMeasurement[i][j].printPsi(position,k,outfile);
+
+            outfile << std::endl;
+
+            outfile << "Gamma: " << position(k) << std::endl << std::endl << std::endl;
+
             k++;
 
         }

@@ -31,7 +31,7 @@
 
 /** ===== Seed Random Number Generator ============================= */
 
-//#define SEED_RANDOM_NUMBER_GENERATOR
+#define SEED_RANDOM_NUMBER_GENERATOR
 
 /** ================================================================ */
 
@@ -44,7 +44,7 @@
 
 /** ===== Set the Maximum Number of Iterations ===================== */
 
-#define MAX_ITERATIONS 10//6000
+#define MAX_ITERATIONS 6000
 
 /** ================================================================ */
 
