@@ -2,6 +2,14 @@
 
 #define PI 3.141592653589793
 
+
+MeritFunction::MeritFunction(){
+
+
+
+}
+
+
 Eigen::VectorXd MeritFunction::setInitialPosition(){
 
     Eigen::VectorXd position = Eigen::VectorXd::Random(funcDimension);
@@ -11,6 +19,7 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
     return position;
 
 }
+
 
 void MeritFunction::setMeritFunction(int intParam){
 
@@ -47,41 +56,3 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
     return;
 
 }
-
-
-MeritFunction::MeritFunction(){
-
-
-
-}
-
-
-int MeritFunction::g(int n,int m){
-    if(n==0 && m==0){
-        return 0;
-    }
-    else if(n==0 && m>0){
-        return 1;
-    }
-
-    else{
-        return (int)(doublefactorial(n+m-1)/(doublefactorial(n)*doublefactorial(m-1))+0.5);
-    }
-}
-
-
-double MeritFunction::doublefactorial(int x){
-    double total=1.0;
-    if (x>=0){
-        for(int i=x;i>0;i--){
-            total=i*total;
-        }
-    }
-    else{
-        std::cout << "invalid factorial" << std::endl;
-        total=-1;
-    }
-    return total;
-}
-
-

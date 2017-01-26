@@ -24,11 +24,61 @@ void Integration::setIntegral(double Delta,double DP,int NUMBGRIDPOINTS,int LEVE
 
     A.resize(numbTotalMeasOutcomes);
     B.resize(numbTotalMeasOutcomes);
-    C.resize(numbTotalMeasBranches);
+    C.resize(numbTotalMeasOutcomes);
 
     return;
 
 }
+
+
+double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement){
+
+    phi = -delta;
+    P_phi = chainMeasurement[0][0].P_phi[0];
+
+    updatePhiInChain(chainMeasurement);
+
+    initializeABC(chainMeasurement,dP / 3.0);
+
+    for(int i=1;i<numbGridPoints-2;i+=2){
+
+        phi = -delta + i*dP;
+        P_phi = chainMeasurement[0][0].P_phi[i];
+
+        updatePhiInChain(chainMeasurement);
+
+        updateABC(chainMeasurement,4.0 * dP / 3.0);
+
+
+        phi = -delta + (i+1) * dP;
+        P_phi = chainMeasurement[0][0].P_phi[i+1];
+
+        updatePhiInChain(chainMeasurement);
+
+        updateABC(chainMeasurement,2.0 * dP / 3.0);
+
+    }
+
+    phi = delta - dP;
+    P_phi = chainMeasurement[0][0].P_phi[numbGridPoints-2];
+
+    updatePhiInChain(chainMeasurement);
+
+    updateABC(chainMeasurement,4.0 * dP / 3.0);
+
+    phi = delta;
+    P_phi = chainMeasurement[0][0].P_phi[numbGridPoints-1];
+
+    updatePhiInChain(chainMeasurement);
+
+    updateABC(chainMeasurement,dP / 3.0);
+
+    assert( A.prod() != 0.0 );
+
+    return C.sum() - 2.0 * (B.array() / A.array()).matrix().transpose() * B + ((B.array() / A.array()) * (B.array() / A.array())).matrix().transpose() * A;
+
+}
+
 
 inline void Integration::updatePhiInChain(std::vector<std::vector<MZIMeas> >& chainMeasurement){
 
@@ -48,6 +98,7 @@ inline void Integration::updatePhiInChain(std::vector<std::vector<MZIMeas> >& ch
 
 }
 
+
 inline void Integration::subUpdateABC(std::vector<std::vector<MZIMeas> >& chainMeasurement,double& simpsonCoeff,int& k){
 
     double productHolder = P_phi;
@@ -65,6 +116,7 @@ inline void Integration::subUpdateABC(std::vector<std::vector<MZIMeas> >& chainM
     return;
 
 }
+
 
 inline void Integration::updateABC(std::vector<std::vector<MZIMeas> >& chainMeasurement,double simpsonCoeff){
 
@@ -111,53 +163,68 @@ inline void Integration::updateABC(std::vector<std::vector<MZIMeas> >& chainMeas
 
 }
 
-double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement){
 
-    phi = -delta;
-    P_phi = chainMeasurement[0][0].P_phi[0];
+inline void Integration::subInitializeABC(std::vector<std::vector<MZIMeas> >& chainMeasurement,double& simpsonCoeff,int& k){
 
-    updatePhiInChain(chainMeasurement);
+    double productHolder = P_phi;
 
-    A = Eigen::VectorXd::Zero(numbTotalMeasOutcomes);
-    B = Eigen::VectorXd::Zero(numbTotalMeasOutcomes);
-    C = Eigen::VectorXd::Zero(numbTotalMeasOutcomes);           // WRITE A NEW FUNCTION THAT CIRCUMVENTS THIS INITIALIZATION (SHOULD BE REALLY EASY)
+    for(int i=0;i<levels;i++) productHolder *= chainMeasurement[i][ b[i] ].P_m_phi[ m[i] ];
 
-    updateABC(chainMeasurement,dP / 3.0);
+    A(k) = simpsonCoeff * productHolder;
 
-    for(int i=1;i<numbGridPoints-2;i+=2){
+    B(k) = simpsonCoeff * phi * productHolder;
 
-        phi = -delta + i*dP;
-        P_phi = chainMeasurement[0][0].P_phi[i];
+    C(k) = simpsonCoeff * phi * phi * productHolder;
 
-        updatePhiInChain(chainMeasurement);
+    k++;
 
-        updateABC(chainMeasurement,4.0 * dP / 3.0);
+    return;
+
+}
 
 
-        phi = -delta + (i+1) * dP;
-        P_phi = chainMeasurement[0][0].P_phi[i+1];
+inline void Integration::initializeABC(std::vector<std::vector<MZIMeas> >& chainMeasurement,double simpsonCoeff){
 
-        updatePhiInChain(chainMeasurement);
+    int k=0;
+    double productHolder;
 
-        updateABC(chainMeasurement,2.0 * dP / 3.0);
+    for(int i=0;i<numbTotalMeasBranches;i++){
+
+        setBArray(i,chainMeasurement);
+
+        if(adaptive){
+
+            setMArrayAdaptive(chainMeasurement);
+
+            for(int j=0;j<chainMeasurement[levels-1][i].numbBranches;j++){
+
+                m[levels-1] = j;
+
+                subInitializeABC(chainMeasurement,simpsonCoeff,k);
+
+            }
+
+
+        }
+
+        else{
+
+            for(int j=0;j<levels;j++) m[j] = 0;
+
+            for(int j=0;j<numbTotalMeasOutcomes;j++){
+
+                subInitializeABC(chainMeasurement,simpsonCoeff,k);
+
+                iterateMArray(chainMeasurement);
+
+            }
+
+        }
 
     }
 
-    phi = delta - dP;
-    P_phi = chainMeasurement[0][0].P_phi[numbGridPoints-2];
 
-    updatePhiInChain(chainMeasurement);
-
-    updateABC(chainMeasurement,4.0 * dP / 3.0);
-
-    phi = delta;
-    P_phi = chainMeasurement[0][0].P_phi[numbGridPoints-1];
-
-    updatePhiInChain(chainMeasurement);
-
-    updateABC(chainMeasurement,dP / 3.0);
-
-    return C.sum() - 2.0 * (B.array() / A.array()).matrix().transpose() * B + ((B.array() / A.array()) * (B.array() / A.array())).matrix().transpose() * A;
+    return;
 
 }
 
@@ -189,6 +256,7 @@ inline void Integration::setMArrayAdaptive(std::vector<std::vector<MZIMeas> >& c
 
 }
 
+
 inline void Integration::iterateMArray(std::vector<std::vector<MZIMeas> >& chainMeasurement){
 
     m[0]++;
@@ -202,6 +270,7 @@ inline void Integration::iterateMArray(std::vector<std::vector<MZIMeas> >& chain
     return;
 
 }
+
 
 void Integration::printMArray(){
 
@@ -219,6 +288,7 @@ void Integration::printMArray(){
 
 }
 
+
 void Integration::printBArray(){
 
     std::cout << "b: ";
@@ -232,114 +302,6 @@ void Integration::printBArray(){
     return;
 
 }
-
-
-//double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m,double& phaseEstimator){
-//
-//    //std::ofstream test("funcIntTest.dat");
-//    double phi = -delta;
-//    double productHolder;
-//
-//    productHolder = (phi - phaseEstimator) * (phi - phaseEstimator)  * chainMeasurement[0][0].P_phi[0];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << std::setprecision(16) << 0 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    double output = (dP / 3.0) * productHolder;
-//
-//    for(int i=1;i<numbGridPoints-2;i+=2){
-//
-//        phi = -delta + i*dP;
-//
-//        productHolder = (phi - phaseEstimator) * (phi - phaseEstimator) * chainMeasurement[0][0].P_phi[i];
-//
-//        for(int j=0;j<levels;j++){
-//
-//            chainMeasurement[j][b[j]].updatePhi(phi);
-//            chainMeasurement[j][b[j]].updateOMEGAU();
-//            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
-//
-//            productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
-//
-//        }
-//
-//        //test << i << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//        output += (4.0 * dP / 3.0) * productHolder;
-//
-//        phi = -delta + (i+1) * dP;
-//
-//        productHolder = (phi - phaseEstimator) * (phi - phaseEstimator) * chainMeasurement[0][0].P_phi[i+1];
-//
-//        for(int j=0;j<levels;j++){
-//
-//            chainMeasurement[j][b[j]].updatePhi(phi);
-//            chainMeasurement[j][b[j]].updateOMEGAU();
-//            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
-//
-//            productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
-//
-//        }
-//
-//        //test << i+1 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//        output += (2.0 * dP / 3.0) * productHolder;
-//
-//    }
-//
-//    phi = delta - dP;
-//
-//    productHolder = (phi - phaseEstimator) * (phi - phaseEstimator) * chainMeasurement[0][0].P_phi[numbGridPoints-2];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << numbGridPoints-2 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    output += (4.0 * dP / 3.0) * productHolder;
-//
-//
-//    phi = delta;
-//
-//    productHolder = (phi - phaseEstimator) * (phi - phaseEstimator) * chainMeasurement[0][0].P_phi[numbGridPoints-1];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << numbGridPoints-1 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    output += (dP / 3.0) * productHolder;
-//
-//    //test.close();
-//
-//    //std::cout << "integration result: " << std::setprecision(16) << output << std::endl;
-//
-//    return output;
-//
-//}
 
 
 double Integration::integrateArray(std::vector<double>& f){
@@ -359,230 +321,5 @@ double Integration::integrateArray(std::vector<double>& f){
     return output;
 
 }
-
-
-//double Integration::numer(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m){
-//
-//    //std::ofstream test("funcIntTest.dat");
-//
-//    double phi = -delta;
-//    double productHolder;
-//
-//    productHolder = phi * chainMeasurement[0][0].P_phi[0];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << std::setprecision(16) << 0 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    double output = (dP / 3.0) * productHolder;
-//
-//    for(int i=1;i<numbGridPoints-2;i+=2){
-//
-//        phi = -delta + i*dP;
-//
-//        productHolder = phi * chainMeasurement[0][0].P_phi[i];
-//
-//        for(int j=0;j<levels;j++){
-//
-//            chainMeasurement[j][b[j]].updatePhi(phi);
-//            chainMeasurement[j][b[j]].updateOMEGAU();
-//            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
-//
-//            productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
-//
-//        }
-//
-//        //test << i << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//        output += (4.0 * dP / 3.0) * productHolder;
-//
-//        phi = -delta + (i+1) * dP;
-//
-//        productHolder = phi * chainMeasurement[0][0].P_phi[i+1];
-//
-//        for(int j=0;j<levels;j++){
-//
-//            chainMeasurement[j][b[j]].updatePhi(phi);
-//            chainMeasurement[j][b[j]].updateOMEGAU();
-//            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
-//
-//            productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
-//
-//        }
-//
-//        //test << i+1 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//        output += (2.0 * dP / 3.0) * productHolder;
-//
-//    }
-//
-//    phi = delta - dP;
-//
-//    productHolder = phi * chainMeasurement[0][0].P_phi[numbGridPoints-2];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << numbGridPoints-2 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    output += (4.0 * dP / 3.0) * productHolder;
-//
-//
-//    phi = delta;
-//
-//    productHolder = phi * chainMeasurement[0][0].P_phi[numbGridPoints-1];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << numbGridPoints-1 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    output += (dP / 3.0) * productHolder;
-//
-//    //test.close();
-//
-//    //std::cout << "integration result: " << std::setprecision(16) << output << std::endl;
-//
-//    return output;
-//
-//}
-//
-//
-//double Integration::denom(std::vector<std::vector<MZIMeas> >& chainMeasurement,std::vector<int>& b,std::vector<int>& m){
-//
-//    //std::ofstream test("funcIntTest.dat");
-//
-//    double phi = -delta;
-//    double productHolder;
-//
-//    productHolder = chainMeasurement[0][0].P_phi[0];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << std::setprecision(16) << 0 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    double output = (dP / 3.0) * productHolder;
-//
-//    for(int i=1;i<numbGridPoints-2;i+=2){
-//
-//        phi = -delta + i*dP;
-//
-//        productHolder = chainMeasurement[0][0].P_phi[i];
-//
-//        for(int j=0;j<levels;j++){
-//
-//            chainMeasurement[j][b[j]].updatePhi(phi);
-//            chainMeasurement[j][b[j]].updateOMEGAU();
-//            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
-//
-//            productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
-//
-//        }
-//
-//        //test << i << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//        output += (4.0 * dP / 3.0) * productHolder;
-//
-//        phi = -delta + (i+1) * dP;
-//
-//        productHolder = chainMeasurement[0][0].P_phi[i+1];
-//
-//        for(int j=0;j<levels;j++){
-//
-//            chainMeasurement[j][b[j]].updatePhi(phi);
-//            chainMeasurement[j][b[j]].updateOMEGAU();
-//            chainMeasurement[j][b[j]].updateP_M_PHI(m[j]);
-//
-//            productHolder *= chainMeasurement[j][b[j]].P_m_phi[m[j]];
-//
-//        }
-//
-//        //test << i+1 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//        output += (2.0 * dP / 3.0) * productHolder;
-//
-//    }
-//
-//    phi = delta - dP;
-//
-//    productHolder = chainMeasurement[0][0].P_phi[numbGridPoints-2];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << numbGridPoints-2 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    output += (4.0 * dP / 3.0) * productHolder;
-//
-//
-//    phi = delta;
-//
-//    productHolder = chainMeasurement[0][0].P_phi[numbGridPoints-1];
-//
-//    for(int i=0;i<levels;i++){
-//
-//        chainMeasurement[i][b[i]].updatePhi(phi);
-//        chainMeasurement[i][b[i]].updateOMEGAU();
-//        chainMeasurement[i][b[i]].updateP_M_PHI(m[i]);
-//
-//        productHolder *= chainMeasurement[i][b[i]].P_m_phi[m[i]];
-//
-//    }
-//
-//    //test << numbGridPoints-1 << "\t" << phi << "\t" << productHolder << std::endl;
-//
-//    output += (dP / 3.0) * productHolder;
-//
-//    //test.close();
-//
-//    //std::cout << "integration result: " << std::setprecision(16) << output << std::endl;
-//
-//    //if(m[0] == 4 && m[1] == 4 && m[2] == 4) assert(1>2 && "UP TO HERE");
-//
-//    // UP TO HERE - CHECK THAT THE INTEGRATION IS WORKING PROPERLY - GO THROUGH THIS FUNCTION AN EXTRA TIME JUST TO MAKE SURE EVERYTHING IS GOOD
-//    // SOMETHING ISN'T RIGHT - CHECK IT
-//
-//
-//    return output;
-//
-//}
-
 
 

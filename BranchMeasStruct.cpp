@@ -11,11 +11,13 @@ BranchMeasStruct::BranchMeasStruct(){
 
 }
 
+
 double BranchMeasStruct::generalVariance(){
 
     return integrate.generalVariance(chainMeasurement);
 
 }
+
 
 void BranchMeasStruct::setKernalProbDistribution(){
 
@@ -34,103 +36,57 @@ void BranchMeasStruct::setKernalProbDistribution(){
 }
 
 
-double BranchMeasStruct::probabilityTest(){
+void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import,int gridSize,double Delta){
 
-    double phi = PI/3.0;
+    adaptive = Adaptive;
+    levels = numbMeas;
+    import = Import;
+
+    delta = Delta;
+
+    dP = (2.0 * delta) / (1.0 * gridSize);
+
+    numbGridPoints = gridSize + 1;
+
+    assert(numbGridPoints % 2 == 1 && "Simpson's rule requires an even number of intervals (odd number of grid points).");
+
+    chainMeasurement.resize(levels);
+
+    setKernel();
+
+    if(adaptive) setAdaptiveMeasurements();
+
+    if(!adaptive) setNonAdaptiveMeasurements();
+
+    numbTotalMeasBranches = chainMeasurement.at(levels-1).size();
+
+    if(adaptive) setNumbTotalMeasOutcomesAdaptive();
+    if(!adaptive) setNumbTotalMeasOutcomesNonAdaptive();
+
+    integrate.setIntegral(delta,dP,numbGridPoints,levels,adaptive,numbTotalMeasBranches,numbTotalMeasOutcomes);
+
+    return;
+
+}
+
+
+int BranchMeasStruct::setFuncDimension(){
+
+    int output = 0;
 
     for(int i=0;i<levels;i++){
 
-        for(int j=0;j<chainMeasurement[i].size();j++){
+        for(int j=0;j<chainMeasurement.at(i).size();j++){
 
-            chainMeasurement.at(i).at(j).updatePhi(phi);
-            chainMeasurement.at(i).at(j).updateOMEGAU();
-            chainMeasurement.at(i).at(j).updateP_M_PHI();
+            output += 2*chainMeasurement.at(i).at(j).subHSDimension;
+
+            output += 1;
 
         }
 
     }
 
-    double probTestTemp = 1.0;
-
-    for(int i=0;i<levels;i++) probTestTemp *= chainMeasurement.at(i).at(b[i]).P_m_phi.at(m[i]);
-
-    probTestTot += probTestTemp;
-
-    std::cout << probTestTemp << "\t" << probTestTot << std::endl;
-
-    return 2.0;
-
-}
-
-
-inline void BranchMeasStruct::setBArray(int& i){
-
-    b[levels-1] = i;
-
-    for(int j=levels-1;j>0;j--){
-
-        b[j-1] = chainMeasurement[j][ b[j] ].root;
-
-    }
-
-    return;
-
-}
-
-
-inline void BranchMeasStruct::setMArrayAdaptive(){
-
-    for(int i=levels-1;i>0;i--){
-
-        m[i-1] = chainMeasurement[i][ b[i] ].rootMeas;
-
-    }
-
-    return;
-
-}
-
-inline void BranchMeasStruct::iterateMArray(){
-
-    m[0]++;
-
-    for(int i=0;i<levels-1;i++){
-
-        if(m[i] == chainMeasurement[i][0].numbBranches) {   m[i+1]++;   m[i] = 0;  }
-
-    }
-
-    return;
-
-}
-
-void BranchMeasStruct::printMArray(){
-
-    std::cout << "m: ";
-
-    for(int i=0;i<m.size();i++){
-
-        std::cout << m[i] << " ";
-
-    }
-
-    std::cout << std::endl;
-
-    return;
-
-}
-
-void BranchMeasStruct::printBArray(){
-
-    std::cout << "b: ";
-
-    for(int i=0;i<b.size();i++){
-        std::cout << b[i] << " ";
-    }
-
-    std::cout << std::endl;
-
-    return;
+    return output;
 
 }
 
@@ -181,25 +137,6 @@ void BranchMeasStruct::setPsiAndGamma(Eigen::VectorXd& position){
 
 }
 
-int BranchMeasStruct::setFuncDimension(){
-
-    int output = 0;
-
-    for(int i=0;i<levels;i++){
-
-        for(int j=0;j<chainMeasurement.at(i).size();j++){
-
-            output += 2*chainMeasurement.at(i).at(j).subHSDimension;
-
-            output += 1;
-
-        }
-
-    }
-
-    return output;
-
-}
 
 void BranchMeasStruct::printBranchStructure(){
 
@@ -215,18 +152,12 @@ void BranchMeasStruct::printBranchStructure(){
             if(i>0) std::cout << "root: " << chainMeasurement.at(i).at(j).root << std::endl;
             if(i>0) std::cout << "rootMeas: " << chainMeasurement.at(i).at(j).rootMeas << std::endl;
             std::cout << "photons: " << chainMeasurement.at(i).at(j).extractPhotons() << std::endl;
-            //if(i<levels-1){
 
-                std::cout << "numbBranches: " << chainMeasurement.at(i).at(j).numbBranches << std::endl;
+            std::cout << "numbBranches: " << chainMeasurement.at(i).at(j).numbBranches << std::endl;
 
-                std::cout << "branches:\n";
-                for(int k=0;k<chainMeasurement.at(i).at(j).numbBranches;k++) std::cout << chainMeasurement.at(i).at(j).branches.at(k) << " ";
+            std::cout << std::endl;
 
-                std::cout << std::endl;
-
-                chainMeasurement.at(i).at(j).printMAddress();
-
-            //}
+            chainMeasurement.at(i).at(j).printMAddress();
 
             std::cout << std::endl << std::endl;
 
@@ -237,6 +168,7 @@ void BranchMeasStruct::printBranchStructure(){
     return;
 
 }
+
 
 void BranchMeasStruct::setKernel(){
 
@@ -256,6 +188,7 @@ void BranchMeasStruct::setKernel(){
 
 }
 
+
 void BranchMeasStruct::setAdaptiveMeasurements(){
 
     for(int i=0;i<levels-1;i++){
@@ -272,7 +205,7 @@ void BranchMeasStruct::setAdaptiveMeasurements(){
 
             while(k<chainMeasurement.at(i+1).size()){
 
-                chainMeasurement.at(i+1).at(k).initializeMZIObject(PHOTONS,2,2);    // THINK OF SOME WAY TO CHANGE THIS DYNAMICALLY
+                chainMeasurement.at(i+1).at(k).initializeMZIObject(PHOTONS,2,2);
 
                 chainMeasurement.at(i+1).at(k).root = j;
 
@@ -280,13 +213,9 @@ void BranchMeasStruct::setAdaptiveMeasurements(){
 
                 chainMeasurement.at(i+1).at(k).level = i+1;
 
-                chainMeasurement.at(i).at(j).branches.at(l) = k;
-
                 chainMeasurement.at(i+1).at(k).delta = delta;
 
                 chainMeasurement.at(i+1).at(k).dP = dP;
-
-                //chainMeasurement.at(i+1).at(k).P_phi.resize(numbGridPoints);
 
                 l++;
 
@@ -301,6 +230,7 @@ void BranchMeasStruct::setAdaptiveMeasurements(){
     return;
 
 }
+
 
 void BranchMeasStruct::setNonAdaptiveMeasurements(){
 
@@ -318,15 +248,12 @@ void BranchMeasStruct::setNonAdaptiveMeasurements(){
 
         chainMeasurement.at(i+1).at(0).dP = dP;
 
-        //chainMeasurement.at(i+1).at(0).P_phi.resize(numbGridPoints);
-
-        for(int j=0;j<chainMeasurement.at(i).at(0).numbBranches;j++) chainMeasurement.at(i).at(0).branches.at(j) = 0;
-
     }
 
     return;
 
 }
+
 
 void BranchMeasStruct::setNumbTotalMeasOutcomesAdaptive(){
 
@@ -342,6 +269,7 @@ void BranchMeasStruct::setNumbTotalMeasOutcomesAdaptive(){
 
 }
 
+
 void BranchMeasStruct::setNumbTotalMeasOutcomesNonAdaptive(){
 
     numbTotalMeasOutcomes = 1;
@@ -356,43 +284,3 @@ void BranchMeasStruct::setNumbTotalMeasOutcomesNonAdaptive(){
 
 }
 
-void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import,int gridSize,double Delta){
-
-    adaptive = Adaptive;
-    levels = numbMeas;
-    import = Import;
-
-    delta = Delta;
-
-    dP = (2.0 * delta) / (1.0 * gridSize);
-
-    numbGridPoints = gridSize + 1;
-
-    assert(numbGridPoints % 2 == 1 && "ERROR: Simpson's rule requires an even number of intervals (odd number of grid points).");
-
-    chainMeasurement.resize(levels);
-
-    setKernel();
-
-    if(adaptive) setAdaptiveMeasurements();
-
-    if(!adaptive) setNonAdaptiveMeasurements();
-
-    numbTotalMeasBranches = chainMeasurement.at(levels-1).size();
-
-    if(adaptive) setNumbTotalMeasOutcomesAdaptive();
-    if(!adaptive) setNumbTotalMeasOutcomesNonAdaptive();
-
-    phaseEstimators.resize(numbTotalMeasOutcomes);
-
-    m.resize(levels);
-
-    b.resize(levels);
-
-    integrate.setIntegral(delta,dP,numbGridPoints,levels,adaptive,numbTotalMeasBranches,numbTotalMeasOutcomes);
-
-    probTestTot = 0.0;
-
-    return;
-
-}

@@ -13,21 +13,20 @@ class MeritFunction{
     public:
 
         MeritFunction();
+
+        Eigen::VectorXd setInitialPosition();
         void setMeritFunction(int intParam);
         double f(Eigen::VectorXd& position);
-        int funcDimension;
         void printReport(Eigen::VectorXd& position);
-        Eigen::VectorXd setInitialPosition();
+
+        int funcDimension;
 
     private:
 
         Eigen::ArrayXi Row,Col;
-        std::complex<double> I;
         Eigen::VectorXcd psiPrime;
-        int g(int n,int m);
-        double doublefactorial(int x);
         BranchMeasStruct measChain;
 
 };
 
-#endif // MERITFUNCTION_H_INCLUDED
+#endif

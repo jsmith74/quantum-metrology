@@ -11,38 +11,32 @@ class BranchMeasStruct{
     public:
 
         BranchMeasStruct();
+
         void setMeasChain(bool Adaptive,int numbMeas,bool import,int gridSize,double Delta);
-        void printBranchStructure();
         int setFuncDimension();
         void setPsiAndGamma(Eigen::VectorXd& position);
-        void printPsiAndGamma(Eigen::VectorXd& position);
         void setKernalProbDistribution();
+
         double generalVariance();
+
+        void printPsiAndGamma(Eigen::VectorXd& position);
+        void printBranchStructure();
 
     private:
 
-        std::vector<int> m;
-        std::vector<int> b;
-        std::vector<double> phaseEstimators;
+        Integration integrate;
+
         std::vector<std::vector<MZIMeas> > chainMeasurement;
         bool adaptive,import;
         int levels, numbTotalMeasBranches, numbTotalMeasOutcomes, numbGridPoints;
         double delta,dP;
-        double probTestTot;
 
         void setKernel();
         void setAdaptiveMeasurements();
         void setNonAdaptiveMeasurements();
         void setNumbTotalMeasOutcomesAdaptive();
         void setNumbTotalMeasOutcomesNonAdaptive();
-        inline void setBArray(int& i);
-        void printBArray();
-        inline void setMArrayAdaptive();
-        inline void iterateMArray();
-        void printMArray();
 
-        Integration integrate;
-        double probabilityTest();
 };
 
-#endif // BRANCHMEASUREMENTSTRUCTURE_H_INCLUDED
+#endif
