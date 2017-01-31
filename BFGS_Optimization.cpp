@@ -24,7 +24,7 @@
 
 /** ===== Print Step Monitor ======================================= */
 
-#define PRINT_STEP_MONITOR
+//#define PRINT_STEP_MONITOR
 
 /** ================================================================ */
 
@@ -470,7 +470,7 @@ void BFGS_Optimization::printResultReport(){
 
 
 
-BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,int intParam){
+BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,int intParam,double delta){
 
     #ifdef SEED_RANDOM_NUMBER_GENERATOR
 
@@ -494,7 +494,7 @@ BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,int int
 
     alphaMax = maxStepSize;
 
-    meritFunction.setMeritFunction(intParam);
+    meritFunction.setMeritFunction(intParam,delta);
 
     bestResult = 1e30;
 
@@ -532,3 +532,10 @@ void BFGS_Optimization::setInverseHessian(){
 
 }
 
+void BFGS_Optimization::printStateAmps(){
+
+    meritFunction.printStateAmps(position);
+
+    return;
+
+}

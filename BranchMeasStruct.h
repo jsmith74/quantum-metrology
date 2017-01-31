@@ -22,6 +22,9 @@ class BranchMeasStruct{
         void printPsiAndGamma(Eigen::VectorXd& position,std::ofstream& outfile);
         void printBranchStructure();
 
+        void printStateAmps(Eigen::VectorXd& position,std::ofstream& outfile);
+        void printGammaAmps(Eigen::VectorXd& position,std::ofstream& outfile);
+
     private:
 
         Integration integrate;

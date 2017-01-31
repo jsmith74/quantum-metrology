@@ -5,6 +5,11 @@ OMPFLAGS = -fopenmp
 INCLUDE = -I /home/jake/Documents/EIGEN
 OBJS = main.o MeritFunction.o BFGS_Optimization.o LOTransform.o MZIMeas.o BranchMeasStruct.o Integration.o
 
+all: QuantumMetrology script
+
+script: script.cpp
+	$(CC) script.cpp -o script
+
 QuantumMetrology: $(OBJS)
 	$(CC) $(OMPFLAGS) $(LFLAGS) $(OBJS)
 
@@ -30,4 +35,4 @@ LOTransform.o: LOTransform.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) LOTransform.cpp
 
 clean:
-	rm *.o QuantumMetrology *.out *.dat
+	rm *.o QuantumMetrology *.out *.dat script

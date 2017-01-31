@@ -8,9 +8,11 @@ class BFGS_Optimization{
 
     public:
 
-        BFGS_Optimization(double tolerance,double maxStepSize,int intParam);
+        BFGS_Optimization(double tolerance,double maxStepSize,int intParam,double delta);
         double minimize();
         double bestResult;
+
+        void printStateAmps();
 
     private:
 

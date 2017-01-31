@@ -2,7 +2,7 @@
 
 #define PI 3.141592653589793
 
-#define PHOTONS 2
+#define PHOTONS 1
 
 
 BranchMeasStruct::BranchMeasStruct(){
@@ -112,6 +112,47 @@ void BranchMeasStruct::setPsiAndGamma(Eigen::VectorXd& position){
 
 }
 
+void BranchMeasStruct::printStateAmps(Eigen::VectorXd& position,std::ofstream& outfile){
+
+    int k=0;
+
+    for(int i=0;i<levels;i++){
+
+        for(int j=0;j<chainMeasurement[i].size();j++){
+
+            chainMeasurement[i][j].printStateAmps(position,k,outfile);
+
+            k++;
+
+        }
+
+    }
+
+    return;
+
+}
+
+void BranchMeasStruct::printGammaAmps(Eigen::VectorXd& position,std::ofstream& outfile){
+
+    int k=0;
+
+    for(int i=0;i<levels;i++){
+
+        for(int j=0;j<chainMeasurement[i].size();j++){
+
+            k += 2 * chainMeasurement[i][j].subHSDimension;
+
+            outfile << position(k) << "\t";
+
+            k++;
+
+        }
+
+    }
+
+    return;
+
+}
 
 void BranchMeasStruct::printPsiAndGamma(Eigen::VectorXd& position,std::ofstream& outfile){
 
@@ -129,7 +170,7 @@ void BranchMeasStruct::printPsiAndGamma(Eigen::VectorXd& position,std::ofstream&
 
             outfile << std::endl;
 
-            outfile << "Gamma: " << position(k) << std::endl << std::endl << std::endl;
+            outfile << "Gamma: " << std::setprecision(16) << position(k) << std::endl << std::endl << std::endl;
 
             k++;
 

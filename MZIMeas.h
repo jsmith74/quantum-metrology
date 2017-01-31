@@ -31,6 +31,8 @@ class MZIMeas{
         void printPsi(Eigen::VectorXd& position,int& k,std::ofstream& outfile);
         int extractPhotons();
 
+        void printStateAmps(Eigen::VectorXd& position,int& k,std::ofstream& outfile);
+
     private:
 
         std::complex<double> I;

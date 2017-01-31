@@ -172,7 +172,26 @@ void MZIMeas::printPsi(Eigen::VectorXd& position,int& k,std::ofstream& outfile){
 
     //outfile << "Psi:\n" << psi << std::endl << std::endl;
 
-    for(int i=0;i<subHSDimension;i++) outfile << sqrt(norm(psi(i))) << "  exp( " << arg(psi(i)) << " I ) " << std::endl;
+    for(int i=0;i<subHSDimension;i++) outfile << std::setprecision(16) << sqrt(norm(psi(i))) << "  exp( " << arg(psi(i)) << " I ) " << std::endl;
+
+    return;
+
+}
+
+
+void MZIMeas::printStateAmps(Eigen::VectorXd& position,int& k,std::ofstream& outfile){
+
+    for(int i=0;i<subHSDimension;i++){
+
+        psi(i) = position(k) * exp(I * position(k+1));
+        k += 2;
+
+    }
+
+    psi.normalize();
+
+
+    for(int i=0;i<subHSDimension;i++) outfile << std::setprecision(16) << sqrt(norm(psi(i))) << "\t";
 
     return;
 

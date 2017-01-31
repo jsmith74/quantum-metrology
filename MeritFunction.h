@@ -15,17 +15,20 @@ class MeritFunction{
         MeritFunction();
 
         Eigen::VectorXd setInitialPosition();
-        void setMeritFunction(int intParam);
+        void setMeritFunction(int intParam,double delta);
         double f(Eigen::VectorXd& position);
         void printReport(Eigen::VectorXd& position);
 
         int funcDimension;
+
+        void printStateAmps(Eigen::VectorXd& position);
 
     private:
 
         Eigen::ArrayXi Row,Col;
         Eigen::VectorXcd psiPrime;
         BranchMeasStruct measChain;
+        double deltaPrint;
 
 };
 

@@ -21,15 +21,17 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 }
 
 
-void MeritFunction::setMeritFunction(int intParam){
+void MeritFunction::setMeritFunction(int intParam,double delta){
 
-    measChain.setMeasChain(true,3,false,intParam,.1);
+    measChain.setMeasChain(true,1,false,intParam,delta);
 
     measChain.setKernalProbDistribution();
 
     //measChain.printBranchStructure();
 
     funcDimension = measChain.setFuncDimension();
+
+    deltaPrint = delta;
 
     return;
 
@@ -53,9 +55,31 @@ void MeritFunction::printReport(Eigen::VectorXd& position){
 
     outfile << std::endl << std::endl << std::endl;
 
-    outfile << "OPTIMIZATION RESULT: " << measChain.generalVariance() << std::endl << std::endl;
+    outfile << "OPTIMIZATION RESULT: " << std::setprecision(16) << measChain.generalVariance() << "\t" << deltaPrint << std::endl << std::endl;
 
     measChain.printPsiAndGamma(position,outfile);
+
+    outfile.close();
+
+    return;
+
+}
+
+
+void MeritFunction::printStateAmps(Eigen::VectorXd& position){
+
+    measChain.setPsiAndGamma(position);
+
+    std::ofstream outfile("BestStateAmpsDist.dat",std::ofstream::app);
+    outfile << deltaPrint << "\t";
+    measChain.printStateAmps(position,outfile);
+    outfile << std::endl << std::endl << std::endl;
+
+    outfile.close();
+
+    outfile.open("BestGammaDist.dat",std::ofstream::app);
+    outfile << deltaPrint << "\t";
+    measChain.printGammaAmps(position,outfile);
 
     outfile.close();
 
