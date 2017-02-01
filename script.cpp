@@ -7,7 +7,7 @@ int main(){
 
     std::string progName = "./QuantumMetrology ";
 
-    for(double delta=0.01;delta<PI;delta+=0.02){
+    for(double delta=0.01;delta<PI;delta+=0.01){
 
         std::string command;
         std::stringstream ss;

@@ -139,20 +139,48 @@ void BFGS_Optimization::setAlphaJ(double& alphaj,double& alphaLow,double& alphaH
     if(alphaLow < alphaHigh){
 
         alphaj = alphaHigh * alphaHigh * phiLowPrime - alphaLow * (2.0 * phiHigh - 2.0 * phiLow + alphaLow * phiLowPrime);
-        alphaj /= 2.0 * (-phiHigh + phiLow + (alphaHigh - alphaLow) * phiLowPrime);
+
+        if((-phiHigh + phiLow + (alphaHigh - alphaLow) * phiLowPrime) != 0.0){
+
+            alphaj /= 2.0 * (-phiHigh + phiLow + (alphaHigh - alphaLow) * phiLowPrime);
+
+        }
+
+        else assert(alphaj == 0.0);
 
         secondDerivativeTest = phiHigh - phiLow + (alphaLow-alphaHigh) * phiLowPrime;
-        secondDerivativeTest /= (alphaHigh-alphaLow) * (alphaHigh-alphaLow);
+
+        if((alphaHigh-alphaLow) * (alphaHigh-alphaLow) != 0.0){
+
+            secondDerivativeTest /= (alphaHigh-alphaLow) * (alphaHigh-alphaLow);
+
+        }
+
+        else assert(secondDerivativeTest == 0.0);
 
     }
 
     else{
 
         alphaj = alphaLow * alphaLow * phiLowPrime - alphaHigh * (2.0 * phiLow - 2.0 * phiHigh + alphaHigh * phiLowPrime);
-        alphaj /= 2.0 * (-phiLow + phiHigh + (alphaLow - alphaHigh) * phiLowPrime);
+
+        if((-phiLow + phiHigh + (alphaLow - alphaHigh) * phiLowPrime) != 0.0){
+
+            alphaj /= 2.0 * (-phiLow + phiHigh + (alphaLow - alphaHigh) * phiLowPrime);
+
+        }
+
+        else assert(alphaj == 0.0);
 
         secondDerivativeTest = phiLow - phiHigh + (alphaHigh-alphaLow) * phiLowPrime;
-        secondDerivativeTest /= (alphaLow-alphaHigh) * (alphaLow-alphaHigh);
+
+        if((alphaLow-alphaHigh) * (alphaLow-alphaHigh) != 0.0){
+
+            secondDerivativeTest /= (alphaLow-alphaHigh) * (alphaLow-alphaHigh);
+
+        }
+
+        else assert(secondDerivativeTest == 0.0);
 
     }
 
@@ -391,7 +419,11 @@ double BFGS_Optimization::minimize(){
 
         y += gradient;
 
-        rho = 1.0/(y.transpose() * s);
+        denom = y.transpose() * s;
+
+        if(denom == 0.0) break;
+
+        rho = 1.0 / denom;
 
         H = (I - rho * s * y.transpose()) * H * (I - rho * y * s.transpose()) + rho * s * s.transpose();
 

@@ -21,7 +21,7 @@ int main( int argc, char *argv[] ){
 
     int integrationGridSize = 6000;
 
-    int optimizationAttempts = 50;
+    int optimizationAttempts = 10;
 
     double bestResult = 1e20;
 
@@ -51,6 +51,7 @@ int main( int argc, char *argv[] ){
 
             bestResult = result;
             optimizer.printStateAmps();
+
         }
 
     }
