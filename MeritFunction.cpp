@@ -73,13 +73,14 @@ void MeritFunction::printStateAmps(Eigen::VectorXd& position){
     std::ofstream outfile("BestStateAmpsDist.dat",std::ofstream::app);
     outfile << deltaPrint << "\t";
     measChain.printStateAmps(position,outfile);
-    outfile << std::endl << std::endl << std::endl;
+    outfile << std::endl;
 
     outfile.close();
 
     outfile.open("BestGammaDist.dat",std::ofstream::app);
     outfile << deltaPrint << "\t";
     measChain.printGammaAmps(position,outfile);
+    outfile << std::endl;
 
     outfile.close();
 

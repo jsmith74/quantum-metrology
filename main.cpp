@@ -4,7 +4,6 @@
 #include <fstream>
 #include <iostream>
 #include <omp.h>
-#include <unistd.h>
 
 int main( int argc, char *argv[] ){
 
@@ -31,11 +30,7 @@ int main( int argc, char *argv[] ){
 
     t1 = clock();
 
-#pragma omp parallel for schedule(dynamic)  default(none) \
-    shared(gradientCheck,maxStepSize,integrationGridSize,optimizationAttempts,bestResult,delta)
     for(int i=0;i<optimizationAttempts;i++){
-
-        if( i < omp_get_num_threads() ) usleep(3000000 * omp_get_thread_num());
 
         BFGS_Optimization optimizer(gradientCheck,maxStepSize,integrationGridSize,delta);
 
@@ -43,7 +38,7 @@ int main( int argc, char *argv[] ){
 
         std::ofstream outfile("OptResults.dat",std::ofstream::app);
 
-        outfile << i << "\t" << omp_get_thread_num() << "\t" << delta << "\t" << std::setprecision(16) << result << std::endl;
+        outfile << i << "\t" << delta << "\t" << std::setprecision(16) << result << std::endl;
 
         outfile.close();
 
@@ -60,7 +55,7 @@ int main( int argc, char *argv[] ){
 
     float diff = (float)t2 - (float)t1;
 
-    std::cout << "Runtime: " << diff/CLOCKS_PER_SEC << std::endl << std::endl;
+    //std::cout << "Runtime: " << diff/CLOCKS_PER_SEC << std::endl << std::endl;
 
     std::ofstream outfile("BestResults.dat",std::ofstream::app);
     outfile << delta << "\t" << std::setprecision(16) << bestResult << std::endl;

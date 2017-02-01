@@ -8,7 +8,7 @@ OBJS = main.o MeritFunction.o BFGS_Optimization.o LOTransform.o MZIMeas.o Branch
 all: QuantumMetrology script
 
 script: script.cpp
-	$(CC) script.cpp -o script
+	$(CC) $(OMPFLAGS) script.cpp -o script
 
 QuantumMetrology: $(OBJS)
 	$(CC) $(OMPFLAGS) $(LFLAGS) $(OBJS)
