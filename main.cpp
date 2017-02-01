@@ -3,7 +3,6 @@
 #include <time.h>
 #include <fstream>
 #include <iostream>
-#include <omp.h>
 
 int main( int argc, char *argv[] ){
 
@@ -45,7 +44,7 @@ int main( int argc, char *argv[] ){
         if(result < bestResult) {
 
             bestResult = result;
-            optimizer.printStateAmps();
+            optimizer.printStateAmps();  // TO DO: FIX THIS SO IT ONLY PRINTS THE TRULY BEST ONE
 
         }
 

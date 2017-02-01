@@ -11,10 +11,10 @@ script: script.cpp
 	$(CC) $(OMPFLAGS) script.cpp -o script
 
 QuantumMetrology: $(OBJS)
-	$(CC) $(OMPFLAGS) $(LFLAGS) $(OBJS)
+	$(CC) $(LFLAGS) $(OBJS)
 
 main.o: main.cpp
-	$(CC) $(OMPFLAGS) $(CFLAGS) $(INCLUDE) main.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) main.cpp
 
 MeritFunction.o: MeritFunction.cpp
 	$(CC) $(CFLAGS) $(INCLUDE) MeritFunction.cpp

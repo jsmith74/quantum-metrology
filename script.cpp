@@ -3,7 +3,7 @@
 #include <sstream>
 #include <omp.h>
 #include <unistd.h>
-#include <fstream>
+
 
 #define PI 3.14159265359
 
@@ -22,7 +22,7 @@ int main(){
 
         double delta = startPoint + i*increment;
 
-        if( i < omp_get_num_threads() ) usleep(3000000 * omp_get_thread_num());
+        if( i < omp_get_num_threads() ) usleep(2000000 * omp_get_thread_num());
 
         std::string command;
         std::stringstream ss;
