@@ -9,9 +9,9 @@
 
 int main(){
 
-    double startPoint = 0.01;
+    double startPoint = 0.1;
     double endPoint = PI;
-    double increment = 0.01;
+    double increment = 0.05;
     int intEndPoint = (endPoint - startPoint) / increment;
 
 #pragma omp parallel for schedule(dynamic)  default(none) \

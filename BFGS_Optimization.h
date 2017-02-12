@@ -12,7 +12,8 @@ class BFGS_Optimization{
         double minimize();
         double bestResult;
 
-        void printStateAmps();
+        Eigen::VectorXd extractOptPosition();
+        void printStateAmps(Eigen::VectorXd& BestPosition);
 
     private:
 

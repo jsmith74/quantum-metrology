@@ -564,9 +564,15 @@ void BFGS_Optimization::setInverseHessian(){
 
 }
 
-void BFGS_Optimization::printStateAmps(){
+Eigen::VectorXd BFGS_Optimization::extractOptPosition(){
 
-    meritFunction.printStateAmps(position);
+    return position;
+
+}
+
+void BFGS_Optimization::printStateAmps(Eigen::VectorXd& bestPosition){
+
+    meritFunction.printStateAmps(bestPosition);
 
     return;
 

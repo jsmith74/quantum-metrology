@@ -4,6 +4,11 @@
 #include <fstream>
 #include <iostream>
 
+void printBestResult(double delta,double bestResult);
+
+void printStateAmps(BFGS_Optimization& optimizer,Eigen::VectorXd& bestPosition);
+
+
 int main( int argc, char *argv[] ){
 
     if(argc != 2){
@@ -23,15 +28,17 @@ int main( int argc, char *argv[] ){
 
     double bestResult = 1e20;
 
+    Eigen::VectorXd bestPosition;
+
     double delta = std::atof(argv[1]);
 
     clock_t t1,t2;
 
     t1 = clock();
 
-    for(int i=0;i<optimizationAttempts;i++){
+    BFGS_Optimization optimizer(gradientCheck,maxStepSize,integrationGridSize,delta);
 
-        BFGS_Optimization optimizer(gradientCheck,maxStepSize,integrationGridSize,delta);
+    for(int i=0;i<optimizationAttempts;i++){
 
         double result = optimizer.minimize();
 
@@ -44,7 +51,7 @@ int main( int argc, char *argv[] ){
         if(result < bestResult) {
 
             bestResult = result;
-            optimizer.printStateAmps();  // TO DO: FIX THIS SO IT ONLY PRINTS THE TRULY BEST ONE
+            bestPosition = optimizer.extractOptPosition();
 
         }
 
@@ -56,10 +63,28 @@ int main( int argc, char *argv[] ){
 
     //std::cout << "Runtime: " << diff/CLOCKS_PER_SEC << std::endl << std::endl;
 
+    printBestResult(delta,bestResult);
+
+    printStateAmps(optimizer,bestPosition);
+
+    return 0;
+
+}
+
+void printBestResult(double delta,double bestResult){
+
     std::ofstream outfile("BestResults.dat",std::ofstream::app);
     outfile << delta << "\t" << std::setprecision(16) << bestResult << std::endl;
     outfile.close();
 
-    return 0;
+    return;
+
+}
+
+void printStateAmps(BFGS_Optimization& optimizer,Eigen::VectorXd& bestPosition){
+
+    optimizer.printStateAmps(bestPosition);
+
+    return;
 
 }

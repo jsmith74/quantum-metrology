@@ -2,7 +2,7 @@
 
 #define PI 3.141592653589793
 
-#define PHOTONS 1
+#define PHOTONS 3
 
 
 BranchMeasStruct::BranchMeasStruct(){
