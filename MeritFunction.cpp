@@ -2,6 +2,7 @@
 
 #define PI 3.141592653589793
 
+//#define PRINT_OUTPUT_PROB_DIST
 
 MeritFunction::MeritFunction(){
 
@@ -21,9 +22,9 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 }
 
 
-void MeritFunction::setMeritFunction(int intParam,double delta){
+void MeritFunction::setMeritFunction(int intParam,double delta,int import){
 
-    measChain.setMeasChain(true,1,false,intParam,delta);
+    measChain.setMeasChain(false,1,import,intParam,delta);
 
     measChain.setKernalProbDistribution();
 
@@ -80,6 +81,14 @@ void MeritFunction::printStateAmps(Eigen::VectorXd& position){
     outfile << std::endl;
 
     outfile.close();
+
+    measChain.setPsiAndGamma(position);
+
+    #ifdef PRINT_OUTPUT_PROB_DIST
+
+        measChain.printFinalProbDist();
+
+    #endif // PRINT_OUTPUT_PROB_DIST
 
     return;
 

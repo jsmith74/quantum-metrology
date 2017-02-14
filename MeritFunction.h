@@ -15,7 +15,7 @@ class MeritFunction{
         MeritFunction();
 
         Eigen::VectorXd setInitialPosition();
-        void setMeritFunction(int intParam,double delta);
+        void setMeritFunction(int intParam,double delta,int import);
         double f(Eigen::VectorXd& position);
         void printReport(Eigen::VectorXd& position);
 

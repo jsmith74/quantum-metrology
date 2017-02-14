@@ -4,6 +4,8 @@
 
 #define PHOTONS 3
 
+//#define IMPORT_INITIAL_PROB_DIST
+
 
 BranchMeasStruct::BranchMeasStruct(){
 
@@ -11,6 +13,13 @@ BranchMeasStruct::BranchMeasStruct(){
 
 }
 
+void BranchMeasStruct::printFinalProbDist(){
+
+    integrate.printFinalProbDist(chainMeasurement);
+
+    return;
+
+}
 
 double BranchMeasStruct::generalVariance(){
 
@@ -31,12 +40,73 @@ void BranchMeasStruct::setKernalProbDistribution(){
 
     /** ==================================================================================================== */
 
+    #ifdef IMPORT_INITIAL_PROB_DIST
+
+        std::string filename;
+        std::stringstream ss;
+
+        ss << delta;
+        ss >> filename;
+        filename = "Delta_" + filename + "_postProbDist.dat";
+
+        std::ifstream infile(filename.c_str());
+
+        assert(infile.is_open());
+
+        double throwaway;
+
+        unsigned long numbPrevBranches;
+
+        setNumbPrevBranches(numbPrevBranches,infile);
+
+        infile.close();
+
+        infile.open(filename.c_str());
+
+        for(int i=0;i<numbGridPoints;i++){
+
+            for(int j=0;j<import;j++) infile >> throwaway;
+
+            infile >> chainMeasurement.at(0).at(0).P_phi.at(i);
+
+            for(int j=import;j<numbPrevBranches-1;j++) infile >> throwaway;
+
+        }
+
+        infile.close();
+
+        // TO DO - ADD WARNING THAT GRID SIZE AND STARTING POINT IS THE SAME
+
+    #endif // IMPORT_INITIAL_PROB_DIST
+
     return;
 
 }
 
 
-void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,bool Import,int gridSize,double Delta){
+void BranchMeasStruct::setNumbPrevBranches(unsigned long& numbPrevBranches,std::ifstream& infile){
+
+    numbPrevBranches = 0;
+    double throwaway;
+
+    infile >> throwaway;
+
+    while(!infile.eof()){
+
+        infile >> throwaway;
+        numbPrevBranches++;
+
+    }
+
+    assert(numbPrevBranches % numbGridPoints == 0);
+
+    numbPrevBranches /= numbGridPoints;
+
+    return;
+
+}
+
+void BranchMeasStruct::setMeasChain(bool Adaptive,int numbMeas,int Import,int gridSize,double Delta){
 
     adaptive = Adaptive;
     levels = numbMeas;

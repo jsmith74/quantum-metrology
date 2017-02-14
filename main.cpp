@@ -11,9 +11,9 @@ void printStateAmps(BFGS_Optimization& optimizer,Eigen::VectorXd& bestPosition);
 
 int main( int argc, char *argv[] ){
 
-    if(argc != 2){
+    if(argc != 3){
 
-        std::cout << "./QuantumMetrology [uncertainty inverval size]" << std::endl;
+        std::cout << "./QuantumMetrology [uncertainty inverval size] [import outcome number index from file (starts at 2)]" << std::endl;
         return 1;
 
     }
@@ -24,7 +24,7 @@ int main( int argc, char *argv[] ){
 
     int integrationGridSize = 6000;
 
-    int optimizationAttempts = 10;
+    int optimizationAttempts = 20;
 
     double bestResult = 1e20;
 
@@ -32,11 +32,15 @@ int main( int argc, char *argv[] ){
 
     double delta = std::atof(argv[1]);
 
+    int import = std::atoi(argv[2]);
+
+    import--;
+
     clock_t t1,t2;
 
     t1 = clock();
 
-    BFGS_Optimization optimizer(gradientCheck,maxStepSize,integrationGridSize,delta);
+    BFGS_Optimization optimizer(gradientCheck,maxStepSize,integrationGridSize,delta,import);
 
     for(int i=0;i<optimizationAttempts;i++){
 

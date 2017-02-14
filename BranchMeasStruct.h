@@ -12,7 +12,7 @@ class BranchMeasStruct{
 
         BranchMeasStruct();
 
-        void setMeasChain(bool Adaptive,int numbMeas,bool import,int gridSize,double Delta);
+        void setMeasChain(bool Adaptive,int numbMeas,int Import,int gridSize,double Delta);
         int setFuncDimension();
         void setPsiAndGamma(Eigen::VectorXd& position);
         void setKernalProbDistribution();
@@ -25,13 +25,16 @@ class BranchMeasStruct{
         void printStateAmps(Eigen::VectorXd& position,std::ofstream& outfile);
         void printGammaAmps(Eigen::VectorXd& position,std::ofstream& outfile);
 
+        void printFinalProbDist();
+
     private:
 
         Integration integrate;
 
         std::vector<std::vector<MZIMeas> > chainMeasurement;
-        bool adaptive,import;
-        int levels, numbTotalMeasBranches, numbTotalMeasOutcomes, numbGridPoints;
+        bool adaptive;
+
+        int levels, numbTotalMeasBranches, numbTotalMeasOutcomes, numbGridPoints, import;
         double delta,dP;
 
         void setKernel();
@@ -39,6 +42,8 @@ class BranchMeasStruct{
         void setNonAdaptiveMeasurements();
         void setNumbTotalMeasOutcomesAdaptive();
         void setNumbTotalMeasOutcomesNonAdaptive();
+
+        void setNumbPrevBranches(unsigned long& numbPrevBranches,std::ifstream& infile);
 
 };
 

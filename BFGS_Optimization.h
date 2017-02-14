@@ -8,7 +8,7 @@ class BFGS_Optimization{
 
     public:
 
-        BFGS_Optimization(double tolerance,double maxStepSize,int intParam,double delta);
+        BFGS_Optimization(double tolerance,double maxStepSize,int intParam,double delta,int import);
         double minimize();
         double bestResult;
 

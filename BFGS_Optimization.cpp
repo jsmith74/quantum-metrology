@@ -6,6 +6,13 @@
 #define MACHINEPRECISION 1.1e-16
 
 
+/** ===== SET DEBUG MODE =========================================== */
+
+//#define DEBUG_MODE
+
+/** ================================================================ */
+
+
 /** ===== Set the initial Hessian matrix =========================== */
 
 #define IDENTITY
@@ -389,6 +396,12 @@ double BFGS_Optimization::minimize(){
 
     while(true){
 
+        #ifdef DEBUG_MODE
+
+            break;
+
+        #endif // DEBUG_MODE
+
         printStepMonitor();
 
         if(gradient.norm() < tol) break;
@@ -502,7 +515,7 @@ void BFGS_Optimization::printResultReport(){
 
 
 
-BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,int intParam,double delta){
+BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,int intParam,double delta,int import){
 
     #ifdef SEED_RANDOM_NUMBER_GENERATOR
 
@@ -526,7 +539,7 @@ BFGS_Optimization::BFGS_Optimization(double tolerance,double maxStepSize,int int
 
     alphaMax = maxStepSize;
 
-    meritFunction.setMeritFunction(intParam,delta);
+    meritFunction.setMeritFunction(intParam,delta,import);
 
     bestResult = 1e30;
 

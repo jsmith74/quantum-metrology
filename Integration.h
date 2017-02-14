@@ -17,11 +17,15 @@ class Integration{
         double integrateArray(std::vector<double>& f);
         double generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement);
 
+        void printFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMeasurement);
+
     private:
 
         bool adaptive;
         double delta,dP,phi, P_phi;
         int numbGridPoints,levels,numbTotalMeasBranches,numbTotalMeasOutcomes;
+
+        std::string filename;
 
         std::vector<int> b,m;
 
@@ -38,6 +42,8 @@ class Integration{
 
         void printBArray();
         void printMArray();
+
+        inline void subPrintFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMeasurement);
 
 };
 
