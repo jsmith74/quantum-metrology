@@ -4,7 +4,6 @@
 #include <omp.h>
 #include <unistd.h>
 
-
 #define PI 3.14159265359
 
 int main(){
@@ -14,8 +13,10 @@ int main(){
     double increment = 0.05;
     int intEndPoint = (endPoint - startPoint) / increment;
 
+    int import = 0;
+
 #pragma omp parallel for schedule(dynamic)  default(none) \
-    shared(startPoint,endPoint,increment,intEndPoint)
+    shared(startPoint,endPoint,increment,intEndPoint,import)
     for(int i=0;i<intEndPoint;i++){
 
         std::string progName = "./QuantumMetrology ";
@@ -24,11 +25,14 @@ int main(){
 
         if( i < omp_get_num_threads() ) usleep(2000000 * omp_get_thread_num());
 
-        std::string command;
-        std::stringstream ss;
+        std::string command,imp;
+        std::stringstream ss,ssImp;
         ss << delta;
         ss >> command;
-        command = progName + command;
+        ssImp << import;
+        ssImp >> imp;
+
+        command = progName + command + " " + imp;
 
         system(command.c_str());
 

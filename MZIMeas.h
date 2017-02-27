@@ -32,6 +32,7 @@ class MZIMeas{
         int extractPhotons();
 
         void printStateAmps(Eigen::VectorXd& position,int& k,std::ofstream& outfile);
+        void printRelativePhase(Eigen::VectorXd& position,int& k,std::ofstream& outfile);
 
     private:
 

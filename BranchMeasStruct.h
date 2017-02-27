@@ -24,6 +24,7 @@ class BranchMeasStruct{
 
         void printStateAmps(Eigen::VectorXd& position,std::ofstream& outfile);
         void printGammaAmps(Eigen::VectorXd& position,std::ofstream& outfile);
+        void printRelativePhase(Eigen::VectorXd& position,std::ofstream& outfile);
 
         void printFinalProbDist();
 

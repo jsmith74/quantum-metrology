@@ -202,6 +202,26 @@ void BranchMeasStruct::printStateAmps(Eigen::VectorXd& position,std::ofstream& o
 
 }
 
+void BranchMeasStruct::printRelativePhase(Eigen::VectorXd& position,std::ofstream& outfile){
+
+    int k=0;
+
+    for(int i=0;i<levels;i++){
+
+        for(int j=0;j<chainMeasurement[i].size();j++){
+
+            chainMeasurement[i][j].printRelativePhase(position,k,outfile);
+
+            k++;
+
+        }
+
+    }
+
+    return;
+
+}
+
 void BranchMeasStruct::printGammaAmps(Eigen::VectorXd& position,std::ofstream& outfile){
 
     int k=0;

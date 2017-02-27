@@ -197,6 +197,25 @@ void MZIMeas::printStateAmps(Eigen::VectorXd& position,int& k,std::ofstream& out
 
 }
 
+void MZIMeas::printRelativePhase(Eigen::VectorXd& position,int& k,std::ofstream& outfile){
+
+    for(int i=0;i<subHSDimension;i++){
+
+        psi(i) = position(k) * exp(I * position(k+1));
+        k += 2;
+
+    }
+
+    psi.normalize();
+
+    psi *= exp(-I * std::arg(psi(0)));
+
+    for(int i=0;i<subHSDimension;i++) outfile << std::setprecision(16) << std::arg(psi(i)) << "\t";
+
+    return;
+
+}
+
 
 void MZIMeas::printMAddress(){
 

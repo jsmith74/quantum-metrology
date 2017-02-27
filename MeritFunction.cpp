@@ -24,7 +24,7 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 
 void MeritFunction::setMeritFunction(int intParam,double delta,int import){
 
-    measChain.setMeasChain(false,1,import,intParam,delta);
+    measChain.setMeasChain(false,2,import,intParam,delta);
 
     measChain.setKernalProbDistribution();
 
@@ -78,6 +78,13 @@ void MeritFunction::printStateAmps(Eigen::VectorXd& position){
     outfile.open("BestGammaDist.dat",std::ofstream::app);
     outfile << deltaPrint << "\t";
     measChain.printGammaAmps(position,outfile);
+    outfile << std::endl;
+
+    outfile.close();
+
+    outfile.open("BestRelativePhaseDist.dat",std::ofstream::app);
+    outfile << deltaPrint << "\t";
+    measChain.printRelativePhase(position,outfile);
     outfile << std::endl;
 
     outfile.close();
