@@ -30,20 +30,64 @@ void Integration::setIntegral(double Delta,double DP,int NUMBGRIDPOINTS,int LEVE
 
 }
 
-void Integration::printFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMeasurement){
-
-    // TO DO: WRITE FUNCTION THAT EXPORTS THE FINAL PROBABILITY DISTRIBUTION
-
-    generalVariance(chainMeasurement); // THIS IS TO SET THE "A" VECTOR
+void Integration::initializeFilenameBase(){
 
     std::stringstream ss;
 
     ss << delta;
-    ss >> filename;
-    filename = "Delta_" + filename + "_postProbDist.dat";
+    ss >> filenameBase;
 
-    remove(filename.c_str());
+    filenameBase = "D_" + filenameBase + "_";
+
+    return;
+
+}
+
+void Integration::setFilename(int i,int j){
+
+    std::stringstream ss1,ss2;
+    std::string s1,s2;
+
+    ss1 << i;
+    ss1 >> s1;
+    ss2 << j;
+    ss2 >> s2;
+
+    filename = filenameBase + s1 + "_" + s2 + ".dat";
+
+    return;
+
+}
+
+void Integration::removeSignals(std::vector<std::vector<MZIMeas> >& chainMeasurement){
+
     remove("InitialProbDist.dat");
+
+    for(int i=0;i<levels;i++){
+
+        for(int j=0;j<chainMeasurement[i].size();j++){
+
+            setFilename(i,j);
+
+            remove(filename.c_str());
+
+        }
+
+    }
+
+    return;
+
+}
+
+void Integration::printFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMeasurement){
+
+    generalVariance(chainMeasurement);
+
+    initializeFilenameBase();
+
+    removeSignals(chainMeasurement);
+
+    // TO DO: PUT FUNCTION TO SET p(m1,m2,...) HERE
 
     for(int i=0;i<numbGridPoints;i++){
 
@@ -51,98 +95,80 @@ void Integration::printFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMe
         P_phi = chainMeasurement[0][0].P_phi[i];
         updatePhiInChain(chainMeasurement);
 
-        std::ofstream outfile(filename.c_str(),std::ofstream::app);
-        outfile << std::setprecision(16) << phi << "\t";
-        outfile.close();
+        printAppendToFiles(chainMeasurement);
 
-        subPrintFinalProbDist(chainMeasurement);
-
-        outfile.open(filename.c_str(),std::ofstream::app);
-
-        outfile << std::endl;
-
-        outfile.close();
-
-        outfile.open("InitialProbDist.dat",std::ofstream::app);
-
+        std::ofstream outfile("InitialProbDist.dat",std::ofstream::app);
         outfile << std::setprecision(16) << phi << "\t" << P_phi << std::endl;
-
         outfile.close();
 
     }
 
+    assert(1>2);
+
     return;
 
 }
 
-inline void Integration::subPrintFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMeasurement){
+void Integration::printAppendToFiles(std::vector<std::vector<MZIMeas> >& chainMeasurement){
 
-    int k=0;
-    double productHolder;
+    for(int i=0;i<levels;i++){
 
-    for(int i=0;i<numbTotalMeasBranches;i++){
+        for(int j=0;j<chainMeasurement[i].size();j++){
 
-        setBArray(i,chainMeasurement);
+            setFilename(i,j);
 
-        if(adaptive){
+            std::ofstream outfile(filename.c_str(),std::ofstream::app);
+            outfile << std::setprecision(16) << phi << "\t";
+            outfile.close();
 
-            setMArrayAdaptive(chainMeasurement);
+            subPrintFinalProbDist(chainMeasurement,i,j);
 
-            for(int j=0;j<chainMeasurement[levels-1][i].numbBranches;j++){
-
-                m[levels-1] = j;
-
-                double productHolder = P_phi;
-
-                for(int ii=0;ii<levels;ii++) productHolder *= chainMeasurement[ii][ b[ii] ].P_m_phi[ m[ii] ];
-
-                productHolder /= A(k);
-
-                std::ofstream outfile(filename.c_str(),std::ofstream::app);
-
-                outfile << std::setprecision(16) << productHolder << "\t";
-
-                outfile.close();
-
-                k++;
-
-            }
-
-
-        }
-
-        else{
-
-            for(int j=0;j<levels;j++) m[j] = 0;
-
-            for(int j=0;j<numbTotalMeasOutcomes;j++){
-
-                double productHolder = P_phi;
-
-                for(int ii=0;ii<levels;ii++) productHolder *= chainMeasurement[ii][ b[ii] ].P_m_phi[ m[ii] ];
-
-                productHolder /= A(k);
-
-                std::ofstream outfile(filename.c_str(),std::ofstream::app);
-
-                outfile << std::setprecision(16) << productHolder << "\t";
-
-                outfile.close();
-
-                k++;
-
-                iterateMArray(chainMeasurement);
-
-            }
+            outfile.open(filename.c_str(),std::ofstream::app);
+            outfile << std::endl;
+            outfile.close();
 
         }
 
     }
 
+    return;
+
+}
+
+void Integration::subPrintFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMeasurement,int i,int j){
+
+    for(int ii=0;ii<chainMeasurement[i][j].numbBranches;ii++){
+
+        double productHolder = P_phi;
+
+        // TO DO: FINISH THIS SECTION - WRITE CODE TO DO p(m1,m2,...) IN ADVANCE
+
+        assert(1>2 && "UP TO HERE");
+
+    }
 
     return;
 
 }
+
+inline void Integration::subUpdateABC(std::vector<std::vector<MZIMeas> >& chainMeasurement,double& simpsonCoeff,int& k){
+
+    double productHolder = P_phi;
+
+    for(int i=0;i<levels;i++) productHolder *= chainMeasurement[i][ b[i] ].P_m_phi[ m[i] ];
+
+    A(k) += simpsonCoeff * productHolder;
+
+    B(k) += simpsonCoeff * phi * productHolder;
+
+    C(k) += simpsonCoeff * phi * phi * productHolder;
+
+    k++;
+
+    return;
+
+}
+
 
 double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMeasurement){
 
@@ -206,25 +232,6 @@ inline void Integration::updatePhiInChain(std::vector<std::vector<MZIMeas> >& ch
         }
 
     }
-
-    return;
-
-}
-
-
-inline void Integration::subUpdateABC(std::vector<std::vector<MZIMeas> >& chainMeasurement,double& simpsonCoeff,int& k){
-
-    double productHolder = P_phi;
-
-    for(int i=0;i<levels;i++) productHolder *= chainMeasurement[i][ b[i] ].P_m_phi[ m[i] ];
-
-    A(k) += simpsonCoeff * productHolder;
-
-    B(k) += simpsonCoeff * phi * productHolder;
-
-    C(k) += simpsonCoeff * phi * phi * productHolder;
-
-    k++;
 
     return;
 

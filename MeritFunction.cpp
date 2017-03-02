@@ -2,7 +2,7 @@
 
 #define PI 3.141592653589793
 
-//#define PRINT_OUTPUT_PROB_DIST
+#define PRINT_OUTPUT_PROB_DIST
 
 MeritFunction::MeritFunction(){
 
@@ -24,7 +24,7 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 
 void MeritFunction::setMeritFunction(int intParam,double delta,int import){
 
-    measChain.setMeasChain(false,4,import,intParam,delta);
+    measChain.setMeasChain(false,2,import,intParam,delta);
 
     measChain.setKernalProbDistribution();
 

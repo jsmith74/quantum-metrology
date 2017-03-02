@@ -25,7 +25,7 @@ class Integration{
         double delta,dP,phi, P_phi;
         int numbGridPoints,levels,numbTotalMeasBranches,numbTotalMeasOutcomes;
 
-        std::string filename;
+        std::string filename,filenameBase;
 
         std::vector<int> b,m;
 
@@ -43,7 +43,12 @@ class Integration{
         void printBArray();
         void printMArray();
 
-        inline void subPrintFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMeasurement);
+        void subPrintFinalProbDist(std::vector<std::vector<MZIMeas> >& chainMeasurement,int i,int j);
+        void initializeFilenameBase();
+        void removeSignals(std::vector<std::vector<MZIMeas> >& chainMeasurement);
+        void setFilename(int i,int j);
+        void printAppendToFiles(std::vector<std::vector<MZIMeas> >& chainMeasurement);
+
 
 };
 
