@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --qos=normal
-#SBATCH --job-name=S1_P4_A
+#SBATCH --job-name=S4_P3_N
 #SBATCH --time=1-00:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1

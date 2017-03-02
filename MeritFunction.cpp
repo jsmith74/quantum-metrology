@@ -24,7 +24,7 @@ Eigen::VectorXd MeritFunction::setInitialPosition(){
 
 void MeritFunction::setMeritFunction(int intParam,double delta,int import){
 
-    measChain.setMeasChain(false,2,import,intParam,delta);
+    measChain.setMeasChain(false,4,import,intParam,delta);
 
     measChain.setKernalProbDistribution();
 

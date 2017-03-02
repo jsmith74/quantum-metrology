@@ -186,7 +186,7 @@ double Integration::generalVariance(std::vector<std::vector<MZIMeas> >& chainMea
 
     updateABC(chainMeasurement,dP / 3.0);
 
-    assert( A.prod() != 0.0 );
+    for(int i=0;i<A.size();i++) assert( A(i) != 0.0 );
 
     return C.sum() - 2.0 * (B.array() / A.array()).matrix().transpose() * B + ((B.array() / A.array()) * (B.array() / A.array())).matrix().transpose() * A;
 
